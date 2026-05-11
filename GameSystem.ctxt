@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=GameSystem
+comment1.params=
+comment1.target=void\ startGameThread()
+comment2.params=
+comment2.target=void\ run()
+comment3.params=X1\ Y1\ X2\ Y2
+comment3.target=double\ calculateTheAngleBetweenTwoPoints(double,\ double,\ double,\ double)
+comment4.params=
+comment4.target=int\ getWindowX()
+comment5.params=
+comment5.target=int\ getWindowY()
+comment6.params=X\ Y
+comment6.target=void\ setWindowPosition(int,\ int)
+comment7.params=Width\ Height
+comment7.target=void\ setWindowSize(int,\ int)
+numComments=8

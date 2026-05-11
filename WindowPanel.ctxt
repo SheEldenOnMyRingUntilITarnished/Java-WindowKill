@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=WindowPanel
+comment1.params=window
+comment1.target=WindowPanel(javax.swing.JFrame)
+comment2.params=g
+comment2.target=void\ paintComponent(java.awt.Graphics)
+comment2.text=\r\n\ Runs\ when\ .repaint\ is\ ran\ in\ the\ gameSystem\r\n\ repaints\ the\ windows\ screen\ with\ the\ new\ information.\r\n
+comment3.params=
+comment3.target=int\ getWindowX()
+comment4.params=
+comment4.target=int\ getWindowY()
+comment5.params=X\ Y
+comment5.target=void\ setWindowPosition(int,\ int)
+comment6.params=Width\ Height
+comment6.target=void\ setWindowSize(int,\ int)
+numComments=7

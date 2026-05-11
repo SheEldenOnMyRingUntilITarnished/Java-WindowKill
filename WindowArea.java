@@ -1,0 +1,40 @@
+/**
+ * Write a description of class JavaRogue here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+
+import javax.swing.JFrame;
+
+public class WindowArea
+{
+    private JFrame window = null;
+    private WindowPanel windowPanel = null;
+    public WindowArea(GameSystem chosenGameSystem)  
+    {
+        this.window = new JFrame();
+                
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
+        window.setTitle("");
+        
+        this.windowPanel = new WindowPanel(window);
+        window.add(windowPanel);
+        
+        window.pack();
+        
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+    }
+    
+    public JFrame getWindow()
+    {
+        return this.window;
+    }
+    
+    public WindowPanel getGamePanel()
+    {
+        return this.windowPanel;
+    }
+}

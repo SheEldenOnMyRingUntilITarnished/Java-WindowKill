@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=WindowArea
+comment1.params=chosenGameSystem
+comment1.target=WindowArea(GameSystem)
+comment2.params=
+comment2.target=javax.swing.JFrame\ getWindow()
+comment3.params=
+comment3.target=WindowPanel\ getGamePanel()
+numComments=4
