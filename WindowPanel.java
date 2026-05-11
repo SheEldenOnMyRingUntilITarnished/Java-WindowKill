@@ -20,15 +20,16 @@ public class WindowPanel extends JPanel
 {
     
     JFrame window = null;
+    private Player player = null;
     
-    
-    public WindowPanel(JFrame window) 
+    public WindowPanel(JFrame window, GameSystem chosenGameSystem) 
     {
         this.setPreferredSize(new Dimension(600,600));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-        //this.addKeyListener(playerCode.keyH);
-        //this.addMouseListener(playerCode.mouseH);
+        this.player = chosenGameSystem.player;
+        this.addKeyListener(chosenGameSystem.inputManager.keyH);
+        this.addMouseListener(chosenGameSystem.inputManager.mouseH);
         this.setFocusable(true);
         this.window = window;
     }

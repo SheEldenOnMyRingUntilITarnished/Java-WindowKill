@@ -19,7 +19,6 @@ public class MouseHandler implements MouseInputListener
     @Override
     public void mousePressed(MouseEvent e)
     {
-        System.out.println("Shoot");
         shootPressed = true;
     }
     

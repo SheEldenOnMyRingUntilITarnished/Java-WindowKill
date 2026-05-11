@@ -26,7 +26,6 @@ public class KeyHandler implements KeyListener
         int code = e.getKeyCode();
         
         if(code == KeyEvent.VK_W){
-            System.out.println("UP");
             upPressed = true;
         }
         if(code == KeyEvent.VK_S){
@@ -42,15 +41,12 @@ public class KeyHandler implements KeyListener
             dashPressed = true;
         }
         if(code == KeyEvent.VK_ESCAPE){
-            System.out.println("PAUSE");
             pausePressed = true;
         }
         if(code == KeyEvent.VK_TAB){
-            System.out.println("QUICK BOSS SHOP");
             quickBossShopPressed = true;
         }
         if(code == KeyEvent.VK_SPACE){
-            System.out.println("QUICK SHOP");
             quickShopPressed = true;
         }
     }
@@ -77,15 +73,12 @@ public class KeyHandler implements KeyListener
             dashPressed = false;
         }
         if(code == KeyEvent.VK_ESCAPE){
-            System.out.println("PAUSE");
             pausePressed = false;
         }
         if(code == KeyEvent.VK_TAB){
-            System.out.println("QUICK BOSS SHOP");
             quickBossShopPressed = false;
         }
         if(code == KeyEvent.VK_SPACE){
-            System.out.println("QUICK SHOP");
             quickShopPressed = false;
         }
     }

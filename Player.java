@@ -7,12 +7,18 @@
  */
 public class Player
 {
-    KeyHandler keyH = new KeyHandler();
-    MouseHandler mouseH = new MouseHandler();
+    InputManager inputManager = new InputManager();
     PlayerStats playerStats = new PlayerStats();
     
     public Player()
     {
+        
+    }
+    
+    public void updatePlayer()
+    {
+        int temp = 0;
+        
         
     }
 }

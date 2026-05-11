@@ -8,11 +8,11 @@
 public class PlayerStats
 {  
     //Shooting Stats
-    private int playerProjectileWindowStrength = 50;
-    private double playerFirerate = 90;
-    private double playerProjectileSpeed = 10;
-    private double playerProjectileRange = 1;
-    private int playerProjectileMultiShot = 1;
+    int playerProjectileWindowStrength = 50;
+    double playerFirerate = 90;
+    double playerProjectileSpeed = 10;
+    double playerProjectileRange = 1;
+    int playerProjectileMultiShot = 1;
     
     //Player Stats
     int playerMaxHealth = 3;

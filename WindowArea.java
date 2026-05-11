@@ -19,7 +19,7 @@ public class WindowArea
         window.setResizable(false);
         window.setTitle("");
         
-        this.windowPanel = new WindowPanel(window);
+        this.windowPanel = new WindowPanel(window, chosenGameSystem);
         window.add(windowPanel);
         
         window.pack();
