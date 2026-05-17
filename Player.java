@@ -3,12 +3,15 @@
  * Write a description of class Player here.
  *
  * @author (your name)
- * @version 05/11/2026
+ * @version 05/18/2026
  */
 public class Player
 {
-    InputManager inputManager = new InputManager();
+    InputManager inputManager = new InputManager(this);
     PlayerStats playerStats = new PlayerStats();
+    
+    public int playerX = 0;
+    public int playerY = 0;
     
     public Player()
     {
@@ -19,6 +22,8 @@ public class Player
     {
         int temp = 0;
         
+        int friction = 1;
         
+        //PLayer Movement Slippery
     }
 }

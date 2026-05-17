@@ -3,31 +3,37 @@
  * Write a description of class InputManager here.
  *
  * @author (your name)
- * @version (a version number or a date)
+ * @version 05/18/2026
  */
 public class InputManager
 {
     KeyHandler keyH = new KeyHandler();
     MouseHandler mouseH = new MouseHandler();
+    private Player player = null;
+    
+    public InputManager(Player player)
+    {
+        this.player = player;
+    }
     
     public void updateInput()
     {
         //Movement
         if(keyH.upPressed == true)
         {
-            System.out.println("UP");
+            this.player.playerY -= this.player.playerStats.playerSpeed;
         }
         if(keyH.downPressed == true)
         {
-            System.out.println("DOWN");
+            this.player.playerY += this.player.playerStats.playerSpeed;
         }
         if(keyH.leftPressed == true)
         {
-            System.out.println("LEFT");
+            this.player.playerX -= this.player.playerStats.playerSpeed;
         }
         if(keyH.rightPressed == true)
         {
-            System.out.println("RIGHT");
+            this.player.playerX += this.player.playerStats.playerSpeed;
         }
         
         //Shooting

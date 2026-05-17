@@ -13,9 +13,8 @@ public class GameSystem implements Runnable
     Thread gameThread;
     
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
-    
-    InputManager inputManager = new InputManager();
     Player player = new Player();
+    InputManager inputManager = player.inputManager;
     
     WindowPanel window = null;
     
@@ -52,6 +51,7 @@ public class GameSystem implements Runnable
             if(delta >= 1)
             {
                 inputManager.updateInput();
+                player.updatePlayer();
                 for(int i = 0; i < activeWindows.size(); i++)
                 {
                     activeWindows.get(i).getGamePanel().repaint();

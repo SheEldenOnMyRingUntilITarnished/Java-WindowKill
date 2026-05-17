@@ -42,6 +42,16 @@ public class WindowPanel extends JPanel
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+
+        paintPlayer(g2);
+        
+    }
+    
+    public void paintPlayer(Graphics2D g2)
+    {
+        g2.setColor(Color.RED);
+        g2.drawRect(player.playerX,player.playerY,30, 30);
+        System.out.println("playerX: " + player.playerX);
     }
     
     //Window Methods
