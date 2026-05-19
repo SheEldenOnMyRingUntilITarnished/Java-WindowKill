@@ -20,6 +20,7 @@ public class WindowPanel extends JPanel
 {
     
     JFrame window = null;
+    private GameSystem gameSystem;
     private Player player = null;
     
     public WindowPanel(JFrame window, GameSystem chosenGameSystem) 
@@ -27,6 +28,7 @@ public class WindowPanel extends JPanel
         this.setPreferredSize(new Dimension(600,600));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+        this.gameSystem = chosenGameSystem;
         this.player = chosenGameSystem.player;
         this.addKeyListener(chosenGameSystem.inputManager.keyH);
         this.addMouseListener(chosenGameSystem.inputManager.mouseH);
@@ -43,15 +45,30 @@ public class WindowPanel extends JPanel
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        paintPlayer(g2);
-        
+        if (gameSystem.gameState == GameState.MAIN_MENU) {
+            paintMainMenu(g2);
+        } 
+        else if (gameSystem.gameState == GameState.GAME) {
+            paintPlayer(g2);
+            paintProjectile(g2, Color.BLUE, 1, 1);
+        }
+    }
+    
+    public void paintMainMenu(Graphics2D g2)
+    {
+        //I need to add main menu stuff in here
     }
     
     public void paintPlayer(Graphics2D g2)
     {
         g2.setColor(Color.RED);
         g2.drawRect(player.playerX,player.playerY,30, 30);
-        System.out.println("playerX: " + player.playerX);
+    }
+    
+    public void paintProjectile(Graphics2D g2, Color color, int xPos, int yPos)
+    {
+        g2.setColor(color);
+        g2.drawRect(xPos,yPos,30, 30);
     }
     
     //Window Methods

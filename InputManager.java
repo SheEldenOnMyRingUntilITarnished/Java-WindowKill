@@ -18,43 +18,55 @@ public class InputManager
     
     public void updateInput()
     {
-        //Movement
-        if(keyH.upPressed == true)
+        if(player.gameSystem.gameState == GameState.GAME){
+            //Movement
+            if(keyH.upPressed == true)
+            {
+                this.player.playerY -= this.player.playerStats.playerSpeed;
+            }
+            if(keyH.downPressed == true)
+            {
+                this.player.playerY += this.player.playerStats.playerSpeed;
+            }
+            if(keyH.leftPressed == true)
+            {
+                this.player.playerX -= this.player.playerStats.playerSpeed;
+            }
+            if(keyH.rightPressed == true)
+            {
+                this.player.playerX += this.player.playerStats.playerSpeed;
+            }
+            
+            //Shooting
+            if(mouseH.shootPressed == true)
+            {
+                if(true)//Temp we need to replace for checking if player can shoot
+                {
+                    Projectile newPlayerProjectile = new Projectile(10,0,false);
+                    player.playerProjectileList.add(newPlayerProjectile);
+                }
+            }
+            
+            //Shop
+            if(keyH.quickShopPressed == true)
+            {
+                System.out.println("SHOP");
+            }
+            else if(keyH.quickBossShopPressed == true)
+            {
+                System.out.println("BOSS_SHOP");
+            }
+            //Other
+            else if(keyH.pausePressed == true)
+            {
+                System.out.println("PAUSE");
+            }
+        }else
         {
-            this.player.playerY -= this.player.playerStats.playerSpeed;
-        }
-        if(keyH.downPressed == true)
-        {
-            this.player.playerY += this.player.playerStats.playerSpeed;
-        }
-        if(keyH.leftPressed == true)
-        {
-            this.player.playerX -= this.player.playerStats.playerSpeed;
-        }
-        if(keyH.rightPressed == true)
-        {
-            this.player.playerX += this.player.playerStats.playerSpeed;
-        }
-        
-        //Shooting
-        if(mouseH.shootPressed == true)
-        {
-            System.out.println("SHOOT");
-        }
-        
-        //Shop
-        if(keyH.quickShopPressed == true)
-        {
-            System.out.println("SHOP");
-        }
-        else if(keyH.quickBossShopPressed == true)
-        {
-            System.out.println("BOSS_SHOP");
-        }
-        //Other
-        else if(keyH.pausePressed == true)
-        {
-            System.out.println("PAUSE");
+            if(keyH.pausePressed == true)
+            {
+                System.out.println("WOW PAUSING THE MAIN MENU????");
+            }
         }
     }
 }

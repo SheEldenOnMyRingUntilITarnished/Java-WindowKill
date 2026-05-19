@@ -7,13 +7,16 @@
 
 import java.util.ArrayList;
 
+
+
 public class GameSystem implements Runnable
 {   
-    
     Thread gameThread;
     
+    GameState gameState = GameState.GAME;
+    
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
-    Player player = new Player();
+    Player player = new Player(this);
     InputManager inputManager = player.inputManager;
     
     WindowPanel window = null;
@@ -21,7 +24,7 @@ public class GameSystem implements Runnable
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 1; i++)//Change this later as this is for testing
         {
             WindowArea windowArea = new WindowArea(this);
             activeWindows.add(windowArea);
@@ -31,9 +34,15 @@ public class GameSystem implements Runnable
         gameThread.start();
     }
     
+    /**
+     * 
+     * Gets ran when we start the application.
+     * Sets up the game.
+     * 
+    **/
     public void run()
     {
-        double drawInterval = 1000000000/60;//60FPS
+        double drawInterval = 1000000000/60; //60FPS
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -59,7 +68,6 @@ public class GameSystem implements Runnable
                 delta--;
             }
             
-            
             if(timer >= 1000000000)
             {
                 timer = 0;
@@ -81,6 +89,11 @@ public class GameSystem implements Runnable
         }
         
         return angle;
+    }
+    
+    public void updateProjectiles()
+    {
+        
     }
     
     //Window Methods
