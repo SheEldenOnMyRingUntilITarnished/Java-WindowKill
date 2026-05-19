@@ -3,4 +3,6 @@ comment0.target=Projectile
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Projectile\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=projectileSpeed\ projectileDirection\ projectileTargetPlayer
 comment1.target=Projectile(int,\ int,\ boolean)
-numComments=2
+comment2.params=chosenXPos\ chosenYPos
+comment2.target=void\ setPosition(int,\ int)
+numComments=3

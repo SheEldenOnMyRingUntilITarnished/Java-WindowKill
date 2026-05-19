@@ -20,4 +20,10 @@ public class Projectile
         this.direction = projectileDirection;
         this.targetPlayer = projectileTargetPlayer;
     }
+    
+    public void setPosition(int chosenXPos, int chosenYPos)
+    {
+        xPos = chosenXPos;
+        yPos = chosenYPos;
+    }
 }

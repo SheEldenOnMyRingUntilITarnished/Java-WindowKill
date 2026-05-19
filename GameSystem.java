@@ -6,6 +6,7 @@
  */
 
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 
 
@@ -13,7 +14,7 @@ public class GameSystem implements Runnable
 {   
     Thread gameThread;
     
-    GameState gameState = GameState.GAME;
+    GameState gameState = GameState.MAIN_MENU;
     
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
     Player player = new Player(this);
@@ -21,10 +22,11 @@ public class GameSystem implements Runnable
     
     WindowPanel window = null;
     
+    
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        for(int i = 0; i < 1; i++)//Change this later as this is for testing
+        for(int i = 0; i < 5; i++)//Change this later as this is for testing
         {
             WindowArea windowArea = new WindowArea(this);
             activeWindows.add(windowArea);
@@ -65,6 +67,10 @@ public class GameSystem implements Runnable
                 {
                     activeWindows.get(i).getGamePanel().repaint();
                 }
+                if(gameState == GameState.MAIN_MENU)
+                {
+                    updateWindowCollisions();
+                }
                 delta--;
             }
             
@@ -97,15 +103,77 @@ public class GameSystem implements Runnable
     }
     
     //Window Methods
-    public int getWindowX() {
-        return (int) window.getLocationOnScreen().getX();
-    }
-    public int getWindowY() {
-        return window.getY();
-    }
-    public void setWindowPosition(int X, int Y)
+    
+    public void updateWindowCollisions()
     {
-        window.setLocation(X,Y);
+        for(int i = 0; i < activeWindows.size(); i++)
+        {
+            JFrame currentWindow = activeWindows.get(i).getWindow();
+            int currentWindowX = getWindowX(currentWindow);
+            int currentWindowY = getWindowY(currentWindow);
+            int currentWindowWidth = getWindowWidth(currentWindow);
+            int currentWindowHeight = getWindowHeight(currentWindow);
+            
+            for(int j = i + 1; j < activeWindows.size(); j++)
+            {
+                JFrame comparedWindow = activeWindows.get(j).getWindow();
+                
+                int comparedWindowX = getWindowX(comparedWindow);
+                int comparedWindowY = getWindowY(comparedWindow);
+                int comparedWindowWidth = getWindowWidth(comparedWindow);
+                int comparedWindowHeight = getWindowHeight(comparedWindow);
+                
+                if(currentWindowX < comparedWindowX + comparedWindowWidth && currentWindowX + currentWindowWidth > comparedWindowX && //X Checks
+                currentWindowY < comparedWindowY + comparedWindowHeight && currentWindowY + currentWindowHeight > comparedWindowY)//Y Checks
+                {
+                    int overlapX = Math.min(currentWindowX + currentWindowWidth, comparedWindowX + comparedWindowWidth) - Math.max(currentWindowX, comparedWindowX);
+                    int overlapY = Math.min(currentWindowY + currentWindowHeight, comparedWindowY + comparedWindowHeight) - Math.max(currentWindowY, comparedWindowY);
+                    int pushAmount = 0;
+                    
+                    if(overlapX < overlapY)
+                    {
+                        pushAmount = overlapX/2;
+                        
+                        if((currentWindowX + currentWindowWidth)/2 < (comparedWindowX + comparedWindowWidth)/2)
+                        {
+                            currentWindow.setLocation(currentWindowX - pushAmount, comparedWindowY);
+                            comparedWindow.setLocation(comparedWindowX + pushAmount, comparedWindowY);
+                        }
+                        else
+                        {
+                            currentWindow.setLocation(currentWindowX + pushAmount, comparedWindowY);
+                            comparedWindow.setLocation(comparedWindowX - pushAmount, comparedWindowY);
+                        }
+                    }
+                    else if(overlapX > overlapY)
+                    {
+                        pushAmount = overlapY/2;
+                        if((currentWindowY + currentWindowHeight)/2 > (comparedWindowY + comparedWindowHeight)/2)
+                        {
+                            currentWindow.setLocation(currentWindowX, comparedWindowY - pushAmount);
+                            comparedWindow.setLocation(comparedWindowX, comparedWindowY + pushAmount);
+                        }
+                        else
+                        {
+                            currentWindow.setLocation(currentWindowX, comparedWindowY + pushAmount);
+                            comparedWindow.setLocation(comparedWindowX, comparedWindowY - pushAmount);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public int getWindowX(JFrame chosenWindow) {
+        return (int) chosenWindow.getLocationOnScreen().getX();
+    }
+    public int getWindowY(JFrame chosenWindow) {
+        return chosenWindow.getY();
+    }
+    public int getWindowWidth(JFrame chosenWindow){
+        return chosenWindow.getWidth();
+    }
+    public int getWindowHeight(JFrame chosenWindow){
+        return chosenWindow.getHeight();
     }
     public void setWindowSize(int Width, int Height)
     {

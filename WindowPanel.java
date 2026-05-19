@@ -25,7 +25,7 @@ public class WindowPanel extends JPanel
     
     public WindowPanel(JFrame window, GameSystem chosenGameSystem) 
     {
-        this.setPreferredSize(new Dimension(600,600));
+        this.setPreferredSize(new Dimension(200,200));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.gameSystem = chosenGameSystem;
