@@ -23,7 +23,7 @@ public class WindowArea
         window.add(windowPanel);
         
         window.pack();
-        
+        window.setAlwaysOnTop(true);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
     }

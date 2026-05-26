@@ -14,7 +14,7 @@ public class GameSystem implements Runnable
 {   
     Thread gameThread;
     
-    GameState gameState = GameState.MAIN_MENU;
+    GameState gameState = GameState.GAME;
     
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
     Player player = new Player(this);
@@ -26,11 +26,12 @@ public class GameSystem implements Runnable
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        for(int i = 0; i < 5; i++)//Change this later as this is for testing
+        for(int i = 0; i < 3; i++)//Change this later as this is for testing
         {
             WindowArea windowArea = new WindowArea(this);
             activeWindows.add(windowArea);
             window = windowArea.getGamePanel();
+            window.setWindowType("Start");
         }
         
         gameThread.start();
@@ -63,13 +64,14 @@ public class GameSystem implements Runnable
             {
                 inputManager.updateInput();
                 player.updatePlayer();
+                updateProjectiles();
                 for(int i = 0; i < activeWindows.size(); i++)
                 {
                     activeWindows.get(i).getGamePanel().repaint();
                 }
                 if(gameState == GameState.MAIN_MENU)
                 {
-                    updateWindowCollisions();
+                    //updateWindowCollisions();
                 }
                 delta--;
             }
@@ -99,7 +101,18 @@ public class GameSystem implements Runnable
     
     public void updateProjectiles()
     {
+        //Update player projectiles first
+        for(int i = 0; i < player.playerProjectileList.size(); i++)
+        {
+            Projectile projectile = player.playerProjectileList.get(i);
+            int projectileX = projectile.getXPosition();
+            int projectileY = projectile.getYPosition();
+            int projectileSpeed = projectile.getSpeed();
+            
+            projectile.setPosition(projectileX+=1,projectileY);
+        }
         
+        //Update enemy projectiles second
     }
     
     //Window Methods
@@ -136,27 +149,28 @@ public class GameSystem implements Runnable
                         
                         if((currentWindowX + currentWindowWidth)/2 < (comparedWindowX + comparedWindowWidth)/2)
                         {
-                            currentWindow.setLocation(currentWindowX - pushAmount, comparedWindowY);
+                            currentWindow.setLocation(currentWindowX - pushAmount, currentWindowY);
                             comparedWindow.setLocation(comparedWindowX + pushAmount, comparedWindowY);
                         }
                         else
                         {
-                            currentWindow.setLocation(currentWindowX + pushAmount, comparedWindowY);
+                            currentWindow.setLocation(currentWindowX + pushAmount, currentWindowY);
                             comparedWindow.setLocation(comparedWindowX - pushAmount, comparedWindowY);
                         }
                     }
                     else if(overlapX > overlapY)
                     {
                         pushAmount = overlapY/2;
+                        
                         if((currentWindowY + currentWindowHeight)/2 > (comparedWindowY + comparedWindowHeight)/2)
                         {
-                            currentWindow.setLocation(currentWindowX, comparedWindowY - pushAmount);
-                            comparedWindow.setLocation(comparedWindowX, comparedWindowY + pushAmount);
+                            currentWindow.setLocation(currentWindowX, currentWindowY + pushAmount);
+                            comparedWindow.setLocation(comparedWindowX, comparedWindowY - pushAmount);
                         }
                         else
                         {
-                            currentWindow.setLocation(currentWindowX, comparedWindowY + pushAmount);
-                            comparedWindow.setLocation(comparedWindowX, comparedWindowY - pushAmount);
+                            currentWindow.setLocation(currentWindowX, currentWindowY - pushAmount);
+                            comparedWindow.setLocation(comparedWindowX, comparedWindowY + pushAmount);
                         }
                     }
                 }

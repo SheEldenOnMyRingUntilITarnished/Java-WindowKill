@@ -22,19 +22,19 @@ public class InputManager
             //Movement
             if(keyH.upPressed == true)
             {
-                this.player.playerY -= this.player.playerStats.playerSpeed;
+                this.player.setPlayerY(this.player.getPlayerY() - this.player.playerStats.playerSpeed);
             }
             if(keyH.downPressed == true)
             {
-                this.player.playerY += this.player.playerStats.playerSpeed;
+                this.player.setPlayerY(this.player.getPlayerY() + this.player.playerStats.playerSpeed);
             }
             if(keyH.leftPressed == true)
             {
-                this.player.playerX -= this.player.playerStats.playerSpeed;
+                this.player.setPlayerX(this.player.getPlayerX() - this.player.playerStats.playerSpeed);
             }
             if(keyH.rightPressed == true)
             {
-                this.player.playerX += this.player.playerStats.playerSpeed;
+                this.player.setPlayerX(this.player.getPlayerX() + this.player.playerStats.playerSpeed);
             }
             
             //Shooting
@@ -42,7 +42,8 @@ public class InputManager
             {
                 if(true)//Temp we need to replace for checking if player can shoot
                 {
-                    Projectile newPlayerProjectile = new Projectile(10,0,false);
+                    Projectile newPlayerProjectile = new Projectile(1,0,false);
+                    newPlayerProjectile.setPosition(this.player.getPlayerX(),this.player.getPlayerY());
                     player.playerProjectileList.add(newPlayerProjectile);
                 }
             }

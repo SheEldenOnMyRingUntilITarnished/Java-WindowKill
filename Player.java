@@ -14,10 +14,10 @@ public class Player
     InputManager inputManager = new InputManager(this);
     PlayerStats playerStats = new PlayerStats();
     
-    List playerProjectileList = new ArrayList<Projectile>();
+    ArrayList<Projectile> playerProjectileList = new ArrayList<Projectile>();
     
-    public int playerX = 0;
-    public int playerY = 0;
+    private int playerX = 0;
+    private int playerY = 0;
 
     public Player(GameSystem chosenGameSystem)
     {
@@ -31,5 +31,25 @@ public class Player
         int friction = 1;
         
         //PLayer Movement Slippery
+    }
+    
+    public int getPlayerX()
+    {
+        return playerX;
+    }
+    
+    public int getPlayerY()
+    {
+        return playerY;
+    }
+    
+    public void setPlayerX(int chosenX)
+    {
+        playerX = chosenX;
+    }
+    
+    public void setPlayerY(int chosenY)
+    {
+        playerY = chosenY;
     }
 }

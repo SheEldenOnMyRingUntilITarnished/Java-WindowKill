@@ -21,9 +21,24 @@ public class Projectile
         this.targetPlayer = projectileTargetPlayer;
     }
     
+    public int getXPosition()
+    {
+        return xPos;
+    }
+    
+    public int getYPosition()
+    {
+        return yPos;
+    }
+    
     public void setPosition(int chosenXPos, int chosenYPos)
     {
         xPos = chosenXPos;
         yPos = chosenYPos;
+    }
+    
+    public int getSpeed()
+    {
+        return this.speed;
     }
 }

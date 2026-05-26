@@ -22,6 +22,7 @@ public class WindowPanel extends JPanel
     JFrame window = null;
     private GameSystem gameSystem;
     private Player player = null;
+    private String windowType = "null";
     
     public WindowPanel(JFrame window, GameSystem chosenGameSystem) 
     {
@@ -36,6 +37,11 @@ public class WindowPanel extends JPanel
         this.window = window;
     }
     
+    public void setWindowType(String chosenWindowType)
+    {
+        this.windowType = chosenWindowType;
+    }
+    
     /**
      * Runs when .repaint is ran in the gameSystem
      * repaints the windows screen with the new information.
@@ -44,31 +50,73 @@ public class WindowPanel extends JPanel
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-
+        
+        if(this.windowType.equals("null"))
+        {
+            System.err.println("Window Missing WindowType");
+            return;
+        }
+        
         if (gameSystem.gameState == GameState.MAIN_MENU) {
-            paintMainMenu(g2);
+            switch(this.windowType)
+            {
+                case "CharacterSelect":
+                    paintCharacterSelect(g2);
+                    break;
+                
+                case "Settings":
+                    paintSettings(g2);
+                    break;
+                
+                case "Start":
+                    paintStart(g2);
+                    break;
+                
+            }
         } 
         else if (gameSystem.gameState == GameState.GAME) {
             paintPlayer(g2);
-            paintProjectile(g2, Color.BLUE, 1, 1);
         }
+        
+        for(int i = 0; i < player.playerProjectileList.size(); i++)
+        {
+            Projectile projectile = player.playerProjectileList.get(i);
+            int projectileX = projectile.getXPosition();
+            int projectileY = projectile.getYPosition();
+            
+            paintProjectile(g2, Color.RED,projectileX,projectileY);
+        }
+        
     }
     
-    public void paintMainMenu(Graphics2D g2)
+    public void paintStart(Graphics2D g2)
     {
-        //I need to add main menu stuff in here
+        g2.setColor(Color.GREEN);
+        g2.drawRect(0,0,30,30);
+    }
+    
+    public void paintCharacterSelect(Graphics2D g2)
+    {
+        g2.setColor(Color.BLUE);
+        g2.drawRect(0,0,30,30);
+    }
+    
+    public void paintSettings(Graphics2D g2)
+    {
+        g2.setColor(Color.WHITE);
+        g2.drawRect(0,0,30,30);
     }
     
     public void paintPlayer(Graphics2D g2)
     {
         g2.setColor(Color.RED);
-        g2.drawRect(player.playerX,player.playerY,30, 30);
+        g2.drawRect(player.getPlayerX(),player.getPlayerY(),30, 30);
     }
     
     public void paintProjectile(Graphics2D g2, Color color, int xPos, int yPos)
     {
         g2.setColor(color);
-        g2.drawRect(xPos,yPos,30, 30);
+        g2.drawRect(xPos,yPos,5, 5);
     }
     
     //Window Methods
