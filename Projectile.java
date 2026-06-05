@@ -10,11 +10,11 @@ public class Projectile
     private int xPos;
     private int yPos;
     
-    private int speed;
-    private int direction;
+    private double speed;
+    private double direction;
     private boolean targetPlayer;
     
-    public Projectile(int projectileSpeed, int projectileDirection, boolean projectileTargetPlayer)
+    public Projectile(double projectileSpeed, double projectileDirection, boolean projectileTargetPlayer)
     {
         this.speed = projectileSpeed;
         this.direction = projectileDirection;
@@ -31,14 +31,19 @@ public class Projectile
         return yPos;
     }
     
+    public double getSpeed()
+    {
+        return this.speed;
+    }
+    
+    public double getDirection()
+    {
+        return this.direction;
+    }
+    
     public void setPosition(int chosenXPos, int chosenYPos)
     {
         xPos = chosenXPos;
         yPos = chosenYPos;
-    }
-    
-    public int getSpeed()
-    {
-        return this.speed;
     }
 }

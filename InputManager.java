@@ -1,4 +1,6 @@
 
+import java.awt.MouseInfo;
+
 /**
  * Write a description of class InputManager here.
  *
@@ -42,7 +44,7 @@ public class InputManager
             {
                 if(true)//Temp we need to replace for checking if player can shoot
                 {
-                    Projectile newPlayerProjectile = new Projectile(1,0,false);
+                    Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getPlayerX(), this.player.getPlayerY(), MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY()) * Math.PI/180,false);
                     newPlayerProjectile.setPosition(this.player.getPlayerX(),this.player.getPlayerY());
                     player.playerProjectileList.add(newPlayerProjectile);
                 }

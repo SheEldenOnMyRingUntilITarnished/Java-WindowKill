@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="WindowArea" enable="true" strideversion="1">
+    <javadoc xml:space="preserve">Write a description of class JavaRogue here.
+@author (your name) @version (a version number or a date)</javadoc>
+    <imports>
+        <import target="javax.swing.JFrame" enable="true"/>
+    </imports>
+    <implements/>
+    <fields>
+        <variable access="private" type="JFrame" type-java="JFrame" name="window" value="null" value-java="null" enable="true"/>
+        <variable access="private" type="WindowPanel" type-java="WindowPanel" name="windowPanel" value="null" value-java="null" enable="true"/>
+    </fields>
+    <constructors>
+        <constructor access="public" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params>
+                <params type="GameSystem" type-java="GameSystem" name="chosenGameSystem"/>
+            </params>
+            <throws/>
+            <body>
+                <assign dest="this.window" dest-java="this.window" src="new JFrame()" src-java=" new JFrame()" enable="true"/>
+                <call expression="window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)" expression-java="window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)" enable="true"/>
+                <call expression="window.setResizable(false)" expression-java="window.setResizable(false)" enable="true"/>
+                <call expression="window.setTitle(&quot;&quot;)" expression-java="window.setTitle(&quot;&quot;)" enable="true"/>
+                <assign dest="this.windowPanel" dest-java="this.windowPanel" src="new WindowPanel(window,chosenGameSystem)" src-java=" new WindowPanel(window, chosenGameSystem)" enable="true"/>
+                <call expression="window.add(windowPanel)" expression-java="window.add(windowPanel)" enable="true"/>
+                <call expression="window.pack()" expression-java="window.pack()" enable="true"/>
+                <call expression="window.setAlwaysOnTop(true)" expression-java="window.setAlwaysOnTop(true)" enable="true"/>
+                <call expression="window.setLocationRelativeTo(null)" expression-java="window.setLocationRelativeTo(null)" enable="true"/>
+                <call expression="window.setVisible(true)" expression-java="window.setVisible(true)" enable="true"/>
+            </body>
+        </constructor>
+    </constructors>
+    <methods>
+        <method access="public" type="JFrame" type-java="JFrame" name="getWindow" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params/>
+            <throws/>
+            <body>
+                <return value="this.window" value-java="this.window" enable="true"/>
+            </body>
+        </method>
+        <method access="public" type="WindowPanel" type-java="WindowPanel" name="getGamePanel" enable="true">
+            <javadoc xml:space="preserve"/>
+            <params/>
+            <throws/>
+            <body>
+                <return value="this.windowPanel" value-java="this.windowPanel" enable="true"/>
+            </body>
+        </method>
+    </methods>
+</class>

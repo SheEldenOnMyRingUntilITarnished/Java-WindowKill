@@ -26,7 +26,7 @@ public class WindowPanel extends JPanel
     
     public WindowPanel(JFrame window, GameSystem chosenGameSystem) 
     {
-        this.setPreferredSize(new Dimension(200,200));
+        this.setPreferredSize(new Dimension(320,180));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.gameSystem = chosenGameSystem;
@@ -110,7 +110,7 @@ public class WindowPanel extends JPanel
     public void paintPlayer(Graphics2D g2)
     {
         g2.setColor(Color.RED);
-        g2.drawRect(player.getPlayerX(),player.getPlayerY(),30, 30);
+        g2.drawRect(player.getPlayerX(),player.getPlayerY(),10, 10);
     }
     
     public void paintProjectile(Graphics2D g2, Color color, int xPos, int yPos)

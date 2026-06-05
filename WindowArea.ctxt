@@ -1,9 +1,13 @@
 #BlueJ class context
 comment0.target=WindowArea
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ JavaRogue\ here.\r\n\ @author\ (your\ name)\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=chosenGameSystem
 comment1.target=WindowArea(GameSystem)
+comment1.text=\r\n\ \r\n
 comment2.params=
 comment2.target=javax.swing.JFrame\ getWindow()
+comment2.text=\r\n\ \r\n
 comment3.params=
 comment3.target=WindowPanel\ getGamePanel()
+comment3.text=\r\n\ \r\n
 numComments=4

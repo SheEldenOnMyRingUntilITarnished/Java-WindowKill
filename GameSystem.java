@@ -14,7 +14,7 @@ public class GameSystem implements Runnable
 {   
     Thread gameThread;
     
-    GameState gameState = GameState.GAME;
+    GameState gameState = GameState.MAIN_MENU;
     
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
     Player player = new Player(this);
@@ -22,19 +22,25 @@ public class GameSystem implements Runnable
     
     WindowPanel window = null;
     
+    private int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+    private int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
     
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        for(int i = 0; i < 3; i++)//Change this later as this is for testing
-        {
-            WindowArea windowArea = new WindowArea(this);
-            activeWindows.add(windowArea);
-            window = windowArea.getGamePanel();
-            window.setWindowType("Start");
-        }
-        
+        setupWindow("Settings");
+        setupWindow("Start");
+        setupWindow("CharacterSelect");
         gameThread.start();
+    }
+    
+    public void setupWindow(String chosenWindowType)
+    {
+        WindowArea windowArea = new WindowArea(this);
+        activeWindows.add(windowArea);
+        window = windowArea.getGamePanel();
+        window.setWindowType(chosenWindowType);
+        
     }
     
     /**
@@ -71,7 +77,7 @@ public class GameSystem implements Runnable
                 }
                 if(gameState == GameState.MAIN_MENU)
                 {
-                    //updateWindowCollisions();
+                    updateWindowCollisions();
                 }
                 delta--;
             }
@@ -107,9 +113,10 @@ public class GameSystem implements Runnable
             Projectile projectile = player.playerProjectileList.get(i);
             int projectileX = projectile.getXPosition();
             int projectileY = projectile.getYPosition();
-            int projectileSpeed = projectile.getSpeed();
+            double projectileSpeed = projectile.getSpeed();
+            double projectileDirection = projectile.getDirection();
             
-            projectile.setPosition(projectileX+=1,projectileY);
+            projectile.setPosition(projectileX+=projectileSpeed,projectileY);
         }
         
         //Update enemy projectiles second
@@ -127,10 +134,10 @@ public class GameSystem implements Runnable
             int currentWindowWidth = getWindowWidth(currentWindow);
             int currentWindowHeight = getWindowHeight(currentWindow);
             
+            //Checks for collisions with other windows
             for(int j = i + 1; j < activeWindows.size(); j++)
             {
                 JFrame comparedWindow = activeWindows.get(j).getWindow();
-                
                 int comparedWindowX = getWindowX(comparedWindow);
                 int comparedWindowY = getWindowY(comparedWindow);
                 int comparedWindowWidth = getWindowWidth(comparedWindow);
@@ -174,6 +181,24 @@ public class GameSystem implements Runnable
                         }
                     }
                 }
+            }
+            
+            if(currentWindowX + currentWindowWidth > screenWidth)
+            {
+                currentWindow.setLocation(screenWidth - currentWindowWidth, currentWindowY);
+            }
+            if(currentWindowX < 0)
+            {
+                currentWindow.setLocation(0, currentWindowY);
+            }
+            System.out.println("Sreen height: " + screenHeight);
+            if(currentWindowY + currentWindowWidth > screenHeight)
+            {
+                currentWindow.setLocation(currentWindowX, screenHeight - currentWindowHeight);
+            }
+            if(currentWindowY < 0)
+            {
+                currentWindow.setLocation(currentWindowX, 0);
             }
         }
     }
