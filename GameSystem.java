@@ -191,8 +191,8 @@ public class GameSystem implements Runnable
             {
                 currentWindow.setLocation(0, currentWindowY);
             }
-            System.out.println("Sreen height: " + screenHeight);
-            if(currentWindowY + currentWindowWidth > screenHeight)
+            
+            if(currentWindowY + currentWindowHeight > screenHeight)
             {
                 currentWindow.setLocation(currentWindowX, screenHeight - currentWindowHeight);
             }

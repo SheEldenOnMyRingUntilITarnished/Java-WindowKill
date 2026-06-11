@@ -10,7 +10,7 @@
 
 public class JavaWindowKill
 {
-    public JavaWindowKill()
+    public static void main(String[] args)
     {
         GameSystem gameSystem = new GameSystem();
         gameSystem.startGameThread();
