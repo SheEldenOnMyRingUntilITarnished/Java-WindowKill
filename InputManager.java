@@ -24,19 +24,19 @@ public class InputManager
             //Movement
             if(keyH.upPressed == true)
             {
-                this.player.setPlayerY(this.player.getPlayerY() - this.player.playerStats.playerSpeed);
+                this.player.acceleratePlayerY(-this.player.playerStats.playerAcceleration);
             }
             if(keyH.downPressed == true)
             {
-                this.player.setPlayerY(this.player.getPlayerY() + this.player.playerStats.playerSpeed);
+                this.player.acceleratePlayerY(this.player.playerStats.playerAcceleration);
             }
             if(keyH.leftPressed == true)
             {
-                this.player.setPlayerX(this.player.getPlayerX() - this.player.playerStats.playerSpeed);
+                this.player.acceleratePlayerX(-this.player.playerStats.playerAcceleration);
             }
             if(keyH.rightPressed == true)
             {
-                this.player.setPlayerX(this.player.getPlayerX() + this.player.playerStats.playerSpeed);
+                this.player.acceleratePlayerX(this.player.playerStats.playerAcceleration);
             }
             
             //Shooting
@@ -46,7 +46,7 @@ public class InputManager
                 {
                     Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getPlayerX(), this.player.getPlayerY(), MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY()) * Math.PI/180,false);
                     newPlayerProjectile.setPosition(this.player.getPlayerX(),this.player.getPlayerY());
-                    player.playerProjectileList.add(newPlayerProjectile);
+                    player.gameSystem.projectileList.add(newPlayerProjectile);
                 }
             }
             

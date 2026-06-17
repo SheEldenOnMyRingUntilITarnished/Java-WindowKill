@@ -26,7 +26,7 @@ public class WindowPanel extends JPanel
     
     public WindowPanel(JFrame window, GameSystem chosenGameSystem) 
     {
-        this.setPreferredSize(new Dimension(320,180));
+        this.setPreferredSize(new Dimension(1080,720));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.gameSystem = chosenGameSystem;
@@ -78,9 +78,10 @@ public class WindowPanel extends JPanel
             paintPlayer(g2);
         }
         
-        for(int i = 0; i < player.playerProjectileList.size(); i++)
+        //Paint Projectiles
+        for(int i = 0; i < gameSystem.projectileList.size(); i++)
         {
-            Projectile projectile = player.playerProjectileList.get(i);
+            Projectile projectile = gameSystem.projectileList.get(i);
             int projectileX = projectile.getXPosition();
             int projectileY = projectile.getYPosition();
             

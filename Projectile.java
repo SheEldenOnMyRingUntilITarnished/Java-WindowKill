@@ -46,4 +46,10 @@ public class Projectile
         xPos = chosenXPos;
         yPos = chosenYPos;
     }
+    
+    public void updatePosition(double chosenXPos, double chosenYPos)
+    {
+        xPos += chosenXPos;
+        yPos += chosenYPos;
+    }
 }

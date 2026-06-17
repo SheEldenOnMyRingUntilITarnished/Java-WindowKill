@@ -13,4 +13,6 @@ comment5.params=
 comment5.target=double\ getDirection()
 comment6.params=chosenXPos\ chosenYPos
 comment6.target=void\ setPosition(int,\ int)
-numComments=7
+comment7.params=chosenXPos\ chosenYPos
+comment7.target=void\ updatePosition(double,\ double)
+numComments=8
