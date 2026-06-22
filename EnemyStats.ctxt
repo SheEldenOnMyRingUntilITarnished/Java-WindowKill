@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=EnemyStats
+comment0.text=\r\n\ \r\n
+comment1.params=chosenHealth\ chosenSpeed\ chosenAttackRate
+comment1.target=EnemyStats(double,\ double,\ double)
+numComments=2

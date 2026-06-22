@@ -23,12 +23,12 @@ public class Projectile
     
     public int getXPosition()
     {
-        return xPos;
+        return this.xPos;
     }
     
     public int getYPosition()
     {
-        return yPos;
+        return this.yPos;
     }
     
     public double getSpeed()
@@ -43,13 +43,13 @@ public class Projectile
     
     public void setPosition(int chosenXPos, int chosenYPos)
     {
-        xPos = chosenXPos;
-        yPos = chosenYPos;
+        this.xPos = chosenXPos;
+        this.yPos = chosenYPos;
     }
     
     public void updatePosition(double chosenXPos, double chosenYPos)
     {
-        xPos += chosenXPos;
-        yPos += chosenYPos;
+        this.xPos += chosenXPos;
+        this.yPos += chosenYPos;
     }
 }

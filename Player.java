@@ -33,51 +33,51 @@ public class Player
         int temp = 0;
         
         double friction = 0.35;
-        if(playerAccelerationX > 0){
-            playerAccelerationX -= friction;
-        }else if(playerAccelerationX < 0)
+        if(this.playerAccelerationX > 0){
+            this.playerAccelerationX -= friction;
+        }else if(this.playerAccelerationX < 0)
         {
-            playerAccelerationX += friction;
+            this.playerAccelerationX += friction;
         }
         
-        if(playerAccelerationY > 0){
-            playerAccelerationY -= friction;
-        }else if(playerAccelerationY < 0)
+        if(this.playerAccelerationY > 0){
+            this.playerAccelerationY -= friction;
+        }else if(this.playerAccelerationY < 0)
         {
-            playerAccelerationY += friction;
+            this.playerAccelerationY += friction;
         }
         
         double speedCap = playerStats.playerSpeedCap;
         
-        if(playerAccelerationY > speedCap) playerAccelerationY = speedCap;
-        if(playerAccelerationY < -speedCap) playerAccelerationY = -speedCap;
-        if(playerAccelerationX > speedCap) playerAccelerationX = speedCap;
-        if(playerAccelerationX < -speedCap) playerAccelerationX = -speedCap;
+        if(this.playerAccelerationY > speedCap) this.playerAccelerationY = speedCap;
+        if(this.playerAccelerationY < -speedCap) this.playerAccelerationY = -speedCap;
+        if(this.playerAccelerationX > speedCap) this.playerAccelerationX = speedCap;
+        if(this.playerAccelerationX < -speedCap) this.playerAccelerationX = -speedCap;
         
         //PLayer Movement Slippery
-        playerX += Math.round(playerAccelerationX);
-        playerY += Math.round(playerAccelerationY);
+        this.playerX += Math.round(this.playerAccelerationX);
+        this.playerY += Math.round(this.playerAccelerationY);
     }
     
     public int getPlayerX()
     {
-        return playerX;
+        return this.playerX;
     }
     
     public int getPlayerY()
     {
-        return playerY;
+        return this.playerY;
     }
     
     //Position
     public void setPlayerX(int chosenX)
     {
-        playerX = chosenX;
+        this.playerX = chosenX;
     }
     
     public void setPlayerY(int chosenY)
     {
-        playerY = chosenY;
+        this.playerY = chosenY;
     }
     
     //Acceleration

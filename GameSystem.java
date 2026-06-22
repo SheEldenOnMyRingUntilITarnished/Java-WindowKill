@@ -90,26 +90,20 @@ public class GameSystem implements Runnable
 
     public double calculateTheAngleBetweenTwoPoints(double X1, double Y1, double X2, double Y2)
     {
-        double theta = Math.atan2(Y2 - Y1, X2 - X1);
-        theta += Math.PI/2.0;
-        
-        double angle = Math.toDegrees(theta);
-
-        if (angle < 0)
-        {
-            angle += 360;
-        }
-
+        double angle = Math.atan2(Y2 - Y1, X2 - X1) * 180 / Math.PI;;
+        System.out.println("--- " + angle);
         return angle;
     }
 
     public void updateProjectiles()
     {
-        for(int i = projectileList.size() - 1; i >= 0; i--)
-        {
-            Projectile projectile = projectileList.get(i);
-            System.out.println(projectileList.get(i));
-            projectile.updatePosition(projectile.getSpeed() * Math.cos(projectile.getDirection()), projectile.getSpeed() * Math.sin(projectile.getDirection()));
+        synchronized(projectileList) {
+            for(int i = projectileList.size() - 1; i >= 0; i--)
+            {
+                Projectile projectile = projectileList.get(i);
+                //System.out.println(projectileList.get(i));
+                projectile.updatePosition(projectile.getSpeed() * Math.cos(projectile.getDirection()), projectile.getSpeed() * Math.sin(projectile.getDirection()));
+            }
         }
     }
 

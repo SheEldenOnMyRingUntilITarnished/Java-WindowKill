@@ -16,11 +16,11 @@ public class WindowArea
      */
     public WindowArea(GameSystem chosenGameSystem)
     {
-        this.window =  new JFrame();
+        this.window =  new  JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
+        window.setResizable(true);
         window.setTitle("");
-        this.windowPanel =  new WindowPanel(window, chosenGameSystem);
+        this.windowPanel =  new  WindowPanel(window, chosenGameSystem);
         window.add(windowPanel);
         window.pack();
         window.setAlwaysOnTop(true);

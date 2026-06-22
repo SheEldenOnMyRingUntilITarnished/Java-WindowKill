@@ -114,6 +114,12 @@ public class WindowPanel extends JPanel
         g2.drawRect(player.getPlayerX(),player.getPlayerY(),10, 10);
     }
     
+    public void paintEnemy(Graphics2D g2, Color color, int xPos, int yPos)
+    {
+        g2.setColor(color);
+        g2.drawRect(xPos,yPos,5, 5);
+    }
+    
     public void paintProjectile(Graphics2D g2, Color color, int xPos, int yPos)
     {
         g2.setColor(color);

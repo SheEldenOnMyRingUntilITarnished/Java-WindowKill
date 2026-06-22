@@ -1,5 +1,6 @@
 
 import java.awt.MouseInfo;
+import java.awt.PointerInfo;
 
 /**
  * Write a description of class InputManager here.
@@ -20,7 +21,10 @@ public class InputManager
     
     public void updateInput()
     {
+        PointerInfo currentMouse = MouseInfo.getPointerInfo();
+        
         if(player.gameSystem.gameState == GameState.GAME){
+            
             //Movement
             if(keyH.upPressed == true)
             {
@@ -42,10 +46,14 @@ public class InputManager
             //Shooting
             if(mouseH.shootPressed == true)
             {
+                System.out.println("Mouse Clicked");
+                System.out.println("X: " + MouseInfo.getPointerInfo().getLocation().getX());
+                System.out.println("Y: " + MouseInfo.getPointerInfo().getLocation().getY());
                 if(true)//Temp we need to replace for checking if player can shoot
                 {
-                    Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getPlayerX(), this.player.getPlayerY(), MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY()) * Math.PI/180,false);
+                    Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getPlayerX(), this.player.getPlayerY(), MouseInfo.getPointerInfo().getLocation().getX(), currentMouse.getLocation().getY()) * Math.PI/180,false);
                     newPlayerProjectile.setPosition(this.player.getPlayerX(),this.player.getPlayerY());
+                    System.out.println("Bullet pointing this dir: " + newPlayerProjectile.getDirection());
                     player.gameSystem.projectileList.add(newPlayerProjectile);
                 }
             }
@@ -54,6 +62,8 @@ public class InputManager
             if(keyH.quickShopPressed == true)
             {
                 System.out.println("SHOP");
+                EnemyManager enemyManger = new EnemyManager();
+                enemyManger.SpawnEnemy();
             }
             else if(keyH.quickBossShopPressed == true)
             {

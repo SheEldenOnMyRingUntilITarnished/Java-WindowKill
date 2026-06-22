@@ -18,7 +18,7 @@ public class PlayerStats
     int playerMaxHealth = 3;
     
     double playerAcceleration = 1;
-    double playerSpeedCap = 8;
+    double playerSpeedCap = 6;
     int playerMaxSpeed = 10;
     int playerDashDistance = 33;
     int playerDashCooldown = 3;
