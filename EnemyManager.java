@@ -8,14 +8,12 @@ import java.util.ArrayList;
  */
 public class EnemyManager
 {
-    private ArrayList<Enemy> enemyHolder = new ArrayList<Enemy>();
-    
-    public void SpawnEnemy()
+    public Enemy SpawnEnemy()
     {
-        EnemyTypes testEnemyType = EnemyTypes.SQUARE;
-        EnemyStats testEnemyStats = new EnemyStats(1,1,1);
-        EnemyAI testEnemyAI = new EnemyAI();
+        EnemyTypes testEnemyType = EnemyTypes.SQUARE;//Sets up the enemyType
+        EnemyStats testEnemyStats = new EnemyStats(1,1,1);//Sets up the stats of the enemy
+        EnemyAI testEnemyAI = new EnemyAI();//Sets up a AI
         Enemy testEnemy = new Enemy(testEnemyType,testEnemyStats,testEnemyAI);
-        enemyHolder.add(testEnemy);
+        return testEnemy;
     }
 }

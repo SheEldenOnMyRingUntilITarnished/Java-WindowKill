@@ -62,8 +62,8 @@ public class InputManager
             if(keyH.quickShopPressed == true)
             {
                 System.out.println("SHOP");
-                EnemyManager enemyManger = new EnemyManager();
-                enemyManger.SpawnEnemy();
+                EnemyManager enemyManger = player.gameSystem.enemyManger;
+                player.gameSystem.enemyList.add(enemyManger.SpawnEnemy());
             }
             else if(keyH.quickBossShopPressed == true)
             {

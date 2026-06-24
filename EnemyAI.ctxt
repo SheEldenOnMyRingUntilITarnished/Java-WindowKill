@@ -1,4 +1,6 @@
 #BlueJ class context
 comment0.target=EnemyAI
 comment0.text=\r\n\ \r\n
-numComments=1
+comment1.params=
+comment1.target=EnemyAI()
+numComments=2

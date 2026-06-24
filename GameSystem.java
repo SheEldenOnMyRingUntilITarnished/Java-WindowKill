@@ -16,6 +16,9 @@ public class GameSystem implements Runnable
 
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
     ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
+    ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+    
+    EnemyManager enemyManger = new EnemyManager();
     Player player = new Player(this);
     InputManager inputManager = player.inputManager;
 
@@ -28,8 +31,8 @@ public class GameSystem implements Runnable
     {
         gameThread = new Thread(this);
         setupWindow("Settings");
-        setupWindow("Start");
-        setupWindow("CharacterSelect");
+        //setupWindow("Start");
+        //setupWindow("CharacterSelect");
         gameThread.start();
     }
 
@@ -70,6 +73,7 @@ public class GameSystem implements Runnable
                 inputManager.updateInput();
                 player.updatePlayer();
                 updateProjectiles();
+                updateEnemys();
                 for(int i = 0; i < activeWindows.size(); i++)
                 {
                     activeWindows.get(i).getGamePanel().repaint();
@@ -97,12 +101,26 @@ public class GameSystem implements Runnable
 
     public void updateProjectiles()
     {
-        synchronized(projectileList) {
+        synchronized(projectileList) 
+        {
             for(int i = projectileList.size() - 1; i >= 0; i--)
             {
                 Projectile projectile = projectileList.get(i);
                 //System.out.println(projectileList.get(i));
                 projectile.updatePosition(projectile.getSpeed() * Math.cos(projectile.getDirection()), projectile.getSpeed() * Math.sin(projectile.getDirection()));
+            }
+        }
+    }
+    
+    public void updateEnemys()
+    {
+        synchronized(enemyList)
+        {
+            for(int i = enemyList.size() - 1; i >= 0; i--)
+            {
+                Enemy enemy = enemyList.get(i);
+                
+                enemy.updateEnemy();
             }
         }
     }

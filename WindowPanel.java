@@ -88,6 +88,15 @@ public class WindowPanel extends JPanel
             paintProjectile(g2, Color.RED,projectileX,projectileY);
         }
         
+        //Paint Enemys
+        for(int i = 0; i < gameSystem.enemyList.size(); i++)
+        {
+            Enemy enemy = gameSystem.enemyList.get(i);
+            int enemyX = enemy.getXPosition();
+            int enemyY = enemy.getYPosition();
+            
+            paintEnemy(g2, Color.WHITE,enemyX,enemyY);
+        }
     }
     
     public void paintStart(Graphics2D g2)
@@ -117,7 +126,7 @@ public class WindowPanel extends JPanel
     public void paintEnemy(Graphics2D g2, Color color, int xPos, int yPos)
     {
         g2.setColor(color);
-        g2.drawRect(xPos,yPos,5, 5);
+        g2.drawRect(xPos,yPos,50, 50);
     }
     
     public void paintProjectile(Graphics2D g2, Color color, int xPos, int yPos)

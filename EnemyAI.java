@@ -5,4 +5,8 @@
  */
 public class EnemyAI
 {
+    EnemyAI()
+    {
+        
+    }
 }
