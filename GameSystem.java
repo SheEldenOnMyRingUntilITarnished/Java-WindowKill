@@ -120,7 +120,7 @@ public class GameSystem implements Runnable
             {
                 Enemy enemy = enemyList.get(i);
                 
-                enemy.updateEnemy();
+                enemy.updateEnemy(player.getPlayerX(), player.getPlayerY());
             }
         }
     }

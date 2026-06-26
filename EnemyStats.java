@@ -16,4 +16,8 @@ public class EnemyStats
         this.speed = chosenSpeed;
         this.attackRate = chosenAttackRate;
     }
+    
+    public double getSpeed() {
+        return this.speed;
+    }
 }

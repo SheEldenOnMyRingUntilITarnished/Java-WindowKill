@@ -1,10 +1,10 @@
 #BlueJ class context
 comment0.target=Enemy
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Enemy\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=chosenType\ chosenStats\ chosenAI
-comment1.target=Enemy(EnemyTypes,\ EnemyStats,\ EnemyAI)
-comment2.params=
-comment2.target=void\ updateEnemy()
+comment1.params=chosenObject\ chosenType\ chosenStats\ chosenAI
+comment1.target=Enemy(Object,\ EnemyTypes,\ EnemyStats,\ EnemyAI)
+comment2.params=targetX\ targetY
+comment2.target=void\ updateEnemy(int,\ int)
 comment3.params=
 comment3.target=int\ getXPosition()
 comment4.params=

@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=Object
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Object\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=chosenXPos\ chosenYPos
+comment1.target=Object(int,\ int)
+comment2.params=chosenXPos\ chosenYPos
+comment2.target=void\ setPosition(int,\ int)
+comment3.params=chosenXPos\ chosenYPos
+comment3.target=void\ updatePosition(int,\ int)
+comment4.params=
+comment4.target=int\ getXPosition()
+comment5.params=
+comment5.target=int\ getYPosition()
+numComments=6

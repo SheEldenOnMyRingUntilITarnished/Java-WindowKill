@@ -51,7 +51,7 @@ public class InputManager
                 System.out.println("Y: " + MouseInfo.getPointerInfo().getLocation().getY());
                 if(true)//Temp we need to replace for checking if player can shoot
                 {
-                    Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getPlayerX(), this.player.getPlayerY(), MouseInfo.getPointerInfo().getLocation().getX(), currentMouse.getLocation().getY()) * Math.PI/180,false);
+                    Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getPlayerX(), this.player.getPlayerY(), MouseInfo.getPointerInfo().getLocation().getX(),currentMouse.getLocation().getY()) * Math.PI/180,false);
                     newPlayerProjectile.setPosition(this.player.getPlayerX(),this.player.getPlayerY());
                     System.out.println("Bullet pointing this dir: " + newPlayerProjectile.getDirection());
                     player.gameSystem.projectileList.add(newPlayerProjectile);

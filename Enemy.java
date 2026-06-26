@@ -6,34 +6,35 @@
  * @version (a version number or a date)
  */
 public class Enemy
-{
-    private int xPos;
-    private int yPos;
-    
+{    
+    private Object object;
     private EnemyTypes type;
     private EnemyStats stats;
     private EnemyAI ai;
     
-    public Enemy(EnemyTypes chosenType, EnemyStats chosenStats, EnemyAI chosenAI)
+    public Enemy(Object chosenObject, EnemyTypes chosenType, EnemyStats chosenStats, EnemyAI chosenAI)
     {
+        this.object = chosenObject;
         this.type = chosenType;
         this.stats = chosenStats;
         this.ai = chosenAI;
     }
     
-    public void updateEnemy()
+    public void updateEnemy(int targetX, int targetY)
     {
-        xPos += 1;
-        yPos += 1;
+        double speed = stats.getSpeed();
+        double angle = Math.atan2(targetY - getYPosition(), targetX - getXPosition());
+        
+        this.object.updatePosition((int)Math.round(speed * Math.cos(angle)), (int)Math.round(speed * Math.sin(angle)));
     }
     
     public int getXPosition()
     {
-        return this.xPos;
+        return this.object.getXPosition();
     }
     
     public int getYPosition()
     {
-        return this.yPos;
+        return this.object.getYPosition();
     }
 }

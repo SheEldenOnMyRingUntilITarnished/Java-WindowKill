@@ -117,27 +117,42 @@ public class WindowPanel extends JPanel
         g2.drawRect(0,0,30,30);
     }
     
+    /**
+     * Paints the player by compareing the players X and Y positions to the windows X and Y positions!!!
+    **/
     public void paintPlayer(Graphics2D g2)
     {
         g2.setColor(Color.RED);
-        g2.drawRect(player.getPlayerX(),player.getPlayerY(),10, 10);
+        g2.drawRect(player.getPlayerX() - getWindowX(), player.getPlayerY() - getWindowY(), 10, 10);
     }
     
     public void paintEnemy(Graphics2D g2, Color color, int xPos, int yPos)
     {
         g2.setColor(color);
-        g2.drawRect(xPos,yPos,50, 50);
+        g2.drawRect(xPos - getWindowX(), yPos - getWindowY(), 50, 50);
     }
     
     public void paintProjectile(Graphics2D g2, Color color, int xPos, int yPos)
     {
         g2.setColor(color);
-        g2.drawRect(xPos,yPos,5, 5);
+        g2.drawRect(xPos - getWindowX(), yPos - getWindowY(), 5, 5);
     }
     
     //Window Methods
-    public int getWindowX() {return (int) window.getLocationOnScreen().getX();}
-    public int getWindowY() {return window.getY();}
+    public int getWindowX() {
+        try {
+            return (int) this.getLocationOnScreen().getX();
+        } catch (Exception e) {
+            return (int) window.getLocationOnScreen().getX();
+        }
+    }
+    public int getWindowY() {
+        try {
+            return (int) this.getLocationOnScreen().getY();
+        } catch (Exception e) {
+            return window.getY();
+        }
+    }
     
     public void setWindowPosition(int X, int Y) {window.setLocation(X,Y);}
     public void setWindowSize(int Width, int Height){window.setSize(Width,Height);}

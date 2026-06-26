@@ -7,8 +7,7 @@
  */
 public class Projectile
 {
-    private int xPos;
-    private int yPos;
+    private Object object;
     
     private double speed;
     private double direction;
@@ -16,6 +15,7 @@ public class Projectile
     
     public Projectile(double projectileSpeed, double projectileDirection, boolean projectileTargetPlayer)
     {
+        this.object = new Object(0,0);
         this.speed = projectileSpeed;
         this.direction = projectileDirection;
         this.targetPlayer = projectileTargetPlayer;
@@ -23,12 +23,12 @@ public class Projectile
     
     public int getXPosition()
     {
-        return this.xPos;
+        return this.object.getXPosition();
     }
     
     public int getYPosition()
     {
-        return this.yPos;
+        return this.object.getYPosition();
     }
     
     public double getSpeed()
@@ -43,13 +43,11 @@ public class Projectile
     
     public void setPosition(int chosenXPos, int chosenYPos)
     {
-        this.xPos = chosenXPos;
-        this.yPos = chosenYPos;
+        this.object.setPosition(chosenXPos,chosenYPos);
     }
     
     public void updatePosition(double chosenXPos, double chosenYPos)
     {
-        this.xPos += chosenXPos;
-        this.yPos += chosenYPos;
+        this.object.updatePosition((int) chosenXPos, (int) chosenYPos);
     }
 }
