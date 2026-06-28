@@ -10,7 +10,7 @@ public class PlayerStats
     //Shooting Stats
     int playerProjectileWindowStrength = 50;
     double playerFirerate = 90;
-    double playerProjectileSpeed = 10;
+    double playerProjectileSpeed = 1;
     double playerProjectileRange = 1;
     int playerProjectileMultiShot = 1;
     

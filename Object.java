@@ -19,9 +19,12 @@ public class Object
         this.yPos = chosenYPos;
     }
     
-    public void checkForCollision()
+    public Object(int chosenXPos, int chosenYPos, int chosenXSize, int chosenYSize)
     {
-        
+        this.xPos = chosenXPos;
+        this.yPos = chosenYPos;
+        this.xSize = chosenXSize;
+        this.ySize = chosenYSize;
     }
     
     public void setPosition(int chosenXPos, int chosenYPos)
@@ -44,5 +47,15 @@ public class Object
     public int getYPosition()
     {
         return this.yPos;
+    }
+    
+    public int getXSize()
+    {
+        return this.xSize;
+    }
+    
+    public int getYSize()
+    {
+        return this.ySize;
     }
 }

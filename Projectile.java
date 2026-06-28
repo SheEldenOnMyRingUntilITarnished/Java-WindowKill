@@ -15,7 +15,7 @@ public class Projectile
     
     public Projectile(double projectileSpeed, double projectileDirection, boolean projectileTargetPlayer)
     {
-        this.object = new Object(0,0);
+        this.object = new Object(0,0,10,10);
         this.speed = projectileSpeed;
         this.direction = projectileDirection;
         this.targetPlayer = projectileTargetPlayer;
@@ -29,6 +29,11 @@ public class Projectile
     public int getYPosition()
     {
         return this.object.getYPosition();
+    }
+    
+    public Object getObject()
+    {
+        return this.object;
     }
     
     public double getSpeed()

@@ -13,11 +13,14 @@ public class GameSystem implements Runnable
     Thread gameThread;
 
     GameState gameState = GameState.GAME;
-
+    
+    ArrayList<Object> activeObjects = new ArrayList<Object>();
+    ArrayList<Object> deactiveObjects = new ArrayList<Object>();
+    
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
     ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
     ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
-    
+
     EnemyManager enemyManger = new EnemyManager();
     Player player = new Player(this);
     InputManager inputManager = player.inputManager;
@@ -73,6 +76,7 @@ public class GameSystem implements Runnable
                 inputManager.updateInput();
                 player.updatePlayer();
                 updateProjectiles();
+                activeObjectsCollisionCheck();
                 updateEnemys();
                 for(int i = 0; i < activeWindows.size(); i++)
                 {
@@ -111,7 +115,7 @@ public class GameSystem implements Runnable
             }
         }
     }
-    
+
     public void updateEnemys()
     {
         synchronized(enemyList)
@@ -119,14 +123,78 @@ public class GameSystem implements Runnable
             for(int i = enemyList.size() - 1; i >= 0; i--)
             {
                 Enemy enemy = enemyList.get(i);
-                
+
                 enemy.updateEnemy(player.getPlayerX(), player.getPlayerY());
+            }
+        }
+    }
+    
+    public void activeObjectsCollisionCheck()
+    {
+        for(int i = activeObjects.size() - 1; i >= 0; i--)
+        {
+            Object a = activeObjects.get(i);
+            for(int j = i + 1; j < activeObjects.size(); j++)
+            {
+                Object b = activeObjects.get(j);
+                collisionCheck(a, b);
+            }
+        }        
+    }
+    
+    public void collisionCheck(Object a, Object b)
+    {
+        int aX = a.getXPosition();
+        int aY = a.getYPosition();
+        int aWidth = a.getXSize();
+        int aHeight = a.getYSize();
+
+        int bX = a.getXPosition();
+        int bY = a.getYPosition();
+        int bWidth = a.getXSize();
+        int bHeight = a.getYSize();
+
+        if(aX < bX + bWidth && aX + aWidth > bX && //X Checks
+        aY < bY + bHeight && aY + aHeight > bY)//Y Checks
+        {
+            int overlapX = Math.min(aX + aWidth, bX + bWidth) - Math.max(aX, bX);
+            int overlapY = Math.min(aY + aHeight, bY + bHeight) - Math.max(aY, bY);
+            int pushAmount = 0;
+
+            if(overlapX < overlapY)
+            {
+                pushAmount = overlapX/2;
+
+                if((aX + aWidth)/2 < (bX + bWidth)/2)
+                {
+                    a.setPosition(aX - pushAmount, aY);
+                    b.setPosition(bX + pushAmount, bY);
+                }
+                else
+                {
+                    a.setPosition(aX + pushAmount, aY);
+                    b.setPosition(bX - pushAmount, bY);
+                }
+            }
+            else if(overlapX > overlapY)
+            {
+                pushAmount = overlapY/2;
+
+                if((aY + aHeight)/2 > (bY + bHeight)/2)
+                {
+                    a.setPosition(aX, aY + pushAmount);
+                    b.setPosition(bX, bY - pushAmount);
+                }
+                else
+                {
+                    a.setPosition(aX, aY - pushAmount);
+                    b.setPosition(bX, bY + pushAmount);
+                }
             }
         }
     }
 
     //Window Methods
-
     public void updateWindowCollisions()
     {
         for(int i = 0; i < activeWindows.size(); i++)
