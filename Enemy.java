@@ -28,11 +28,13 @@ public class Enemy
         this.object.updatePosition((int)Math.round(speed * Math.cos(angle)), (int)Math.round(speed * Math.sin(angle)));
     }
     
+    //Returns the X position of the object held inside of the enemy
     public int getXPosition()
     {
         return this.object.getXPosition();
     }
     
+    //Returns the Y position of the object held inside of the enemy
     public int getYPosition()
     {
         return this.object.getYPosition();
