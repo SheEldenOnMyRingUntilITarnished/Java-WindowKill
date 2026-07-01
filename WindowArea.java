@@ -11,9 +11,6 @@ public class WindowArea
     private JFrame window = null;
     private WindowPanel windowPanel = null;
 
-    /**
-     * 
-     */
     public WindowArea(GameSystem chosenGameSystem)
     {
         this.window = new JFrame();
@@ -27,18 +24,12 @@ public class WindowArea
         window.setLocationRelativeTo(null);
         window.setVisible(true);
     }
-
-    /**
-     * 
-     */
+    
     public JFrame getWindow()
     {
         return this.window;
     }
 
-    /**
-     * 
-     */
     public WindowPanel getGamePanel()
     {
         return this.windowPanel;

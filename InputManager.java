@@ -46,15 +46,18 @@ public class InputManager
             //Shooting
             if(mouseH.shootPressed == true)
             {
-                System.out.println("Mouse Clicked");
-                System.out.println("X: " + MouseInfo.getPointerInfo().getLocation().getX());
-                System.out.println("Y: " + MouseInfo.getPointerInfo().getLocation().getY());
-                if(true)//Temp we need to replace for checking if player can shoot
+                //System.out.println("Mouse Pressed");
+                //System.out.println("X: " + MouseInfo.getPointerInfo().getLocation().getX());
+                //System.out.println("Y: " + MouseInfo.getPointerInfo().getLocation().getY());
+                if(player.canShoot())//Temp we need to replace for checking if player can shoot
                 {
+                    player.restartShootTimer();
                     Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getPlayerX(), this.player.getPlayerY(), MouseInfo.getPointerInfo().getLocation().getX(),currentMouse.getLocation().getY()) * Math.PI/180,false);
                     newPlayerProjectile.setPosition(this.player.getPlayerX(),this.player.getPlayerY());
-                    System.out.println("Bullet pointing this dir: " + newPlayerProjectile.getDirection());
+                    //System.out.println("Bullet pointing this dir: " + newPlayerProjectile.getDirection());
+                    player.gameSystem.activeObjects.add(newPlayerProjectile.getObject());
                     player.gameSystem.projectileList.add(newPlayerProjectile);
+                    //System.out.println("activeObjects: " + player.gameSystem.activeObjects);
                 }
             }
             

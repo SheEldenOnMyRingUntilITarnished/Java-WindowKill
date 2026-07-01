@@ -12,7 +12,7 @@ public class GameSystem implements Runnable
 {   
     Thread gameThread;
 
-    GameState gameState = GameState.GAME;
+    GameState gameState = GameState.GAME; //GAME
     
     ArrayList<Object> activeObjects = new ArrayList<Object>();
     ArrayList<Object> deactiveObjects = new ArrayList<Object>();
@@ -33,6 +33,7 @@ public class GameSystem implements Runnable
     public void startGameThread()
     {
         gameThread = new Thread(this);
+        //activeObjects.add(player.getObject());
         setupWindow("Settings");
         //setupWindow("Start");
         //setupWindow("CharacterSelect");
@@ -45,7 +46,6 @@ public class GameSystem implements Runnable
         activeWindows.add(windowArea);
         window = windowArea.getGamePanel();
         window.setWindowType(chosenWindowType);
-
     }
 
     /**
@@ -74,9 +74,9 @@ public class GameSystem implements Runnable
             if(delta >= 1)
             {
                 inputManager.updateInput();
+                activeObjectsCollisionCheck();
                 player.updatePlayer();
                 updateProjectiles();
-                activeObjectsCollisionCheck();
                 updateEnemys();
                 for(int i = 0; i < activeWindows.size(); i++)
                 {
@@ -84,7 +84,7 @@ public class GameSystem implements Runnable
                 }
                 if(gameState == GameState.MAIN_MENU)
                 {
-                    updateWindowCollisions();
+                    //updateWindowCollisions();
                 }
                 delta--;
             }
@@ -131,18 +131,21 @@ public class GameSystem implements Runnable
     
     public void activeObjectsCollisionCheck()
     {
-        for(int i = activeObjects.size() - 1; i >= 0; i--)
+        if(activeObjects.size() > 1)
         {
-            Object a = activeObjects.get(i);
-            for(int j = i + 1; j < activeObjects.size(); j++)
+            for(int i = activeObjects.size() - 1; i >= 0; i--)
             {
-                Object b = activeObjects.get(j);
-                collisionCheck(a, b);
-            }
-        }        
+                Object a = activeObjects.get(i);
+                for(int j = i + 1; j < activeObjects.size(); j++)
+                {
+                    Object b = activeObjects.get(j);
+                    collisionCheck(a, b);
+                }
+            }  
+        }
     }
     
-    public void collisionCheck(Object a, Object b)
+    public void collisionCheck(Object a, Object b) //Bug With collisons happening between two objects with diffrent visual X and Y but cmd prints the same x and y
     {
         int aX = a.getXPosition();
         int aY = a.getYPosition();
@@ -153,18 +156,23 @@ public class GameSystem implements Runnable
         int bY = a.getYPosition();
         int bWidth = a.getXSize();
         int bHeight = a.getYSize();
-
+        
         if(aX < bX + bWidth && aX + aWidth > bX && //X Checks
         aY < bY + bHeight && aY + aHeight > bY)//Y Checks
         {
             int overlapX = Math.min(aX + aWidth, bX + bWidth) - Math.max(aX, bX);
             int overlapY = Math.min(aY + aHeight, bY + bHeight) - Math.max(aY, bY);
             int pushAmount = 0;
-
-            if(overlapX < overlapY)
+            
+            System.out.println("collision" + "\n" + "Object A: " + a + "\n" + "Object B:" + b);
+            System.out.println("Ax: " + aX);
+            System.out.println("Ay: " + aY);
+            System.out.println("Bx: " + bX);
+            System.out.println("By: " + bY);
+            if(overlapX < overlapY && false)
             {
                 pushAmount = overlapX/2;
-
+                System.out.println("X:");
                 if((aX + aWidth)/2 < (bX + bWidth)/2)
                 {
                     a.setPosition(aX - pushAmount, aY);
@@ -176,10 +184,10 @@ public class GameSystem implements Runnable
                     b.setPosition(bX - pushAmount, bY);
                 }
             }
-            else if(overlapX > overlapY)
+            else
             {
-                pushAmount = overlapY/2;
-
+                pushAmount = 0;//overlapY/2;
+                System.out.println("Y:");
                 if((aY + aHeight)/2 > (bY + bHeight)/2)
                 {
                     a.setPosition(aX, aY + pushAmount);

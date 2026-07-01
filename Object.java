@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class Object here.
+ * The Object class is a reusable class that contains positional data,
+ * this class alows diffrent objects to compared easily.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Zachary Quinn
+ * @version 7/02/2026
  */
 public class Object
 {
@@ -37,6 +38,18 @@ public class Object
     {
         this.xPos += chosenXPos;
         this.yPos += chosenYPos;
+    }
+    
+    public void setSize(int chosenXSize, int chosenYSize)
+    {
+        this.xSize = chosenXSize;
+        this.ySize = chosenYSize;
+    }
+    
+    public void updateSize(int chosenXSize, int chosenYSize)
+    {
+        this.xSize += chosenXSize;
+        this.ySize += chosenYSize;
     }
     
     public int getXPosition()

@@ -18,10 +18,12 @@ public class Player
     private double playerAccelerationX = 0;
     private double playerAccelerationY = 0;
     
+    private double shootTimer = playerStats.playerFirerate;
+    
     //Places the player in the center of the screen at the start
     private int playerX = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2; //Center X
     private int playerY = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height / 2; //Center Y
-    Object playerObject = new Object(playerX,playerY);
+    Object object = new Object(playerX,playerY);
     public Player(GameSystem chosenGameSystem)
     {
         gameSystem = chosenGameSystem;
@@ -32,16 +34,26 @@ public class Player
         int temp = 0;
         
         double friction = 0.35;
-        if(this.playerAccelerationX > 0){
+        
+        if(shootTimer > 0)
+        {
+            shootTimer--;
+        }
+        
+        if(this.playerAccelerationX > 0)
+        {
             this.playerAccelerationX -= friction;
-        }else if(this.playerAccelerationX < 0)
+        }
+        else if(this.playerAccelerationX < 0)
         {
             this.playerAccelerationX += friction;
         }
         
-        if(this.playerAccelerationY > 0){
+        if(this.playerAccelerationY > 0)
+        {
             this.playerAccelerationY -= friction;
-        }else if(this.playerAccelerationY < 0)
+        }
+        else if(this.playerAccelerationY < 0)
         {
             this.playerAccelerationY += friction;
         }
@@ -54,28 +66,32 @@ public class Player
         if(this.playerAccelerationX < -speedCap) this.playerAccelerationX = -speedCap;
         
         //PLayer Movement Slippery
-        this.playerObject.updatePosition((int) Math.round(this.playerAccelerationX), (int) Math.round(this.playerAccelerationY));
+        this.object.updatePosition((int) Math.round(this.playerAccelerationX), (int) Math.round(this.playerAccelerationY));
+    }
+    
+    public boolean canShoot()
+    {
+        return this.shootTimer < 1;
+    }
+    
+    public void restartShootTimer()
+    {
+        this.shootTimer = playerStats.playerFirerate;
+    }
+    
+    public Object getObject()
+    {
+        return this.object;
     }
     
     public int getPlayerX()
     {
-        return this.playerObject.getXPosition();
+        return this.object.getXPosition();
     }
     
     public int getPlayerY()
     {
-        return this.playerObject.getYPosition();
-    }
-    
-    //Position
-    public void setPlayerX(int chosenX)
-    {
-        this.playerX = chosenX;
-    }
-    
-    public void setPlayerY(int chosenY)
-    {
-        this.playerY = chosenY;
+        return this.object.getYPosition();
     }
     
     //Acceleration
