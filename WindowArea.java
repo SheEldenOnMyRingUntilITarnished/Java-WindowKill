@@ -11,7 +11,7 @@ public class WindowArea
     private JFrame window = null;
     private WindowPanel windowPanel = null;
 
-    public WindowArea(GameSystem chosenGameSystem)
+    public WindowArea(GameSystem chosenGameSystem, int xSize, int ySize)
     {
         this.window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

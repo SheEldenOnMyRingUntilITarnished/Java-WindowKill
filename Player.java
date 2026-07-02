@@ -21,9 +21,11 @@ public class Player
     private double shootTimer = playerStats.playerFirerate;
     
     //Places the player in the center of the screen at the start
-    private int playerX = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2; //Center X
-    private int playerY = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height / 2; //Center Y
-    Object object = new Object(playerX,playerY);
+    Object object = new Object(
+    java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2, 
+    java.awt.Toolkit.getDefaultToolkit().getScreenSize().height / 2, 
+    playerStats.playerSize, 
+    playerStats.playerSize);
     public Player(GameSystem chosenGameSystem)
     {
         gameSystem = chosenGameSystem;

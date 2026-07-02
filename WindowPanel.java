@@ -26,7 +26,7 @@ public class WindowPanel extends JPanel
     
     public WindowPanel(JFrame window, GameSystem chosenGameSystem) 
     {
-        this.setPreferredSize(new Dimension(1080,720));
+        this.setPreferredSize(new Dimension(360,360));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.gameSystem = chosenGameSystem;
@@ -72,6 +72,9 @@ public class WindowPanel extends JPanel
                     paintStart(g2);
                     break;
                 
+                case "W":
+                    paintLetter(g2, "W");
+                
             }
         } 
         else if (gameSystem.gameState == GameState.GAME) {
@@ -97,6 +100,12 @@ public class WindowPanel extends JPanel
             
             paintEnemy(g2, Color.WHITE,enemyX,enemyY);
         }
+    }
+    
+    public void paintLetter(Graphics2D g2, String chosenString)
+    {
+        g2.setColor(Color.GREEN);
+        //g2.drawLetter("chosenString");
     }
     
     public void paintStart(Graphics2D g2)

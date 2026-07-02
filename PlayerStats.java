@@ -16,6 +16,7 @@ public class PlayerStats
     
     //Player Stats
     int playerMaxHealth = 3;
+    int playerSize = 40;
     
     double playerAcceleration = 1;
     double playerSpeedCap = 6;

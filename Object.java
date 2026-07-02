@@ -14,12 +14,6 @@ public class Object
     private int xSize;
     private int ySize;
     
-    public Object(int chosenXPos, int chosenYPos)
-    {
-        this.xPos = chosenXPos;
-        this.yPos = chosenYPos;
-    }
-    
     public Object(int chosenXPos, int chosenYPos, int chosenXSize, int chosenYSize)
     {
         this.xPos = chosenXPos;
