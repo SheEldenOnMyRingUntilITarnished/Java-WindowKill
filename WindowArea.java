@@ -17,7 +17,7 @@ public class WindowArea
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("");
-        this.windowPanel = new WindowPanel(window, chosenGameSystem);
+        this.windowPanel = new WindowPanel(window, chosenGameSystem, xSize, ySize);
         window.add(windowPanel);
         window.pack();
         window.setAlwaysOnTop(true);

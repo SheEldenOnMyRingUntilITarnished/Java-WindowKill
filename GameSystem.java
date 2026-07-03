@@ -12,7 +12,7 @@ public class GameSystem implements Runnable
 {   
     Thread gameThread;
 
-    GameState gameState = GameState.MAIN_MENU; //GAME
+    GameState gameState = GameState.GAME; //GAME
 
     ArrayList<Object> activeObjects = new ArrayList<Object>();
     ArrayList<Object> deactiveObjects = new ArrayList<Object>();
@@ -34,18 +34,18 @@ public class GameSystem implements Runnable
     {
         gameThread = new Thread(this);
         activeObjects.add(player.getObject());
-        setupWindow("W", 240, 240);
-        setupWindow("I", 240, 240);
-        setupWindow("N", 240, 240);
-        setupWindow("D", 240, 240);
-        setupWindow("O", 240, 240);
-        setupWindow("W", 240, 240);
-        setupWindow("G", 240, 240);
-        setupWindow("O", 240, 240);
-        setupWindow("O", 240, 240);
-        setupWindow("N", 240, 240);
-        setupWindow("Settings", 720, 1080);
-        setupWindow("Start", 720, 1080);
+        //setupWindow("W", 240, 240);
+        //setupWindow("I", 240, 240);
+        //setupWindow("N", 240, 240);
+        //setupWindow("D", 240, 240);
+        //setupWindow("O", 240, 240);
+        //setupWindow("W", 240, 240);
+        //setupWindow("G", 240, 240);
+        //setupWindow("O", 240, 240);
+        //setupWindow("O", 240, 240);
+        //setupWindow("N", 240, 240);
+        //setupWindow("Settings", 720, 1080);
+        //setupWindow("Start", 720, 1080);
         setupWindow("CharacterSelect", 720, 1080);
         gameThread.start();
     }
@@ -133,7 +133,7 @@ public class GameSystem implements Runnable
             for(int i = enemyList.size() - 1; i >= 0; i--)
             {
                 Enemy enemy = enemyList.get(i);
-                
+
                 enemy.updateEnemy(player.getPlayerX(), player.getPlayerY());
             }
         }
@@ -153,8 +153,40 @@ public class GameSystem implements Runnable
                     {
                         //epic stuff in here when colliding with other objects
                     }
+                    
+                    if(collisionWithWindowCheck(a))
+                    {
+                        activeObjects.remove(i);
+                    }
                 }                
             }  
+        }
+    }
+
+    public boolean collisionWithWindowCheck(Object a)
+    {
+        int aX = a.getXPosition();
+        int aY = a.getYPosition();
+        int aWidth = a.getXSize();
+        int aHeight = a.getYSize();
+
+        JFrame comparedWindow = activeWindows.get(0).getWindow();
+        int windowX = getWindowX(comparedWindow);
+        int windowY = getWindowY(comparedWindow);
+        int windowWidth = getWindowWidth(comparedWindow);
+        int windowHeight = getWindowHeight(comparedWindow);
+        
+        if(aX > windowX + windowWidth && aX + aWidth < windowX && //X Checks
+        aY > windowY + windowHeight && aY + aHeight < windowY)//Y Checks
+        {
+            int overlapX = Math.min(aX + aWidth, windowX + windowWidth) - Math.max(aX, windowX);
+            int overlapY = Math.min(aY + aHeight, windowY + windowHeight) - Math.max(aY, windowY);
+
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -175,7 +207,7 @@ public class GameSystem implements Runnable
         {
             int overlapX = Math.min(aX + aWidth, bX + bWidth) - Math.max(aX, bX);
             int overlapY = Math.min(aY + aHeight, bY + bHeight) - Math.max(aY, bY);
-            
+
             return true;
         }
         else

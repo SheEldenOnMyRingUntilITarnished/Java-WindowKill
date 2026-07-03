@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=WindowPanel
-comment1.params=window\ chosenGameSystem
-comment1.target=WindowPanel(javax.swing.JFrame,\ GameSystem)
+comment1.params=window\ chosenGameSystem\ xSize\ ySize
+comment1.target=WindowPanel(javax.swing.JFrame,\ GameSystem,\ int,\ int)
 comment10.params=g2\ color\ xPos\ yPos
 comment10.target=void\ paintProjectile(java.awt.Graphics2D,\ java.awt.Color,\ int,\ int)
 comment11.params=
