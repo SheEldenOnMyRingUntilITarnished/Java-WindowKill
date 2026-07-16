@@ -6,6 +6,10 @@
  * @author Zachary Quinn
  * @version 7/02/2026
  */
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 public class Object
 {
     private int xPos;
@@ -22,16 +26,27 @@ public class Object
         this.ySize = chosenYSize;
     }
     
+    public void update()
+    {
+        
+    }
+    
+    public void paint(Graphics2D g2, int windowX, int windowY)
+    {
+        g2.setColor(Color.GRAY);
+        g2.drawRect(this.xPos - windowX, this.yPos - windowY, this.xSize, this.ySize);
+    }
+    
     public void setPosition(int chosenXPos, int chosenYPos)
     {
         this.xPos = chosenXPos;
         this.yPos = chosenYPos;
     }
     
-    public void updatePosition(int chosenXPos, int chosenYPos)
+    public void updatePosition(double chosenXPos, double chosenYPos)
     {
-        this.xPos += chosenXPos;
-        this.yPos += chosenYPos;
+        this.xPos += (int)chosenXPos;
+        this.yPos += (int)chosenYPos;
     }
     
     public void setSize(int chosenXSize, int chosenYSize)

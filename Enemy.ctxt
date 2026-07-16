@@ -1,14 +1,11 @@
 #BlueJ class context
 comment0.target=Enemy
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Enemy\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=chosenObject\ chosenType\ chosenStats\ chosenAI
-comment1.target=Enemy(Object,\ EnemyTypes,\ EnemyStats,\ EnemyAI)
-comment2.params=targetX\ targetY
-comment2.target=void\ updateEnemy(int,\ int)
-comment3.params=
-comment3.target=Object\ getObject()
-comment4.params=
-comment4.target=int\ getXPosition()
-comment5.params=
-comment5.target=int\ getYPosition()
-numComments=6
+comment1.params=chosenType\ chosenStats\ chosenAI
+comment1.target=Enemy(EnemyTypes,\ EnemyStats,\ EnemyAI)
+comment2.params=
+comment2.target=void\ update()
+comment3.params=g2\ windowX\ windowY
+comment3.target=void\ paint(java.awt.Graphics2D,\ int,\ int)
+comment4.params=targetX\ targetY
+comment4.target=void\ updateEnemy(int,\ int)
+numComments=5

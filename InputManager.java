@@ -52,11 +52,10 @@ public class InputManager
                 if(player.canShoot())//Temp we need to replace for checking if player can shoot
                 {
                     player.restartShootTimer();
-                    Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getPlayerX(), this.player.getPlayerY(), MouseInfo.getPointerInfo().getLocation().getX(),currentMouse.getLocation().getY()) * Math.PI/180,false);
-                    newPlayerProjectile.setPosition(this.player.getPlayerX(),this.player.getPlayerY());
+                    Projectile newPlayerProjectile = new Projectile(this.player.playerStats.playerProjectileSpeed, player.gameSystem.calculateTheAngleBetweenTwoPoints(this.player.getXPosition(), this.player.getYPosition(), MouseInfo.getPointerInfo().getLocation().getX(),currentMouse.getLocation().getY()) * Math.PI/180,false);
+                    newPlayerProjectile.setPosition(this.player.getXPosition(),this.player.getYPosition());
                     //System.out.println("Bullet pointing this dir: " + newPlayerProjectile.getDirection());
-                    player.gameSystem.activeObjects.add(newPlayerProjectile.getObject());
-                    player.gameSystem.projectileList.add(newPlayerProjectile);
+                    player.gameSystem.activeObjects.add(newPlayerProjectile);
                     //System.out.println("activeObjects: " + player.gameSystem.activeObjects);
                 }
             }
@@ -66,7 +65,7 @@ public class InputManager
             {
                 System.out.println("SHOP");
                 EnemyManager enemyManger = player.gameSystem.enemyManger;
-                player.gameSystem.enemyList.add(enemyManger.SpawnEnemy());
+                player.gameSystem.activeObjects.add(enemyManger.SpawnEnemy());
             }
             else if(keyH.quickBossShopPressed == true)
             {

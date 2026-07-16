@@ -1,5 +1,3 @@
-// WARNING: This file is auto-generated and any changes to it will be overwritten
-import lang.stride.*;
 import javax.swing.JFrame;
 
 /**

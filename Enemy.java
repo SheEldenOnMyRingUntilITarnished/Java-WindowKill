@@ -5,19 +5,43 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Enemy
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class Enemy extends Object
 {    
-    private Object object;
     private EnemyTypes type;
     private EnemyStats stats;
     private EnemyAI ai;
     
-    public Enemy(Object chosenObject, EnemyTypes chosenType, EnemyStats chosenStats, EnemyAI chosenAI)
+    public Enemy(EnemyTypes chosenType, EnemyStats chosenStats, EnemyAI chosenAI)
     {
-        this.object = chosenObject;
+        super(0, 0, 10, 10);
+        
         this.type = chosenType;
         this.stats = chosenStats;
         this.ai = chosenAI;
+    }
+    
+    @Override
+    public void update()
+    {
+        
+        //int targetX = 
+        //int targetY = 
+        
+        double speed = stats.getSpeed();
+        //double angle = Math.atan2(targetY - getYPosition(), targetX - getXPosition());
+        
+        //this.updatePosition((int)Math.round(speed * Math.cos(angle)), (int)Math.round(speed * Math.sin(angle)));
+    }
+    
+    @Override
+    public void paint(Graphics2D g2, int windowX, int windowY)
+    {
+        g2.setColor(Color.GREEN);
+        g2.drawRect(getXPosition() - windowX, getYPosition() - windowY, getXSize(), getYSize());
     }
     
     public void updateEnemy(int targetX, int targetY)
@@ -25,23 +49,6 @@ public class Enemy
         double speed = stats.getSpeed();
         double angle = Math.atan2(targetY - getYPosition(), targetX - getXPosition());
         
-        this.object.updatePosition((int)Math.round(speed * Math.cos(angle)), (int)Math.round(speed * Math.sin(angle)));
-    }
-    
-    public Object getObject()
-    {
-        return this.object;
-    }
-    
-    //Returns the X position of the object held inside of the enemy
-    public int getXPosition()
-    {
-        return this.object.getXPosition();
-    }
-    
-    //Returns the Y position of the object held inside of the enemy
-    public int getYPosition()
-    {
-        return this.object.getYPosition();
+        this.updatePosition((int)Math.round(speed * Math.cos(angle)), (int)Math.round(speed * Math.sin(angle)));
     }
 }

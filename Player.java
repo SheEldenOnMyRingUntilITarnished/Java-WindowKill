@@ -1,6 +1,3 @@
-import java.util.List;
-import java.util.ArrayList;
-
 /**
  * This script holds the players data such as the player position.
  * it also holds the list of player projectiles to seperate them from the enemy projectiles and give them priority.
@@ -8,7 +5,13 @@ import java.util.ArrayList;
  * @author Zachary Quinn
  * @version 05/18/2026
  */
-public class Player
+
+import java.util.List;
+import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class Player extends Object
 {
     GameSystem gameSystem = null;
     InputManager inputManager = new InputManager(this);
@@ -20,18 +23,17 @@ public class Player
     
     private double shootTimer = playerStats.playerFirerate;
     
-    //Places the player in the center of the screen at the start
-    Object object = new Object(
-    java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2, 
-    java.awt.Toolkit.getDefaultToolkit().getScreenSize().height / 2, 
-    playerStats.playerSize, 
-    playerStats.playerSize);
     public Player(GameSystem chosenGameSystem)
     {
+        super(java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2, 
+        java.awt.Toolkit.getDefaultToolkit().getScreenSize().height / 2, 
+        40, 
+        40);
         gameSystem = chosenGameSystem;
     }
-
-    public void updatePlayer()
+    
+    @Override
+    public void update()
     {
         int temp = 0;
         
@@ -68,7 +70,14 @@ public class Player
         if(this.playerAccelerationX < -speedCap) this.playerAccelerationX = -speedCap;
         
         //PLayer Movement Slippery
-        this.object.updatePosition((int) Math.round(this.playerAccelerationX), (int) Math.round(this.playerAccelerationY));
+        this.updatePosition((int) Math.round(this.playerAccelerationX), (int) Math.round(this.playerAccelerationY));
+    }
+    
+    @Override
+    public void paint(Graphics2D g2, int windowX, int windowY)
+    {
+        g2.setColor(Color.RED);
+        g2.drawRect(getXPosition() - windowX, getYPosition() - windowY, getXSize(), getYSize());
     }
     
     public boolean canShoot()
@@ -79,21 +88,6 @@ public class Player
     public void restartShootTimer()
     {
         this.shootTimer = playerStats.playerFirerate;
-    }
-    
-    public Object getObject()
-    {
-        return this.object;
-    }
-    
-    public int getPlayerX()
-    {
-        return this.object.getXPosition();
-    }
-    
-    public int getPlayerY()
-    {
-        return this.object.getYPosition();
     }
     
     //Acceleration

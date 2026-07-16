@@ -18,8 +18,6 @@ public class GameSystem implements Runnable
     ArrayList<Object> deactiveObjects = new ArrayList<Object>();
 
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
-    ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
-    ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 
     EnemyManager enemyManger = new EnemyManager();
     Player player = new Player(this);
@@ -33,7 +31,7 @@ public class GameSystem implements Runnable
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        activeObjects.add(player.getObject());
+        activeObjects.add(player);
         //setupWindow("W", 240, 240);
         //setupWindow("I", 240, 240);
         //setupWindow("N", 240, 240);
@@ -85,9 +83,7 @@ public class GameSystem implements Runnable
             {
                 inputManager.updateInput();
                 activeObjectsCollisionCheck();
-                player.updatePlayer();
-                updateProjectiles();
-                updateEnemys();
+                updateActiveObjects();
                 for(int i = 0; i < activeWindows.size(); i++)
                 {
                     activeWindows.get(i).getGamePanel().repaint();
@@ -112,33 +108,17 @@ public class GameSystem implements Runnable
         System.out.println("--- " + angle);
         return angle;
     }
-
-    public void updateProjectiles()
+    
+    public void updateActiveObjects()
     {
-        synchronized(projectileList) 
+        for(int i = activeObjects.size() - 1; i >= 0; i--)
         {
-            for(int i = projectileList.size() - 1; i >= 0; i--)
-            {
-                Projectile projectile = projectileList.get(i);
-                //System.out.println(projectileList.get(i));
-                projectile.updatePosition(projectile.getSpeed() * Math.cos(projectile.getDirection()), projectile.getSpeed() * Math.sin(projectile.getDirection()));
-            }
+            Object obj = activeObjects.get(i);
+            
+            obj.update(); 
         }
     }
-
-    public void updateEnemys()
-    {
-        synchronized(enemyList)
-        {
-            for(int i = enemyList.size() - 1; i >= 0; i--)
-            {
-                Enemy enemy = enemyList.get(i);
-
-                enemy.updateEnemy(player.getPlayerX(), player.getPlayerY());
-            }
-        }
-    }
-
+    
     public void activeObjectsCollisionCheck()
     {
         if(activeObjects.size() > 1)
@@ -146,23 +126,32 @@ public class GameSystem implements Runnable
             for(int i = activeObjects.size() - 1; i >= 0; i--)
             {
                 Object a = activeObjects.get(i);
+                
+                if(collisionWithScreenEdgeCheck(a)) 
+                {
+                    activeObjects.remove(i);
+                    continue;
+                }
+    
+                if(collisionWithWindowCheck(a))
+                {
+                    System.out.println("WOW");
+                    activeObjects.remove(i);
+                    continue;
+                }
+                
                 for(int j = i + 1; j < activeObjects.size(); j++)
                 {
                     Object b = activeObjects.get(j);
                     if(collisionCheck(a, b))
                     {
-                        //epic stuff in here when colliding with other objects
-                    }
-                    
-                    if(collisionWithWindowCheck(a))
-                    {
-                        activeObjects.remove(i);
+                        // epic stuff in here when colliding with other objects
                     }
                 }                
             }  
         }
     }
-
+    
     public boolean collisionWithWindowCheck(Object a)
     {
         int aX = a.getXPosition();
@@ -176,12 +165,12 @@ public class GameSystem implements Runnable
         int windowWidth = getWindowWidth(comparedWindow);
         int windowHeight = getWindowHeight(comparedWindow);
         
-        if(aX > windowX + windowWidth && aX + aWidth < windowX && //X Checks
-        aY > windowY + windowHeight && aY + aHeight < windowY)//Y Checks
+        if(aX > windowX + windowWidth || aX < windowX || //X Checks
+        aY > windowY + windowHeight || aY < windowY)//Y Checks
         {
             int overlapX = Math.min(aX + aWidth, windowX + windowWidth) - Math.max(aX, windowX);
             int overlapY = Math.min(aY + aHeight, windowY + windowHeight) - Math.max(aY, windowY);
-
+            System.out.println("WOW");
             return true;
         }
         else
@@ -189,7 +178,22 @@ public class GameSystem implements Runnable
             return false;
         }
     }
-
+    
+    public boolean collisionWithScreenEdgeCheck(Object a)
+    {
+        int aX = a.getXPosition();
+        int aY = a.getYPosition();
+        int aWidth = a.getXSize();
+        int aHeight = a.getYSize();
+    
+        if (aX < 0 || aX + aWidth > screenWidth || aY < 0 || aY + aHeight > screenHeight) 
+        {
+            return true; 
+        }
+        
+        return false;
+    }
+    
     public boolean collisionCheck(Object a, Object b)
     {
         int aX = a.getXPosition();

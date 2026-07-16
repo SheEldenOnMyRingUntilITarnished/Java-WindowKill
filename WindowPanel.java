@@ -24,6 +24,9 @@ public class WindowPanel extends JPanel
     private Player player = null;
     private String windowType = "null";
     
+    private double width;
+    private double height;
+    
     public WindowPanel(JFrame window, GameSystem chosenGameSystem, int xSize, int ySize) 
     {
         this.setPreferredSize(new Dimension(xSize,ySize));
@@ -57,96 +60,13 @@ public class WindowPanel extends JPanel
             return;
         }
         
-        if (gameSystem.gameState == GameState.MAIN_MENU) {
-            switch(this.windowType)
-            {
-                case "CharacterSelect":
-                    paintCharacterSelect(g2);
-                    break;
-                
-                case "Settings":
-                    paintSettings(g2);
-                    break;
-                
-                case "Start":
-                    paintStart(g2);
-                    break;
-                
-                case "W":
-                    paintLetter(g2, "W");
-                
-            }
-        } 
-        else if (gameSystem.gameState == GameState.GAME) {
-            paintPlayer(g2);
-        }
-        
-        //Paint Projectiles
-        for(int i = 0; i < gameSystem.projectileList.size(); i++)
+        for(int i = 0; i < gameSystem.activeObjects.size(); i++)
         {
-            Projectile projectile = gameSystem.projectileList.get(i);
-            int projectileX = projectile.getXPosition();
-            int projectileY = projectile.getYPosition();
+            Object obj = gameSystem.activeObjects.get(i);
             
-            paintProjectile(g2, Color.RED,projectileX,projectileY);
-        }
-        
-        //Paint Enemys
-        for(int i = 0; i < gameSystem.enemyList.size(); i++)
-        {
-            Enemy enemy = gameSystem.enemyList.get(i);
-            int enemyX = enemy.getXPosition();
-            int enemyY = enemy.getYPosition();
-            
-            paintEnemy(g2, Color.WHITE,enemyX,enemyY);
-        }
+            obj.paint(g2, getWindowX(), getWindowY());
+        }      
     }
-    
-    public void paintLetter(Graphics2D g2, String chosenString)
-    {
-        g2.setColor(Color.GREEN);
-        //g2.drawLetter("chosenString");
-    }
-    
-    public void paintStart(Graphics2D g2)
-    {
-        g2.setColor(Color.GREEN);
-        g2.drawRect(0,0,30,30);
-    }
-    
-    public void paintCharacterSelect(Graphics2D g2)
-    {
-        g2.setColor(Color.BLUE);
-        g2.drawRect(0,0,30,30);
-    }
-    
-    public void paintSettings(Graphics2D g2)
-    {
-        g2.setColor(Color.WHITE);
-        g2.drawRect(0,0,30,30);
-    }
-    
-    /**
-     * Paints the player by compareing the players X and Y positions to the windows X and Y positions!!!
-    **/
-    public void paintPlayer(Graphics2D g2)
-    {
-        g2.setColor(Color.RED);
-        g2.drawRect(player.getPlayerX() - getWindowX(), player.getPlayerY() - getWindowY(), 10, 10);
-    }
-    
-    public void paintEnemy(Graphics2D g2, Color color, int xPos, int yPos)
-    {
-        g2.setColor(color);
-        g2.drawRect(xPos - getWindowX(), yPos - getWindowY(), 50, 50);
-    }
-    
-    public void paintProjectile(Graphics2D g2, Color color, int xPos, int yPos)
-    {
-        g2.setColor(color);
-        g2.drawRect(xPos - getWindowX(), yPos - getWindowY(), 5, 5);
-    }
-    
     //Window Methods
     public int getWindowX() {
         try {
@@ -163,6 +83,14 @@ public class WindowPanel extends JPanel
         }
     }
     
-    public void setWindowPosition(int X, int Y) {window.setLocation(X,Y);}
-    public void setWindowSize(int Width, int Height){window.setSize(Width,Height);}
+    public void setWindowPosition(int X, int Y) 
+    {
+        window.setLocation(X,Y);
+    }
+    public void setWindowSize(double chosenWidth, double chosenHeight)
+    {
+        width = chosenWidth;
+        height = chosenHeight;
+        window.setSize((int)width,(int)height);
+    }
 }

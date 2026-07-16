@@ -5,35 +5,36 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Projectile
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class Projectile extends Object
 {
-    private Object object;
-    
     private double speed;
     private double direction;
     private boolean targetPlayer;
     
     public Projectile(double projectileSpeed, double projectileDirection, boolean projectileTargetPlayer)
     {
-        this.object = new Object(0,0,10,10);
+        super(0, 0, 10, 10); 
+        
         this.speed = projectileSpeed;
         this.direction = projectileDirection;
         this.targetPlayer = projectileTargetPlayer;
     }
     
-    public int getXPosition()
+    @Override
+    public void update()
     {
-        return this.object.getXPosition();
+        updatePosition(this.speed * Math.cos((int)this.direction),this.speed * Math.sin(this.direction));
     }
     
-    public int getYPosition()
+    @Override
+    public void paint(Graphics2D g2, int windowX, int windowY)
     {
-        return this.object.getYPosition();
-    }
-    
-    public Object getObject()
-    {
-        return this.object;
+        g2.setColor(Color.RED);
+        g2.drawRect(getXPosition() - windowX, getYPosition() - windowY, getXSize(), getYSize());
     }
     
     public double getSpeed()
@@ -46,13 +47,8 @@ public class Projectile
         return this.direction;
     }
     
-    public void setPosition(int chosenXPos, int chosenYPos)
+    public boolean getTargetPlayer()
     {
-        this.object.setPosition(chosenXPos,chosenYPos);
-    }
-    
-    public void updatePosition(double chosenXPos, double chosenYPos)
-    {
-        this.object.updatePosition((int) chosenXPos, (int) chosenYPos);
+        return this.targetPlayer;
     }
 }

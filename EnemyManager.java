@@ -10,11 +10,10 @@ public class EnemyManager
 {
     public Enemy SpawnEnemy()
     {
-        Object testEnemyObject = new Object(0,0,10,10);
         EnemyTypes testEnemyType = EnemyTypes.SQUARE;//Sets up the enemyType
         EnemyStats testEnemyStats = new EnemyStats(1,1,1);//Sets up the stats of the enemy
         EnemyAI testEnemyAI = new EnemyAI();//Sets up a AI
-        Enemy testEnemy = new Enemy(testEnemyObject,testEnemyType,testEnemyStats,testEnemyAI);
+        Enemy testEnemy = new Enemy(testEnemyType,testEnemyStats,testEnemyAI);
         return testEnemy;
     }
 }
