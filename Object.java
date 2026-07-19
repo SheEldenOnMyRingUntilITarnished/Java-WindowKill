@@ -9,6 +9,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import javax.swing.JFrame;
 
 public class Object
 {
@@ -29,6 +30,34 @@ public class Object
     public void update()
     {
         
+    }
+    
+    /**
+     * This method will contain the code that will be ran on collision
+     * 
+     * The method takes the collided object.
+    **/
+    public void collison(Object collidedObject)
+    {
+        //Epic code to cause EPIC EXPLOSION!!!!!
+    }
+    
+    /**
+     * This method will contain the code that will be ran
+     * on collision with the edges of the window
+    **/
+    public void windowEdge(JFrame collidedWindow)
+    {
+        //DEATH TO THE WINDOW!!!!!
+    }
+    
+    /**
+     * This method will contain the code that will be ran
+     * on collision with the edges of the screen
+    **/
+    public void screenEdge()
+    {
+        //DEATH TO THE SCREEN!!!!!
     }
     
     public void paint(Graphics2D g2, int windowX, int windowY)

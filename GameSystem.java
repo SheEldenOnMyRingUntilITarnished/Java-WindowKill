@@ -44,7 +44,7 @@ public class GameSystem implements Runnable
         //setupWindow("N", 240, 240);
         //setupWindow("Settings", 720, 1080);
         //setupWindow("Start", 720, 1080);
-        setupWindow("CharacterSelect", 720, 1080);
+        setupWindow("CharacterSelect", 1080, 720);
         gameThread.start();
     }
 
@@ -129,14 +129,18 @@ public class GameSystem implements Runnable
                 
                 if(collisionWithScreenEdgeCheck(a)) 
                 {
-                    activeObjects.remove(i);
+                    a.screenEdge();
+                    //activeObjects.remove(i);
                     continue;
                 }
-    
-                if(collisionWithWindowCheck(a))
+                
+                JFrame comparedWindow = activeWindows.get(0).getWindow();
+                
+                if(collisionWithWindowCheck(a, comparedWindow))
                 {
                     System.out.println("WOW");
-                    activeObjects.remove(i);
+                    a.windowEdge(comparedWindow);
+                    //activeObjects.remove(i);
                     continue;
                 }
                 
@@ -145,21 +149,21 @@ public class GameSystem implements Runnable
                     Object b = activeObjects.get(j);
                     if(collisionCheck(a, b))
                     {
-                        // epic stuff in here when colliding with other objects
+                        a.collison(b);
+                        b.collison(a);
                     }
                 }                
             }  
         }
     }
     
-    public boolean collisionWithWindowCheck(Object a)
+    public boolean collisionWithWindowCheck(Object a, JFrame comparedWindow)
     {
         int aX = a.getXPosition();
         int aY = a.getYPosition();
         int aWidth = a.getXSize();
         int aHeight = a.getYSize();
 
-        JFrame comparedWindow = activeWindows.get(0).getWindow();
         int windowX = getWindowX(comparedWindow);
         int windowY = getWindowY(comparedWindow);
         int windowWidth = getWindowWidth(comparedWindow);
@@ -168,9 +172,8 @@ public class GameSystem implements Runnable
         if(aX > windowX + windowWidth || aX < windowX || //X Checks
         aY > windowY + windowHeight || aY < windowY)//Y Checks
         {
-            int overlapX = Math.min(aX + aWidth, windowX + windowWidth) - Math.max(aX, windowX);
-            int overlapY = Math.min(aY + aHeight, windowY + windowHeight) - Math.max(aY, windowY);
-            System.out.println("WOW");
+            //int overlapX = Math.min(aX + aWidth, windowX + windowWidth) - Math.max(aX, windowX);
+            //int overlapY = Math.min(aY + aHeight, windowY + windowHeight) - Math.max(aY, windowY);
             return true;
         }
         else
@@ -179,6 +182,11 @@ public class GameSystem implements Runnable
         }
     }
     
+    /**
+     * This method is usedd to check if an object collides with the screen edges of the moniter.
+     * 
+     * This method takes an object to compare with the window bounds and returns true or false.
+    **/
     public boolean collisionWithScreenEdgeCheck(Object a)
     {
         int aX = a.getXPosition();
@@ -209,8 +217,8 @@ public class GameSystem implements Runnable
         if(aX < bX + bWidth && aX + aWidth > bX && //X Checks
         aY < bY + bHeight && aY + aHeight > bY)//Y Checks
         {
-            int overlapX = Math.min(aX + aWidth, bX + bWidth) - Math.max(aX, bX);
-            int overlapY = Math.min(aY + aHeight, bY + bHeight) - Math.max(aY, bY);
+            //int overlapX = Math.min(aX + aWidth, bX + bWidth) - Math.max(aX, bX);
+            //int overlapY = Math.min(aY + aHeight, bY + bHeight) - Math.max(aY, bY);
 
             return true;
         }
@@ -300,23 +308,23 @@ public class GameSystem implements Runnable
         }
     }
 
-    public int getWindowX(JFrame chosenWindow) {
+    private int getWindowX(JFrame chosenWindow) {
         return (int) chosenWindow.getLocationOnScreen().getX();
     }
 
-    public int getWindowY(JFrame chosenWindow) {
+    private int getWindowY(JFrame chosenWindow) {
         return chosenWindow.getY();
     }
 
-    public int getWindowWidth(JFrame chosenWindow){
+    private int getWindowWidth(JFrame chosenWindow){
         return chosenWindow.getWidth();
     }
 
-    public int getWindowHeight(JFrame chosenWindow){
+    private int getWindowHeight(JFrame chosenWindow){
         return chosenWindow.getHeight();
     }
 
-    public void setWindowSize(int Width, int Height)
+    private void setWindowSize(int Width, int Height)
     {
         window.setSize(Width,Height);
     }
