@@ -125,39 +125,45 @@ public class GameSystem implements Runnable
         {
             for(int i = activeObjects.size() - 1; i >= 0; i--)
             {
-                Object a = activeObjects.get(i);
-                
-                if(collisionWithScreenEdgeCheck(a)) 
+                if(activeObjects.get(i) instanceof RidgedBody2D)
                 {
-                    a.screenEdge();
-                    //activeObjects.remove(i);
-                    continue;
-                }
-                
-                JFrame comparedWindow = activeWindows.get(0).getWindow();
-                
-                if(collisionWithWindowCheck(a, comparedWindow))
-                {
-                    System.out.println("WOW");
-                    a.windowEdge(comparedWindow);
-                    //activeObjects.remove(i);
-                    continue;
-                }
-                
-                for(int j = i + 1; j < activeObjects.size(); j++)
-                {
-                    Object b = activeObjects.get(j);
-                    if(collisionCheck(a, b))
+                    RidgedBody2D a = (RidgedBody2D) activeObjects.get(i);
+                    
+                    if(collisionWithScreenEdgeCheck(a)) 
                     {
-                        a.collison(b);
-                        b.collison(a);
+                        a.screenEdge();
+                        //activeObjects.remove(i);
+                        continue;
                     }
-                }                
+                    
+                    JFrame comparedWindow = activeWindows.get(0).getWindow();
+                    
+                    if(collisionWithWindowCheck(a, comparedWindow))
+                    {
+                        System.out.println("WOW");
+                        a.windowEdge(comparedWindow);
+                        //activeObjects.remove(i);
+                        continue;
+                    }
+                    
+                    for(int j = i + 1; j < activeObjects.size(); j++)
+                    {
+                        if(activeObjects.get(i) instanceof RidgedBody2D)
+                        {
+                            RidgedBody2D b = (RidgedBody2D) activeObjects.get(i);
+                            if(collisionCheck(a, b))
+                            {
+                                a.collison(b);
+                                b.collison(a);
+                            }
+                        }
+                    }
+                }
             }  
         }
     }
     
-    public boolean collisionWithWindowCheck(Object a, JFrame comparedWindow)
+    public boolean collisionWithWindowCheck(RidgedBody2D a, JFrame comparedWindow)
     {
         int aX = a.getXPosition();
         int aY = a.getYPosition();
@@ -187,7 +193,7 @@ public class GameSystem implements Runnable
      * 
      * This method takes an object to compare with the window bounds and returns true or false.
     **/
-    public boolean collisionWithScreenEdgeCheck(Object a)
+    public boolean collisionWithScreenEdgeCheck(RidgedBody2D a)
     {
         int aX = a.getXPosition();
         int aY = a.getYPosition();
@@ -202,7 +208,7 @@ public class GameSystem implements Runnable
         return false;
     }
     
-    public boolean collisionCheck(Object a, Object b)
+    public boolean collisionCheck(RidgedBody2D a, RidgedBody2D b)
     {
         int aX = a.getXPosition();
         int aY = a.getYPosition();

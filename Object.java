@@ -16,54 +16,15 @@ public class Object
     private int xPos;
     private int yPos;
     
-    private int xSize;
-    private int ySize;
-    
-    public Object(int chosenXPos, int chosenYPos, int chosenXSize, int chosenYSize)
+    public Object(int chosenXPos, int chosenYPos)
     {
         this.xPos = chosenXPos;
         this.yPos = chosenYPos;
-        this.xSize = chosenXSize;
-        this.ySize = chosenYSize;
     }
     
     public void update()
     {
         
-    }
-    
-    /**
-     * This method will contain the code that will be ran on collision
-     * 
-     * The method takes the collided object.
-    **/
-    public void collison(Object collidedObject)
-    {
-        //Epic code to cause EPIC EXPLOSION!!!!!
-    }
-    
-    /**
-     * This method will contain the code that will be ran
-     * on collision with the edges of the window
-    **/
-    public void windowEdge(JFrame collidedWindow)
-    {
-        //DEATH TO THE WINDOW!!!!!
-    }
-    
-    /**
-     * This method will contain the code that will be ran
-     * on collision with the edges of the screen
-    **/
-    public void screenEdge()
-    {
-        //DEATH TO THE SCREEN!!!!!
-    }
-    
-    public void paint(Graphics2D g2, int windowX, int windowY)
-    {
-        g2.setColor(Color.GRAY);
-        g2.drawRect(this.xPos - windowX, this.yPos - windowY, this.xSize, this.ySize);
     }
     
     public void setPosition(int chosenXPos, int chosenYPos)
@@ -78,18 +39,6 @@ public class Object
         this.yPos += (int)chosenYPos;
     }
     
-    public void setSize(int chosenXSize, int chosenYSize)
-    {
-        this.xSize = chosenXSize;
-        this.ySize = chosenYSize;
-    }
-    
-    public void updateSize(int chosenXSize, int chosenYSize)
-    {
-        this.xSize += chosenXSize;
-        this.ySize += chosenYSize;
-    }
-    
     public int getXPosition()
     {
         return this.xPos;
@@ -100,13 +49,4 @@ public class Object
         return this.yPos;
     }
     
-    public int getXSize()
-    {
-        return this.xSize;
-    }
-    
-    public int getYSize()
-    {
-        return this.ySize;
-    }
 }

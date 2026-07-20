@@ -9,7 +9,7 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Enemy extends Object
+public class Enemy extends RidgedBody2D
 {    
     private EnemyTypes type;
     private EnemyStats stats;
@@ -17,7 +17,7 @@ public class Enemy extends Object
     
     public Enemy(EnemyTypes chosenType, EnemyStats chosenStats, EnemyAI chosenAI)
     {
-        super(0, 0, 10, 10);
+        super(10, 10);
         
         this.type = chosenType;
         this.stats = chosenStats;

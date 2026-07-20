@@ -1,0 +1,27 @@
+#BlueJ class context
+comment0.target=RidgedBody2D
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ RidgedBody2D\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=chosenXSize\ chosenYSize
+comment1.target=RidgedBody2D(int,\ int)
+comment10.params=
+comment10.target=int\ getYSize()
+comment2.params=
+comment2.target=void\ update()
+comment3.params=collidedObject
+comment3.target=void\ collison(Object)
+comment3.text=\r\n\ This\ method\ will\ contain\ the\ code\ that\ will\ be\ ran\ on\ collision\r\n\ \r\n\ The\ method\ takes\ the\ collided\ object.\r\n
+comment4.params=collidedWindow
+comment4.target=void\ windowEdge(javax.swing.JFrame)
+comment4.text=\r\n\ This\ method\ will\ contain\ the\ code\ that\ will\ be\ ran\r\n\ on\ collision\ with\ the\ edges\ of\ the\ window\r\n
+comment5.params=
+comment5.target=void\ screenEdge()
+comment5.text=\r\n\ This\ method\ will\ contain\ the\ code\ that\ will\ be\ ran\r\n\ on\ collision\ with\ the\ edges\ of\ the\ screen\r\n
+comment6.params=g2\ windowX\ windowY
+comment6.target=void\ paint(java.awt.Graphics2D,\ int,\ int)
+comment7.params=chosenXSize\ chosenYSize
+comment7.target=void\ setSize(int,\ int)
+comment8.params=chosenXSize\ chosenYSize
+comment8.target=void\ updateSize(int,\ int)
+comment9.params=
+comment9.target=int\ getXSize()
+numComments=11

@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import javax.swing.JFrame;
 
-public class Projectile extends Object
+public class Projectile extends RidgedBody2D
 {
     private double speed;
     private double direction;
@@ -18,7 +18,7 @@ public class Projectile extends Object
     
     public Projectile(double projectileSpeed, double projectileDirection, boolean projectileTargetPlayer)
     {
-        super(0, 0, 10, 10); 
+        super(10, 10); 
         
         this.speed = projectileSpeed;
         this.direction = projectileDirection;

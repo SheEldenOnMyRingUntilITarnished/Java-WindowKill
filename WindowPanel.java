@@ -62,9 +62,12 @@ public class WindowPanel extends JPanel
         
         for(int i = 0; i < gameSystem.activeObjects.size(); i++)
         {
-            Object obj = gameSystem.activeObjects.get(i);
-            
-            obj.paint(g2, getWindowX(), getWindowY());
+            if(gameSystem.activeObjects.get(i) instanceof RidgedBody2D)
+            {
+                RidgedBody2D obj = (RidgedBody2D) gameSystem.activeObjects.get(i);
+                
+                obj.paint(g2, getWindowX(), getWindowY());
+            }
         }      
     }
     //Window Methods
