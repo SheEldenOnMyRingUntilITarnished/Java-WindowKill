@@ -18,6 +18,7 @@ public class PlayerStats
     int playerMaxHealth = 3;
     int playerSize = 40;
     
+    double playerInvincibility = 120;
     double playerAcceleration = 1;
     double playerSpeedCap = 6;
     int playerMaxSpeed = 10;

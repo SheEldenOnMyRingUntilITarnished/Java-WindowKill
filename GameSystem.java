@@ -14,8 +14,7 @@ public class GameSystem implements Runnable
 
     GameState gameState = GameState.GAME; //GAME
 
-    ArrayList<Object> activeObjects = new ArrayList<Object>();
-    ArrayList<Object> deactiveObjects = new ArrayList<Object>();
+    ArrayList<Object> objects = new ArrayList<Object>();
 
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
 
@@ -31,7 +30,7 @@ public class GameSystem implements Runnable
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        activeObjects.add(player);
+        objects.add(player);
         //setupWindow("W", 240, 240);
         //setupWindow("I", 240, 240);
         //setupWindow("N", 240, 240);
@@ -44,7 +43,7 @@ public class GameSystem implements Runnable
         //setupWindow("N", 240, 240);
         //setupWindow("Settings", 720, 1080);
         //setupWindow("Start", 720, 1080);
-        setupWindow("CharacterSelect", 1080, 720);
+        setupWindow("GAME", 1080, 720);
         gameThread.start();
     }
 
@@ -69,7 +68,10 @@ public class GameSystem implements Runnable
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
-
+        
+        awakeObjects();
+        startObjects();
+        
         while (gameThread != null)
         {
             currentTime = System.nanoTime();
@@ -81,9 +83,8 @@ public class GameSystem implements Runnable
             //Updates everything on a frame
             if(delta >= 1)
             {
-                inputManager.updateInput();
-                activeObjectsCollisionCheck();
-                updateActiveObjects();
+                objectsCollisionCheck();
+                updateObjects();
                 for(int i = 0; i < activeWindows.size(); i++)
                 {
                     activeWindows.get(i).getGamePanel().repaint();
@@ -109,25 +110,45 @@ public class GameSystem implements Runnable
         return angle;
     }
     
-    public void updateActiveObjects()
+    public void awakeObjects()
     {
-        for(int i = activeObjects.size() - 1; i >= 0; i--)
+        for(int i = objects.size() - 1; i >= 0; i--)
         {
-            Object obj = activeObjects.get(i);
+            Object obj = objects.get(i);
+            
+            obj.awake(); 
+        }
+    }
+    
+    public void startObjects()
+    {
+        for(int i = objects.size() - 1; i >= 0; i--)
+        {
+            Object obj = objects.get(i);
+            
+            obj.start(); 
+        }
+    }
+    
+    public void updateObjects()
+    {
+        for(int i = objects.size() - 1; i >= 0; i--)
+        {
+            Object obj = objects.get(i);
             
             obj.update(); 
         }
     }
     
-    public void activeObjectsCollisionCheck()
+    public void objectsCollisionCheck()
     {
-        if(activeObjects.size() > 1)
+        if(objects.size() > 1)
         {
-            for(int i = activeObjects.size() - 1; i >= 0; i--)
+            for(int i = objects.size() - 1; i >= 0; i--)
             {
-                if(activeObjects.get(i) instanceof RidgedBody2D)
+                if(objects.get(i) instanceof RidgedBody2D)
                 {
-                    RidgedBody2D a = (RidgedBody2D) activeObjects.get(i);
+                    RidgedBody2D a = (RidgedBody2D) objects.get(i);
                     
                     if(collisionWithScreenEdgeCheck(a)) 
                     {
@@ -146,11 +167,11 @@ public class GameSystem implements Runnable
                         continue;
                     }
                     
-                    for(int j = i + 1; j < activeObjects.size(); j++)
+                    for(int j = i + 1; j < objects.size(); j++)
                     {
-                        if(activeObjects.get(i) instanceof RidgedBody2D)
+                        if(objects.get(i) instanceof RidgedBody2D)
                         {
-                            RidgedBody2D b = (RidgedBody2D) activeObjects.get(i);
+                            RidgedBody2D b = (RidgedBody2D) objects.get(i);
                             if(collisionCheck(a, b))
                             {
                                 a.collison(b);

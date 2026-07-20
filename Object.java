@@ -22,6 +22,16 @@ public class Object
         this.yPos = chosenYPos;
     }
     
+    public void awake()
+    {
+        
+    }
+    
+    public void start()
+    {
+        
+    }
+    
     public void update()
     {
         

@@ -7,4 +7,6 @@ comment2.params=
 comment2.target=void\ update()
 comment3.params=setTime
 comment3.target=void\ setTimer(double)
-numComments=4
+comment4.params=
+comment4.target=boolean\ timerHasPassed()
+numComments=5

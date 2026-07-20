@@ -8,7 +8,7 @@ import java.awt.PointerInfo;
  * @author (your name)
  * @version 05/18/2026
  */
-public class InputManager
+public class InputManager extends Object
 {
     KeyHandler keyH = new KeyHandler();
     MouseHandler mouseH = new MouseHandler();
@@ -16,15 +16,16 @@ public class InputManager
     
     public InputManager(Player player)
     {
+        super(0,0);
         this.player = player;
     }
     
-    public void updateInput()
+    @Override
+    public void update()
     {
         PointerInfo currentMouse = MouseInfo.getPointerInfo();
         
         if(player.gameSystem.gameState == GameState.GAME){
-            
             //Movement
             if(keyH.upPressed == true)
             {
@@ -46,9 +47,7 @@ public class InputManager
             //Shooting
             if(mouseH.shootPressed == true)
             {
-                //System.out.println("Mouse Pressed");
-                //System.out.println("X: " + MouseInfo.getPointerInfo().getLocation().getX());
-                //System.out.println("Y: " + MouseInfo.getPointerInfo().getLocation().getY());
+                this.player.attemptShoot(currentMouse);
             }
             
             //Shop
@@ -56,7 +55,7 @@ public class InputManager
             {
                 System.out.println("SHOP");
                 EnemyManager enemyManger = player.gameSystem.enemyManger;
-                player.gameSystem.activeObjects.add(enemyManger.SpawnEnemy());
+                player.gameSystem.objects.add(enemyManger.SpawnEnemy());
             }
             else if(keyH.quickBossShopPressed == true)
             {

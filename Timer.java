@@ -23,4 +23,9 @@ public class Timer extends Object
     {
         this.currentTime = setTime;
     }
+    
+    public boolean timerHasPassed()
+    {
+        return currentTime < 0;
+    }
 }
