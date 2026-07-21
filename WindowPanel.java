@@ -78,6 +78,7 @@ public class WindowPanel extends JPanel
             return (int) window.getLocationOnScreen().getX();
         }
     }
+    
     public int getWindowY() {
         try {
             return (int) this.getLocationOnScreen().getY();
@@ -86,10 +87,19 @@ public class WindowPanel extends JPanel
         }
     }
     
+    public int getWindowWidth(){
+        return this.getWidth();
+    }
+
+    public int getWindowHeight(){
+        return this.getHeight();
+    }
+    
     public void setWindowPosition(int X, int Y) 
     {
         window.setLocation(X,Y);
     }
+    
     public void setWindowSize(double chosenWidth, double chosenHeight)
     {
         width = chosenWidth;

@@ -24,6 +24,10 @@ public class Player extends RidgedBody2D
     private double playerAccelerationX = 0;
     private double playerAccelerationY = 0;
     
+    private int playerSize = 0;
+    
+    //Timers
+    
     private double shootRate;
     private Timer shootTimer = new Timer();
     
@@ -32,8 +36,11 @@ public class Player extends RidgedBody2D
     
     public Player(GameSystem chosenGameSystem)
     {
-        super(40,40);
+        super(0,0);
+        
         gameSystem = chosenGameSystem;
+        
+        //Add System to the update manager
         gameSystem.objects.add(inputManager);
         gameSystem.objects.add(shootTimer);
         gameSystem.objects.add(invinceTimer);
@@ -42,6 +49,8 @@ public class Player extends RidgedBody2D
     @Override
     public void awake()
     {
+        playerSize = playerStats.playerSize;
+        
         shootRate = playerStats.playerFirerate;
         invinceTime = playerStats.playerInvincibility;
     }
@@ -49,12 +58,14 @@ public class Player extends RidgedBody2D
     @Override
     public void start()
     {
-        setPosition(
+        
+        this.setPosition(
         java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2, //X
         java.awt.Toolkit.getDefaultToolkit().getScreenSize().height / 2 //Y
         );
         
-        //setSize(playerStats.playerSize, playerStats.playerSize);
+        this.setSize(playerSize,playerSize);
+        
     }
     
     @Override
@@ -115,33 +126,54 @@ public class Player extends RidgedBody2D
      * the side the projectile hit.
     **/
     @Override
-    public void windowEdge(JFrame collidedWindow)
+    public boolean windowEdge(WindowArea collidedWindow)
     {
-        /*int windowX = getWindowX(collidedWindow);
-        int windowY = getWindowY(collidedWindow);
-        int windowWidth = getWindowWidth(collidedWindow);
-        int windowHeight = getWindowHeight(collidedWindow);
-        if(this.getXPosition() >= windowX + windowWidth)
+        WindowPanel windowPanel = collidedWindow.getGamePanel();
+        int windowX = windowPanel.getWindowX();
+        int windowY = windowPanel.getWindowY();
+        int windowWidth = windowPanel.getWindowWidth();
+        int windowHeight = windowPanel.getWindowHeight();
+        
+        int xPos = this.getXPosition();
+        int yPos = this.getYPosition();
+        
+        if(xPos >= windowX + windowWidth)
         {
             //Right wall
             
+            playerAccelerationX = 0;
+            
+            this.setPosition(xPos - playerSize, yPos);
+            
         }
-        else if(this.getXPosition() <= windowX + windowWidth)
+        else if(xPos <= windowX)
         {
             //Left wall
             
+            playerAccelerationX = 0;
+            
+            this.setPosition(xPos + playerSize, yPos);
+            
         }
-        
-        if(this.getYPosition() >= windowY + windowHeight)
+        else if(yPos <= windowY)
         {
             //Top wall
             
+            playerAccelerationY = 0;
+            
+            this.setPosition(xPos, yPos + playerSize);
+            
         }
-        else if(this.getYPosition() <= windowY + windowHeight)
+        else if(yPos >= windowY + windowHeight)
         {
             //Bottom wall
             
-        }*/
+            playerAccelerationY = 0;
+            
+            this.setPosition(xPos, yPos - playerSize);
+            
+        }
+        return false;
     }
     
     /**
@@ -149,9 +181,11 @@ public class Player extends RidgedBody2D
      * instead with the edge of the moniter.
     **/
     @Override
-    public void screenEdge()
+    public boolean screenEdge()
     {
+        
         //DEATH TO THE SCREEN!!!!!
+        return false;
     }
     
     @Override

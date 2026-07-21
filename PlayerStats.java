@@ -2,7 +2,7 @@
 /**
  * Write a description of class PlayerStats here.
  *
- * @author (your name)
+ * @author Zachary Quinn
  * @version 05/11/2026
  */
 public class PlayerStats
@@ -10,13 +10,13 @@ public class PlayerStats
     //Shooting Stats
     int playerProjectileWindowStrength = 50;
     double playerFirerate = 60; // in frames
-    double playerProjectileSpeed = 3;
+    double playerProjectileSpeed = 6;
     double playerProjectileRange = 1;
     int playerProjectileMultiShot = 1;
     
     //Player Stats
     int playerMaxHealth = 3;
-    int playerSize = 40;
+    int playerSize = 10;
     
     double playerInvincibility = 120;
     double playerAcceleration = 1;

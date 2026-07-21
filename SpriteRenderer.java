@@ -4,7 +4,7 @@ import java.awt.Color;
 /**
  * Write a description of class SpriteRenderer here.
  *
- * @author (your name)
+ * @author Zachary Quinn
  * @version (a version number or a date)
  */
 public class SpriteRenderer extends Object

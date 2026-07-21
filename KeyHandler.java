@@ -1,7 +1,7 @@
 /**
  * Write a description of class KeyHandler here.
  *
- * @author (your name)
+ * @author Zachary Quinn
  * @version 05/11/2026
 */
  

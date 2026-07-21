@@ -15,9 +15,20 @@ public class Enemy extends RidgedBody2D
     private EnemyStats stats;
     private EnemyAI ai;
     
+    private int targetX;
+    private int targetY;
+    
+    private double accelerationSpeed = 1;
+    
+    private double accelerationX = 0;
+    private double accelerationY = 0;
+    
+    private double accelerationCap = 6;
+    private double friction = 0.1;
+    
     public Enemy(EnemyTypes chosenType, EnemyStats chosenStats, EnemyAI chosenAI)
     {
-        super(10, 10);
+        super(40, 40);
         
         this.type = chosenType;
         this.stats = chosenStats;
@@ -28,13 +39,23 @@ public class Enemy extends RidgedBody2D
     public void update()
     {
         
-        //int targetX = 
-        //int targetY = 
-        
         double speed = stats.getSpeed();
-        //double angle = Math.atan2(targetY - getYPosition(), targetX - getXPosition());
+        double angle = Math.atan2(this.targetY - getYPosition(), this.targetX - getXPosition());
         
-        //this.updatePosition((int)Math.round(speed * Math.cos(angle)), (int)Math.round(speed * Math.sin(angle)));
+        accelerationX += Math.round(accelerationSpeed * Math.cos(angle));
+        accelerationY += Math.round(accelerationSpeed * Math.sin(angle));
+        
+        if(accelerationX > 0) accelerationX -= friction;
+        else if(accelerationX < 0) accelerationX += friction;
+        else if(accelerationY > 0) accelerationY -= friction;
+        else if(accelerationY < 0) accelerationY += friction;
+        
+        if(accelerationX > accelerationCap) accelerationX = accelerationCap;
+        else if(accelerationX < -accelerationCap) accelerationX = -accelerationCap;
+        else if(accelerationY > accelerationCap) accelerationY = accelerationCap;
+        else if(accelerationY < -accelerationCap) accelerationY = -accelerationCap;
+        
+        updatePosition(Math.round(accelerationX * Math.cos(angle)),Math.round(accelerationY * Math.sin(angle)));
     }
     
     @Override
@@ -44,11 +65,9 @@ public class Enemy extends RidgedBody2D
         g2.drawRect(getXPosition() - windowX, getYPosition() - windowY, getXSize(), getYSize());
     }
     
-    public void updateEnemy(int targetX, int targetY)
+    public void updateTargetPosition(int chosenTargetX, int chosenTargetY)
     {
-        double speed = stats.getSpeed();
-        double angle = Math.atan2(targetY - getYPosition(), targetX - getXPosition());
-        
-        this.updatePosition((int)Math.round(speed * Math.cos(angle)), (int)Math.round(speed * Math.sin(angle)));
+        targetX = chosenTargetX;
+        targetY = chosenTargetY;
     }
 }

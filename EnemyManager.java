@@ -6,8 +6,28 @@ import java.util.ArrayList;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class EnemyManager
+public class EnemyManager extends Object
 {
+    private Player player = null;
+    
+    public EnemyManager(Player chosenPlayer)
+    {
+        super(0,0);
+        this.player = chosenPlayer;
+    }
+    
+    @Override
+    public void awake()
+    {
+        
+    }
+    
+    @Override
+    public void update()
+    {
+        
+    }
+    
     public Enemy SpawnEnemy()
     {
         EnemyTypes testEnemyType = EnemyTypes.SQUARE;//Sets up the enemyType

@@ -5,7 +5,7 @@ import java.awt.PointerInfo;
 /**
  * Write a description of class InputManager here.
  *
- * @author (your name)
+ * @author Zachary Quinn
  * @version 05/18/2026
  */
 public class InputManager extends Object

@@ -5,7 +5,7 @@ import java.awt.Color;
 /**
  * Write a description of class RidgedBody2D here.
  *
- * @author (your name)
+ * @author Zachary Quinn
  * @version (a version number or a date)
  */
 public class RidgedBody2D extends Object
@@ -16,6 +16,8 @@ public class RidgedBody2D extends Object
     public RidgedBody2D(int chosenXSize, int chosenYSize)
     {
         super(0,0);
+        this.xSize = chosenXSize;
+        this.ySize = chosenYSize;
     }
     
     @Override
@@ -38,8 +40,9 @@ public class RidgedBody2D extends Object
      * This method will contain the code that will be ran
      * on collision with the edges of the window
     **/
-    public void windowEdge(JFrame collidedWindow)
+    public boolean windowEdge(WindowArea collidedWindow)
     {
+        return false;
         //DEATH TO THE WINDOW!!!!!
     }
     
@@ -47,8 +50,9 @@ public class RidgedBody2D extends Object
      * This method will contain the code that will be ran
      * on collision with the edges of the screen
     **/
-    public void screenEdge()
+    public boolean screenEdge()
     {
+        return false;
         //DEATH TO THE SCREEN!!!!!
     }
     

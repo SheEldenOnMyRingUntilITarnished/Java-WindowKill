@@ -17,9 +17,8 @@ public class GameSystem implements Runnable
     ArrayList<Object> objects = new ArrayList<Object>();
 
     ArrayList<WindowArea> activeWindows = new ArrayList<WindowArea>();
-
-    EnemyManager enemyManger = new EnemyManager();
     Player player = new Player(this);
+    EnemyManager enemyManger = new EnemyManager(player);
     InputManager inputManager = player.inputManager;
 
     WindowPanel window = null;
@@ -152,18 +151,21 @@ public class GameSystem implements Runnable
                     
                     if(collisionWithScreenEdgeCheck(a)) 
                     {
-                        a.screenEdge();
-                        //activeObjects.remove(i);
+                        if(a.screenEdge())
+                        {
+                            objects.remove(i);
+                        }
                         continue;
                     }
                     
-                    JFrame comparedWindow = activeWindows.get(0).getWindow();
+                    WindowArea comparedWindow = activeWindows.get(0);
                     
-                    if(collisionWithWindowCheck(a, comparedWindow))
+                    if(collisionWithWindowCheck(a, comparedWindow.getWindow()))
                     {
-                        System.out.println("WOW");
-                        a.windowEdge(comparedWindow);
-                        //activeObjects.remove(i);
+                        if(a.windowEdge(comparedWindow))
+                        {
+                            objects.remove(i);
+                        }
                         continue;
                     }
                     
