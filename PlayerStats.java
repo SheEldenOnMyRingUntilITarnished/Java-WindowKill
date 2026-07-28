@@ -8,6 +8,9 @@
 public class PlayerStats
 {  
     //Shooting Stats
+    int projectileWidth = 30;
+    int projectileHeight = 10;
+    
     int playerProjectileWindowStrength = 50;
     double playerFirerate = 60; // in frames
     double playerProjectileSpeed = 6;
@@ -16,10 +19,10 @@ public class PlayerStats
     
     //Player Stats
     int playerMaxHealth = 3;
-    int playerSize = 10;
+    int playerSize = 30;
     
     double playerInvincibility = 120;
-    double playerAcceleration = 1;
+    double playerAcceleration = 2;
     double playerSpeedCap = 6;
     int playerMaxSpeed = 10;
     int playerDashDistance = 33;

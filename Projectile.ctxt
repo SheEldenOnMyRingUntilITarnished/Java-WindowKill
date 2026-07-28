@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Projectile
-comment1.params=projectileSpeed\ projectileDirection\ projectileFromPlayer
-comment1.target=Projectile(double,\ double,\ boolean)
+comment1.params=xSize\ ySize\ projectileSpeed\ projectileDirection\ projectileFromPlayer\ projectileCanHurtPlayer
+comment1.target=Projectile(int,\ int,\ double,\ double,\ boolean,\ boolean)
 comment1.text=\r\n\ This\ class\ takes\:\r\n\ \r\n\ (double\ projectileSpeed,\ double\ projectileDirection,\ boolean\ projectileFromPlayer)\r\n
 comment10.params=
 comment10.target=boolean\ getFromPlayer()

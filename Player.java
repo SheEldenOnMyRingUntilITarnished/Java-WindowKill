@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import javax.swing.JFrame;
 import java.awt.PointerInfo;
 
@@ -131,8 +133,8 @@ public class Player extends RidgedBody2D
         WindowPanel windowPanel = collidedWindow.getGamePanel();
         int windowX = windowPanel.getWindowX();
         int windowY = windowPanel.getWindowY();
-        int windowWidth = windowPanel.getWindowWidth();
-        int windowHeight = windowPanel.getWindowHeight();
+        int windowWidth = collidedWindow.getWindowWidth();
+        int windowHeight = collidedWindow.getWindowHeight();
         
         int xPos = this.getXPosition();
         int yPos = this.getYPosition();
@@ -144,7 +146,6 @@ public class Player extends RidgedBody2D
             playerAccelerationX = 0;
             
             this.setPosition(xPos - playerSize, yPos);
-            
         }
         else if(xPos <= windowX)
         {
@@ -153,7 +154,6 @@ public class Player extends RidgedBody2D
             playerAccelerationX = 0;
             
             this.setPosition(xPos + playerSize, yPos);
-            
         }
         else if(yPos <= windowY)
         {
@@ -162,7 +162,6 @@ public class Player extends RidgedBody2D
             playerAccelerationY = 0;
             
             this.setPosition(xPos, yPos + playerSize);
-            
         }
         else if(yPos >= windowY + windowHeight)
         {
@@ -171,7 +170,6 @@ public class Player extends RidgedBody2D
             playerAccelerationY = 0;
             
             this.setPosition(xPos, yPos - playerSize);
-            
         }
         return false;
     }
@@ -192,7 +190,14 @@ public class Player extends RidgedBody2D
     public void paint(Graphics2D g2, int windowX, int windowY)
     {
         g2.setColor(Color.RED);
-        g2.drawRect(getXPosition() - windowX, getYPosition() - windowY, getXSize(), getYSize());
+        int playerX = this.getXPosition();
+        int playerY = this.getYPosition();
+        
+        int playerSizeX = this.getXSize();
+        int playerSizeY = this.getYSize();
+        
+        Shape circle = new Ellipse2D.Double(playerX - windowX - (playerSizeX/2), playerY - windowY - (playerSizeY/2), this.playerSize, this.playerSize);
+        g2.draw(circle);
     }
     
     public void attemptShoot(PointerInfo currentMouse)
@@ -201,7 +206,7 @@ public class Player extends RidgedBody2D
         {
             shootTimer.setTimer(shootRate);
             
-            Projectile newPlayerProjectile = new Projectile(playerStats.playerProjectileSpeed, gameSystem.calculateTheAngleBetweenTwoPoints(getXPosition(), getYPosition(), currentMouse.getLocation().getX(), currentMouse.getLocation().getY()) * Math.PI/180,false);
+            Projectile newPlayerProjectile = new Projectile(playerStats.projectileWidth, playerStats.projectileHeight, playerStats.playerProjectileSpeed, gameSystem.calculateTheAngleBetweenTwoPoints(getXPosition(), getYPosition(), currentMouse.getLocation().getX(), currentMouse.getLocation().getY()) * Math.PI/180,true,false);
             newPlayerProjectile.setPosition(getXPosition(),getYPosition());
             gameSystem.objects.add(newPlayerProjectile);
         }

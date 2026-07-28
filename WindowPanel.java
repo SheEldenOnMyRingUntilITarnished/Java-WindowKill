@@ -12,9 +12,16 @@
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Dimension;
+import java.awt.BasicStroke;
+
+/**
+ * Graphics Related Imports
+**/
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 
 public class WindowPanel extends JPanel
 {
@@ -27,9 +34,8 @@ public class WindowPanel extends JPanel
     private double width;
     private double height;
     
-    public WindowPanel(JFrame window, GameSystem chosenGameSystem, int xSize, int ySize) 
+    public WindowPanel(JFrame window, GameSystem chosenGameSystem) 
     {
-        this.setPreferredSize(new Dimension(xSize,ySize));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.gameSystem = chosenGameSystem;
@@ -53,6 +59,12 @@ public class WindowPanel extends JPanel
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        float strokeThickness = 3;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        
+        g2.setStroke(new BasicStroke(strokeThickness));
         
         if(this.windowType.equals("null"))
         {
@@ -70,6 +82,7 @@ public class WindowPanel extends JPanel
             }
         }      
     }
+    
     //Window Methods
     public int getWindowX() {
         try {
@@ -87,23 +100,8 @@ public class WindowPanel extends JPanel
         }
     }
     
-    public int getWindowWidth(){
-        return this.getWidth();
-    }
-
-    public int getWindowHeight(){
-        return this.getHeight();
-    }
-    
     public void setWindowPosition(int X, int Y) 
     {
         window.setLocation(X,Y);
-    }
-    
-    public void setWindowSize(double chosenWidth, double chosenHeight)
-    {
-        width = chosenWidth;
-        height = chosenHeight;
-        window.setSize((int)width,(int)height);
     }
 }

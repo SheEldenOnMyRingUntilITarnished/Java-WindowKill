@@ -9,6 +9,8 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import javax.swing.JFrame;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
 public class Projectile extends RidgedBody2D
 {
@@ -23,9 +25,11 @@ public class Projectile extends RidgedBody2D
      * 
      * (double projectileSpeed, double projectileDirection, boolean projectileFromPlayer)
     **/
-    public Projectile(double projectileSpeed, double projectileDirection, boolean projectileFromPlayer)
+    public Projectile(int xSize, int ySize, double projectileSpeed, double projectileDirection, boolean projectileFromPlayer, boolean projectileCanHurtPlayer)
     {
-        super(10, 10); 
+        super(xSize, ySize); 
+        
+        this.canHurtPlayer = projectileCanHurtPlayer;
         
         this.speed = projectileSpeed;
         this.direction = projectileDirection;
@@ -80,33 +84,46 @@ public class Projectile extends RidgedBody2D
     public boolean windowEdge(WindowArea collidedWindow)
     {
         WindowPanel windowPanel = collidedWindow.getGamePanel();
-        int windowX = windowPanel.getWindowX();
-        int windowY = windowPanel.getWindowY();
-        int windowWidth = windowPanel.getWindowWidth();
-        int windowHeight = windowPanel.getWindowHeight();
+        int windowX = collidedWindow.getWindowXPositionAccountingForTopBar();
+        int windowY = collidedWindow.getWindowYPositionAccountingForTopBar();
+        int windowWidth = collidedWindow.getWindowWidth();
+        int windowHeight = collidedWindow.getWindowHeight();
+        
+        if(!fromPlayer) //May change if i give gimics to the enemy bullets
+        {
+            return false;
+        }
         
         if(this.getXPosition() >= windowX + windowWidth)
         {
             //Right wall
             System.out.println("Right");
+            collidedWindow.setWindowSize(windowWidth + 50,windowHeight);
+            windowPanel.setWindowPosition(windowX,windowY);
             return true;
         }
         else if(this.getXPosition() <= windowX)
         {
             //Left wall
             System.out.println("Left");
+            collidedWindow.setWindowSize(windowWidth + 50,windowHeight);
+            windowPanel.setWindowPosition(windowX,windowY);
             return true;
         }
         else if(this.getYPosition() <= windowY)
         {
             //Top wall
             System.out.println("Top");
+            collidedWindow.setWindowSize(windowWidth ,windowHeight + 50);
+            windowPanel.setWindowPosition(windowX,windowY);
             return true;
         }
         else if(this.getYPosition() >= windowY + windowHeight)
         {
             //Bottom wall
             System.out.println("Bottom");
+            collidedWindow.setWindowSize(windowWidth ,windowHeight + 50);
+            windowPanel.setWindowPosition(windowX - 6,windowY - 29);
             return true;
         }
         return false;
@@ -135,8 +152,18 @@ public class Projectile extends RidgedBody2D
     @Override
     public void paint(Graphics2D g2, int windowX, int windowY)
     {
-        g2.setColor(Color.RED);
-        g2.drawRect(getXPosition() - windowX, getYPosition() - windowY, getXSize(), getYSize());
+        g2.setColor(Color.WHITE);
+        int positionX = this.getXPosition();
+        int positionY = this.getYPosition();
+        
+        int sizeX = this.getXSize();
+        int sizeY = this.getYSize();
+        
+        Shape circle = new Ellipse2D.Double(positionX - windowX - (sizeX/2), positionY - windowY - (sizeY/2), sizeX, sizeY);
+        g2.rotate(direction, positionX - windowX - (sizeX/2), positionY - windowY - (sizeY/2));
+        g2.draw(circle);
+        g2.fill(circle);
+        g2.dispose();
     }
     
     /**

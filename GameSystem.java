@@ -42,13 +42,14 @@ public class GameSystem implements Runnable
         //setupWindow("N", 240, 240);
         //setupWindow("Settings", 720, 1080);
         //setupWindow("Start", 720, 1080);
-        setupWindow("GAME", 1080, 720);
+        setupWindow("GAME", 300, 300);
         gameThread.start();
     }
 
     public void setupWindow(String chosenWindowType, int chosenWidth, int chosenHeight)
     {
         WindowArea windowArea = new WindowArea(this, chosenWidth, chosenHeight);
+        objects.add(windowArea);
         activeWindows.add(windowArea);
         window = windowArea.getGamePanel();
         window.setWindowType(chosenWindowType);
