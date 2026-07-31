@@ -88,6 +88,12 @@ public class WindowArea extends Object
         return this.height;
     }
     
+    public void setWindowPosition(int X, int Y)
+    {
+        this.setPosition(X,Y);
+        this.windowPanel.setWindowPosition(getWindowXPositionAccountingForTopBar(),getWindowYPositionAccountingForTopBar());
+    }
+    
     public int getWindowXPositionAccountingForTopBar()
     {
         return this.getXPosition() - leftBorderWidth;
@@ -96,6 +102,16 @@ public class WindowArea extends Object
     public int getWindowYPositionAccountingForTopBar()
     {
         return this.getYPosition() - titleBarHeight;
+    }
+    
+    public int getWindowXPosition()
+    {
+        return this.getXPosition();
+    }
+    
+    public int getWindowYPosition()
+    {
+        return this.getYPosition();
     }
     
     public JFrame getWindow()

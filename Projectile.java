@@ -83,9 +83,9 @@ public class Projectile extends RidgedBody2D
     @Override
     public boolean windowEdge(WindowArea collidedWindow)
     {
-        WindowPanel windowPanel = collidedWindow.getGamePanel();
-        int windowX = collidedWindow.getWindowXPositionAccountingForTopBar();
-        int windowY = collidedWindow.getWindowYPositionAccountingForTopBar();
+        //WindowPanel windowPanel = collidedWindow.getGamePanel();
+        int windowX = collidedWindow.getWindowXPosition();
+        int windowY = collidedWindow.getWindowYPosition();
         int windowWidth = collidedWindow.getWindowWidth();
         int windowHeight = collidedWindow.getWindowHeight();
         
@@ -99,7 +99,7 @@ public class Projectile extends RidgedBody2D
             //Right wall
             System.out.println("Right");
             collidedWindow.setWindowSize(windowWidth + 50,windowHeight);
-            windowPanel.setWindowPosition(windowX,windowY);
+            collidedWindow.setWindowPosition(windowX,windowY);
             return true;
         }
         else if(this.getXPosition() <= windowX)
@@ -107,7 +107,7 @@ public class Projectile extends RidgedBody2D
             //Left wall
             System.out.println("Left");
             collidedWindow.setWindowSize(windowWidth + 50,windowHeight);
-            windowPanel.setWindowPosition(windowX,windowY);
+            collidedWindow.setWindowPosition(windowX - 50,windowY);
             return true;
         }
         else if(this.getYPosition() <= windowY)
@@ -115,7 +115,7 @@ public class Projectile extends RidgedBody2D
             //Top wall
             System.out.println("Top");
             collidedWindow.setWindowSize(windowWidth ,windowHeight + 50);
-            windowPanel.setWindowPosition(windowX,windowY);
+            collidedWindow.setWindowPosition(windowX,windowY - 50);
             return true;
         }
         else if(this.getYPosition() >= windowY + windowHeight)
@@ -123,7 +123,7 @@ public class Projectile extends RidgedBody2D
             //Bottom wall
             System.out.println("Bottom");
             collidedWindow.setWindowSize(windowWidth ,windowHeight + 50);
-            windowPanel.setWindowPosition(windowX - 6,windowY - 29);
+            collidedWindow.setWindowPosition(windowX,windowY);
             return true;
         }
         return false;

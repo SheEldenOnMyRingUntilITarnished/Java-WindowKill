@@ -103,5 +103,6 @@ public class WindowPanel extends JPanel
     public void setWindowPosition(int X, int Y) 
     {
         window.setLocation(X,Y);
+        
     }
 }
