@@ -25,7 +25,12 @@ public class Button extends UI_Collider
     @Override
     public void mouseChecks(PointerInfo currentMouse)
     {
+        //mouse data
+        double mouseX = currentMouse.getLocation().getX();
+        double mouseY = currentMouse.getLocation().getY();
+        
         //check mouse hover
+        //if()
         
         //check mouse click on button
         
