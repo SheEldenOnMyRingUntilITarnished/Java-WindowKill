@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=UI_Collider
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ UI_Collider\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=width\ height
+comment1.target=UI_Collider(int,\ int)
+comment2.params=collidedObject
+comment2.target=void\ collison(Object)
+comment3.params=chosenXSize\ chosenYSize
+comment3.target=void\ setSize(int,\ int)
+comment4.params=
+comment4.target=int\ getXSize()
+comment5.params=
+comment5.target=int\ getYSize()
+numComments=6

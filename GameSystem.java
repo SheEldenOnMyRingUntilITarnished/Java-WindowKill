@@ -246,9 +246,6 @@ public class GameSystem implements Runnable
         if(aX < bX + bWidth && aX + aWidth > bX && //X Checks
         aY < bY + bHeight && aY + aHeight > bY)//Y Checks
         {
-            //int overlapX = Math.min(aX + aWidth, bX + bWidth) - Math.max(aX, bX);
-            //int overlapY = Math.min(aY + aHeight, bY + bHeight) - Math.max(aY, bY);
-
             return true;
         }
         else
