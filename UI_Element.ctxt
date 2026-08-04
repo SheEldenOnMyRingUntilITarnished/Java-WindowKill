@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=UI_Element
+comment1.params=
+comment1.target=UI_Element()
+comment2.params=currentMouse
+comment2.target=void\ mouseChecks(java.awt.PointerInfo)
+numComments=3

@@ -3,4 +3,6 @@ comment0.target=EnemyStats
 comment0.text=\r\n\ \r\n
 comment1.params=chosenHealth\ chosenSpeed\ chosenAttackRate
 comment1.target=EnemyStats(double,\ double,\ double)
-numComments=2
+comment2.params=
+comment2.target=double\ getSpeed()
+numComments=3
