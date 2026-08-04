@@ -12,7 +12,7 @@ public class PlayerStats
     int projectileHeight = 10;
     
     int playerProjectileWindowStrength = 50;
-    double playerFirerate = 60; // in frames
+    double playerFirerate = 30; // in frames
     double playerProjectileSpeed = 6;
     double playerProjectileRange = 1;
     int playerProjectileMultiShot = 1;

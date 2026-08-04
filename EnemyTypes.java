@@ -1,7 +1,5 @@
-import lang.stride.*;
-
 /**
- * 
+ * Enum for Enemy Types
  */
 public enum EnemyTypes
 {

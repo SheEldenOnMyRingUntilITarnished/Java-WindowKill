@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 
 public class KeyHandler implements KeyListener
 {
-    public boolean upPressed, downPressed, leftPressed, rightPressed, dashPressed, pausePressed, quickShopPressed, quickBossShopPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, pausePressed, quickShopPressed, quickBossShopPressed;
     
     @Override
     public void keyTyped(KeyEvent e)
@@ -36,9 +36,6 @@ public class KeyHandler implements KeyListener
         }
         if(code == KeyEvent.VK_D){
             rightPressed = true;
-        }
-        if(code == KeyEvent.VK_SHIFT){
-            dashPressed = true;
         }
         if(code == KeyEvent.VK_ESCAPE){
             pausePressed = true;
@@ -68,9 +65,6 @@ public class KeyHandler implements KeyListener
         }
         if(code == KeyEvent.VK_D){
             rightPressed = false;
-        }
-        if(code == KeyEvent.VK_SHIFT){
-            dashPressed = false;
         }
         if(code == KeyEvent.VK_ESCAPE){
             pausePressed = false;

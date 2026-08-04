@@ -60,12 +60,14 @@ public class Projectile extends RidgedBody2D
     {
         if(collidedObject instanceof Enemy && fromPlayer)
         {
-            //do nothin for now
+            Enemy enemy = (Enemy) collidedObject;
+            enemy.takeDamage(1);
+            this.destroy();
         }
         
         if(collidedObject instanceof Player && canHurtPlayer)
         {
-            //do nothin for now
+            this.destroy();
         }
     }
     
@@ -83,47 +85,44 @@ public class Projectile extends RidgedBody2D
     @Override
     public boolean windowEdge(WindowArea collidedWindow)
     {
-        //WindowPanel windowPanel = collidedWindow.getGamePanel();
         int windowX = collidedWindow.getWindowXPosition();
         int windowY = collidedWindow.getWindowYPosition();
         int windowWidth = collidedWindow.getWindowWidth();
         int windowHeight = collidedWindow.getWindowHeight();
         
-        if(!fromPlayer) //May change if i give gimics to the enemy bullets
+        if(!fromPlayer)
         {
             return false;
         }
         
+        int expandAmount = 50;
+        
         if(this.getXPosition() >= windowX + windowWidth)
         {
             //Right wall
-            System.out.println("Right");
-            collidedWindow.setWindowSize(windowWidth + 50,windowHeight);
-            collidedWindow.setWindowPosition(windowX,windowY);
+            collidedWindow.setWindowSize(windowWidth + expandAmount, windowHeight);
+            collidedWindow.setWindowPosition(windowX, windowY);
             return true;
         }
         else if(this.getXPosition() <= windowX)
         {
             //Left wall
-            System.out.println("Left");
-            collidedWindow.setWindowSize(windowWidth + 50,windowHeight);
-            collidedWindow.setWindowPosition(windowX - 50,windowY);
+            collidedWindow.setWindowSize(windowWidth + expandAmount, windowHeight);
+            collidedWindow.setWindowPosition(windowX - expandAmount, windowY);
             return true;
         }
         else if(this.getYPosition() <= windowY)
         {
             //Top wall
-            System.out.println("Top");
-            collidedWindow.setWindowSize(windowWidth ,windowHeight + 50);
-            collidedWindow.setWindowPosition(windowX,windowY - 50);
+            collidedWindow.setWindowSize(windowWidth, windowHeight + expandAmount);
+            collidedWindow.setWindowPosition(windowX, windowY - expandAmount);
             return true;
         }
         else if(this.getYPosition() >= windowY + windowHeight)
         {
             //Bottom wall
-            System.out.println("Bottom");
-            collidedWindow.setWindowSize(windowWidth ,windowHeight + 50);
-            collidedWindow.setWindowPosition(windowX,windowY);
+            collidedWindow.setWindowSize(windowWidth, windowHeight + expandAmount);
+            collidedWindow.setWindowPosition(windowX, windowY);
             return true;
         }
         return false;
@@ -152,18 +151,20 @@ public class Projectile extends RidgedBody2D
     @Override
     public void paint(Graphics2D g2, int windowX, int windowY)
     {
-        g2.setColor(Color.WHITE);
-        int positionX = this.getXPosition();
-        int positionY = this.getYPosition();
+        Graphics2D g2d = (Graphics2D) g2.create();
+        g2d.setColor(Color.WHITE);
         
+        int drawX = this.getXPosition() - windowX;
+        int drawY = this.getYPosition() - windowY;
         int sizeX = this.getXSize();
         int sizeY = this.getYSize();
         
-        Shape circle = new Ellipse2D.Double(positionX - windowX - (sizeX/2), positionY - windowY - (sizeY/2), sizeX, sizeY);
-        g2.rotate(direction, positionX - windowX - (sizeX/2), positionY - windowY - (sizeY/2));
-        g2.draw(circle);
-        g2.fill(circle);
-        g2.dispose();
+        // Rotate around center point of projectile cause thats good
+        g2d.rotate(direction, drawX, drawY);
+        Shape bulletShape = new Ellipse2D.Double(drawX - (sizeX / 2.0), drawY - (sizeY / 2.0), sizeX, sizeY);
+        g2d.draw(bulletShape);
+        g2d.fill(bulletShape);
+        g2d.dispose();
     }
     
     /**

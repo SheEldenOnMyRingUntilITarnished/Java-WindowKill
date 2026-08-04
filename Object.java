@@ -15,6 +15,7 @@ public class Object
 {
     private int xPos;
     private int yPos;
+    private boolean isDestroyed = false;
     
     public Object(int chosenXPos, int chosenYPos)
     {
@@ -59,4 +60,13 @@ public class Object
         return this.yPos;
     }
     
+    public boolean isDestroyed()
+    {
+        return this.isDestroyed;
+    }
+    
+    public void destroy()
+    {
+        this.isDestroyed = true;
+    }
 }

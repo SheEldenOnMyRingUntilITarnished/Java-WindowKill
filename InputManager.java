@@ -25,52 +25,52 @@ public class InputManager extends Object
     {
         PointerInfo currentMouse = MouseInfo.getPointerInfo();
         
-        if(player.gameSystem.gameState == GameState.GAME){
-            //Movement
-            if(keyH.upPressed == true)
-            {
-                this.player.acceleratePlayerY(-this.player.playerStats.playerAcceleration);
+        //mouse checks for UI
+        if (player != null && player.gameSystem != null) {
+            for (int i = 0; i < player.gameSystem.objects.size(); i++) {
+                if (i < player.gameSystem.objects.size() && player.gameSystem.objects.get(i) instanceof UI_Element) {
+                    UI_Element ui = (UI_Element) player.gameSystem.objects.get(i);
+                    ui.mouseChecks(currentMouse);
+                    
+                    if (mouseH.shootPressed && ui instanceof Button) {
+                        Button btn = (Button) ui;
+                        if (btn.isHovered()) {
+                            mouseH.shootPressed = false; // consume click
+                            btn.triggerClick();
+                        }
+                    }
+                }
             }
-            if(keyH.downPressed == true)
-            {
-                this.player.acceleratePlayerY(this.player.playerStats.playerAcceleration);
-            }
-            if(keyH.leftPressed == true)
-            {
-                this.player.acceleratePlayerX(-this.player.playerStats.playerAcceleration);
-            }
-            if(keyH.rightPressed == true)
-            {
-                this.player.acceleratePlayerX(this.player.playerStats.playerAcceleration);
-            }
+        }
+        
+        if (player != null && player.gameSystem != null) {
+            GameState state = player.gameSystem.gameState;
             
-            //Shooting
-            if(mouseH.shootPressed == true)
-            {
-                this.player.attemptShoot(currentMouse);
-            }
-            
-            //Shop
-            if(keyH.quickShopPressed == true)
-            {
-                System.out.println("SHOP");
-                EnemyManager enemyManger = player.gameSystem.enemyManger;
-                player.gameSystem.objects.add(enemyManger.SpawnEnemy());
-            }
-            else if(keyH.quickBossShopPressed == true)
-            {
-                System.out.println("BOSS_SHOP");
-            }
-            //Other
-            else if(keyH.pausePressed == true)
-            {
-                System.out.println("PAUSE");
-            }
-        }else
-        {
-            if(keyH.pausePressed == true)
-            {
-                System.out.println("WOW PAUSING THE MAIN MENU????");
+            // Player controls only active during GAME state :)
+            if (state == GameState.GAME) {
+                // Movement
+                if(keyH.upPressed)
+                {
+                    this.player.acceleratePlayerY(-this.player.playerStats.playerAcceleration);
+                }
+                if(keyH.downPressed)
+                {
+                    this.player.acceleratePlayerY(this.player.playerStats.playerAcceleration);
+                }
+                if(keyH.leftPressed)
+                {
+                    this.player.acceleratePlayerX(-this.player.playerStats.playerAcceleration);
+                }
+                if(keyH.rightPressed)
+                {
+                    this.player.acceleratePlayerX(this.player.playerStats.playerAcceleration);
+                }
+                
+                // Shooting
+                if(mouseH.shootPressed)
+                {
+                    this.player.attemptShoot(currentMouse);
+                }
             }
         }
     }

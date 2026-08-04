@@ -1,12 +1,15 @@
 #BlueJ class context
 comment0.target=EnemyManager
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ EnemyManager\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=chosenPlayer
 comment1.target=EnemyManager(Player)
-comment2.params=
-comment2.target=void\ awake()
+comment2.params=chosenGameSystem
+comment2.target=void\ setGameSystem(GameSystem)
 comment3.params=
-comment3.target=void\ update()
+comment3.target=void\ awake()
 comment4.params=
-comment4.target=Enemy\ SpawnEnemy()
-numComments=5
+comment4.target=void\ update()
+comment5.params=
+comment5.target=Enemy\ SpawnEnemy()
+comment6.params=chosenType
+comment6.target=Enemy\ createEnemy(EnemyTypes)
+numComments=7

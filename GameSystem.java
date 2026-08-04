@@ -12,7 +12,7 @@ public class GameSystem implements Runnable
 {   
     Thread gameThread;
 
-    GameState gameState = GameState.GAME; //GAME
+    GameState gameState = GameState.MAIN_MENU;
 
     ArrayList<Object> objects = new ArrayList<Object>();
 
@@ -25,25 +25,145 @@ public class GameSystem implements Runnable
 
     private int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
     private int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+    
+    private int gameTimeFrames = 0;
 
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        objects.add(player);
-        //setupWindow("W", 240, 240);
-        //setupWindow("I", 240, 240);
-        //setupWindow("N", 240, 240);
-        //setupWindow("D", 240, 240);
-        //setupWindow("O", 240, 240);
-        //setupWindow("W", 240, 240);
-        //setupWindow("G", 240, 240);
-        //setupWindow("O", 240, 240);
-        //setupWindow("O", 240, 240);
-        //setupWindow("N", 240, 240);
-        //setupWindow("Settings", 720, 1080);
-        //setupWindow("Start", 720, 1080);
-        setupWindow("GAME", 300, 300);
+        loadMainMenu();
         gameThread.start();
+    }
+
+    public void loadMainMenu()
+    {
+        gameState = GameState.MAIN_MENU;
+        
+        for (int i = 0; i < activeWindows.size(); i++) {
+            if (activeWindows.get(i).getWindow() != null) {
+                activeWindows.get(i).getWindow().dispose();
+            }
+        }
+        activeWindows.clear();
+        objects.clear();
+        
+        objects.add(inputManager);
+        
+        int centerX = screenWidth / 2;
+        int centerY = screenHeight / 2;
+        
+        WindowArea titleWin = new WindowArea(this, 360, 130);
+        titleWin.setWindowPosition(centerX - 180, centerY - 150);
+        titleWin.getGamePanel().setWindowType("TITLE");
+        objects.add(titleWin);
+        activeWindows.add(titleWin);
+        
+        WindowArea startWin = new WindowArea(this, 240, 130);
+        startWin.setWindowPosition(centerX - 250, centerY + 20);
+        startWin.getGamePanel().setWindowType("START");
+        objects.add(startWin);
+        activeWindows.add(startWin);
+        
+        WindowArea settingsWin = new WindowArea(this, 240, 130);
+        settingsWin.setWindowPosition(centerX + 10, centerY + 20);
+        settingsWin.getGamePanel().setWindowType("SETTINGS");
+        objects.add(settingsWin);
+        activeWindows.add(settingsWin);
+        
+        Button startBtn = new Button("START GAME", 180, 46, () -> {
+            startGame();
+        });
+        startBtn.attachToWindow(startWin, 120, 65);
+        
+        Button settingsBtn = new Button("SETTINGS", 180, 46, () -> {
+            System.out.println("SETTINGS_OPENED");
+        });
+        settingsBtn.attachToWindow(settingsWin, 120, 65);
+        
+        objects.add(startBtn);
+        objects.add(settingsBtn);
+    }
+
+    private int score = 0;
+
+    public int getScore() {
+        return this.score;
+    }
+
+    public void addScore(int points) {
+        this.score += points;
+    }
+
+    public void resetScore() {
+        this.score = 0;
+    }
+
+    public void startGame()
+    {
+        gameState = GameState.GAME;
+        resetScore();
+        gameTimeFrames = 0;
+        
+        // Deletes existing menu windows
+        for (int i = 0; i < activeWindows.size(); i++) {
+            if (activeWindows.get(i).getWindow() != null) {
+                activeWindows.get(i).getWindow().dispose();
+            }
+        }
+        activeWindows.clear();
+        objects.clear();
+        
+        objects.add(inputManager);
+        objects.add(player);
+        player.awake();
+        player.start();
+        
+        enemyManger.setGameSystem(this);
+        objects.add(enemyManger);
+        
+        setupWindow("GAME", 320, 320);
+        
+        int centerX = screenWidth / 2;
+        int centerY = screenHeight / 2;
+        player.setPosition(centerX, centerY);
+    }
+
+    public void triggerGameOver()
+    {
+        gameState = GameState.GAME_OVER;
+        
+        // Deletes existing gameplay windows
+        for (int i = 0; i < activeWindows.size(); i++) {
+            if (activeWindows.get(i).getWindow() != null) {
+                activeWindows.get(i).getWindow().dispose();
+            }
+        }
+        activeWindows.clear();
+        objects.clear();
+        
+        objects.add(inputManager);
+        
+        int centerX = screenWidth / 2;
+        int centerY = screenHeight / 2;
+        
+        WindowArea gameOverWin = new WindowArea(this, 340, 220);
+        gameOverWin.setWindowPosition(centerX - 170, centerY - 110);
+        gameOverWin.getGamePanel().setWindowType("GAME_OVER");
+        objects.add(gameOverWin);
+        activeWindows.add(gameOverWin);
+        
+        Button restartBtn = new Button("RESTART", 180, 46, () -> {
+            startGame();
+        });
+        restartBtn.attachToWindow(gameOverWin, 170, 105);
+        
+        Button menuBtn = new Button("MAIN MENU", 180, 46, () -> {
+            loadMainMenu();
+        });
+        menuBtn.attachToWindow(gameOverWin, 170, 162);
+        
+        objects.add(restartBtn);
+        objects.add(menuBtn);
     }
 
     public void setupWindow(String chosenWindowType, int chosenWidth, int chosenHeight)
@@ -83,13 +203,22 @@ public class GameSystem implements Runnable
             //Updates everything on a frame
             if(delta >= 1)
             {
+                if (gameState == GameState.GAME)
+                {
+                    gameTimeFrames++;
+                    if (gameTimeFrames % 60 == 0)
+                    {
+                        score++;
+                    }
+                }
+                
                 objectsCollisionCheck();
                 updateObjects();
                 for(int i = 0; i < activeWindows.size(); i++)
                 {
                     activeWindows.get(i).getGamePanel().repaint();
                 }
-                if(gameState == GameState.MAIN_MENU)
+                if(activeWindows.size() > 1)
                 {
                     updateWindowCollisions();
                 }
@@ -105,8 +234,7 @@ public class GameSystem implements Runnable
 
     public double calculateTheAngleBetweenTwoPoints(double X1, double Y1, double X2, double Y2)
     {
-        double angle = Math.atan2(Y2 - Y1, X2 - X1) * 180 / Math.PI;;
-        System.out.println("--- " + angle);
+        double angle = Math.atan2(Y2 - Y1, X2 - X1) * 180 / Math.PI;
         return angle;
     }
     
@@ -135,8 +263,14 @@ public class GameSystem implements Runnable
         for(int i = objects.size() - 1; i >= 0; i--)
         {
             Object obj = objects.get(i);
-            
-            obj.update(); 
+            if (obj.isDestroyed())
+            {
+                objects.remove(i);
+            }
+            else
+            {
+                obj.update(); 
+            }
         }
     }
     
@@ -146,7 +280,7 @@ public class GameSystem implements Runnable
         {
             for(int i = objects.size() - 1; i >= 0; i--)
             {
-                if(objects.get(i) instanceof RidgedBody2D)
+                if(i < objects.size() && objects.get(i) instanceof RidgedBody2D)
                 {
                     RidgedBody2D a = (RidgedBody2D) objects.get(i);
                     
@@ -159,26 +293,38 @@ public class GameSystem implements Runnable
                         continue;
                     }
                     
-                    WindowArea comparedWindow = activeWindows.get(0);
-                    
-                    if(collisionWithWindowCheck(a, comparedWindow.getWindow()))
+                    boolean removed = false;
+                    for(int w = 0; w < activeWindows.size(); w++)
                     {
-                        if(a.windowEdge(comparedWindow))
+                        WindowArea comparedWindow = activeWindows.get(w);
+                        if(collisionWithWindowCheck(a, comparedWindow.getWindow()))
                         {
-                            objects.remove(i);
-                        }
-                        continue;
-                    }
-                    
-                    for(int j = i + 1; j < objects.size(); j++)
-                    {
-                        if(objects.get(i) instanceof RidgedBody2D)
-                        {
-                            RidgedBody2D b = (RidgedBody2D) objects.get(i);
-                            if(collisionCheck(a, b))
+                            if(a.windowEdge(comparedWindow))
                             {
-                                a.collison(b);
-                                b.collison(a);
+                                objects.remove(i);
+                                removed = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(removed) continue;
+                    
+                    for(int j = objects.size() - 1; j >= 0; j--)
+                    {
+                        if(i != j && i < objects.size() && j < objects.size())
+                        {
+                            Object b = objects.get(j);
+                            if (b instanceof RidgedBody2D || b instanceof UI_Collider)
+                            {
+                                if(collisionCheck(a, b))
+                                {
+                                    a.collison(b);
+                                    if (b instanceof RidgedBody2D) {
+                                        ((RidgedBody2D) b).collison(a);
+                                    } else if (b instanceof UI_Collider) {
+                                        ((UI_Collider) b).collison(a);
+                                    }
+                                }
                             }
                         }
                     }
@@ -199,11 +345,9 @@ public class GameSystem implements Runnable
         int windowWidth = getWindowWidth(comparedWindow);
         int windowHeight = getWindowHeight(comparedWindow);
         
-        if(aX > windowX + windowWidth || aX < windowX || //X Checks
-        aY > windowY + windowHeight || aY < windowY)//Y Checks
+        if(aX > windowX + windowWidth || aX < windowX ||
+        aY > windowY + windowHeight || aY < windowY)
         {
-            //int overlapX = Math.min(aX + aWidth, windowX + windowWidth) - Math.max(aX, windowX);
-            //int overlapY = Math.min(aY + aHeight, windowY + windowHeight) - Math.max(aY, windowY);
             return true;
         }
         else
@@ -212,11 +356,6 @@ public class GameSystem implements Runnable
         }
     }
     
-    /**
-     * This method is usedd to check if an object collides with the screen edges of the moniter.
-     * 
-     * This method takes an object to compare with the window bounds and returns true or false.
-    **/
     public boolean collisionWithScreenEdgeCheck(RidgedBody2D a)
     {
         int aX = a.getXPosition();
@@ -232,30 +371,39 @@ public class GameSystem implements Runnable
         return false;
     }
     
-    public boolean collisionCheck(RidgedBody2D a, RidgedBody2D b)
+    public boolean collisionCheck(Object a, Object b)
     {
         int aX = a.getXPosition();
         int aY = a.getYPosition();
-        int aWidth = a.getXSize();
-        int aHeight = a.getYSize();
+        int aWidth = getObjectWidth(a);
+        int aHeight = getObjectHeight(a);
 
         int bX = b.getXPosition();
         int bY = b.getYPosition();
-        int bWidth = b.getXSize();
-        int bHeight = b.getYSize();
+        int bWidth = getObjectWidth(b);
+        int bHeight = getObjectHeight(b);
 
-        if(aX < bX + bWidth && aX + aWidth > bX && //X Checks
-        aY < bY + bHeight && aY + aHeight > bY)//Y Checks
+        if(aX - aWidth/2 < bX + bWidth/2 && aX + aWidth/2 > bX - bWidth/2 &&
+        aY - aHeight/2 < bY + bHeight/2 && aY + aHeight/2 > bY - bHeight/2)
         {
-            //int overlapX = Math.min(aX + aWidth, bX + bWidth) - Math.max(aX, bX);
-            //int overlapY = Math.min(aY + aHeight, bY + bHeight) - Math.max(aY, bY);
-
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    private int getObjectWidth(Object obj) {
+        if (obj instanceof RidgedBody2D) return ((RidgedBody2D) obj).getXSize();
+        if (obj instanceof UI_Collider) return ((UI_Collider) obj).getXSize();
+        return 0;
+    }
+
+    private int getObjectHeight(Object obj) {
+        if (obj instanceof RidgedBody2D) return ((RidgedBody2D) obj).getYSize();
+        if (obj instanceof UI_Collider) return ((UI_Collider) obj).getYSize();
+        return 0;
     }
 
     //Window Methods

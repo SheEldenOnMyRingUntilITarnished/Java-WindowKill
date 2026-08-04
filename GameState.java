@@ -8,7 +8,7 @@
 public enum GameState {
     MAIN_MENU,
     GAME,
-    QUICK_SHOP,
-    PAUSED,
+    QUICK_SHOP, //not used :(
+    PAUSED, //not used :(
     GAME_OVER
 }

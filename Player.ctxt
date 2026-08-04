@@ -14,7 +14,6 @@ comment4.params=
 comment4.target=void\ update()
 comment5.params=collidedObject
 comment5.target=void\ collison(Object)
-comment5.text=\r\n\ This\ method\ will\ check\ if\ the\ object\ is\ \r\n\ a\ enemy(the\ player\ if\ targetPlayer\ is\ true)\r\n\ and\ if\ so\ deal\ damage\ to\ the\ target.\r\n
 comment6.params=collidedWindow
 comment6.target=boolean\ windowEdge(WindowArea)
 comment6.text=\r\n\ This\ method\ will\ destroy\ the\ bullet\ on\ collision\ with\ \r\n\ the\ edge\ of\ the\ window\ and\ expand\ the\ window\ on\ \r\n\ the\ side\ the\ projectile\ hit.\r\n

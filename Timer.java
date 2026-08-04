@@ -28,4 +28,9 @@ public class Timer extends Object
     {
         return currentTime < 0;
     }
+    
+    public double getCurrentTime()
+    {
+        return this.currentTime;
+    }
 }

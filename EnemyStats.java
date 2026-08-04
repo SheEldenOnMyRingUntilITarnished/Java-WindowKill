@@ -17,7 +17,15 @@ public class EnemyStats
         this.attackRate = chosenAttackRate;
     }
     
+    public double getHealth() {
+        return this.health;
+    }
+    
     public double getSpeed() {
         return this.speed;
+    }
+    
+    public double getAttackRate() {
+        return this.attackRate;
     }
 }

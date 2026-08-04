@@ -29,7 +29,6 @@ public class Player extends RidgedBody2D
     private int playerSize = 0;
     
     //Timers
-    
     private double shootRate;
     private Timer shootTimer = new Timer();
     
@@ -42,7 +41,7 @@ public class Player extends RidgedBody2D
         
         gameSystem = chosenGameSystem;
         
-        //Add System to the update manager
+        //Add Systems to the update manager
         gameSystem.objects.add(inputManager);
         gameSystem.objects.add(shootTimer);
         gameSystem.objects.add(invinceTimer);
@@ -52,7 +51,7 @@ public class Player extends RidgedBody2D
     public void awake()
     {
         playerSize = playerStats.playerSize;
-        
+        this.health = playerStats.playerMaxHealth;
         shootRate = playerStats.playerFirerate;
         invinceTime = playerStats.playerInvincibility;
     }
@@ -60,6 +59,9 @@ public class Player extends RidgedBody2D
     @Override
     public void start()
     {
+        this.health = playerStats.playerMaxHealth;
+        this.playerAccelerationX = 0;
+        this.playerAccelerationY = 0;
         
         this.setPosition(
         java.awt.Toolkit.getDefaultToolkit().getScreenSize().width / 2, //X
@@ -67,12 +69,14 @@ public class Player extends RidgedBody2D
         );
         
         this.setSize(playerSize,playerSize);
-        
     }
-    
+
     @Override
     public void update()
     {
+        shootTimer.update();
+        invinceTimer.update();
+        
         int temp = 0;
         
         double friction = 0.35;
@@ -106,19 +110,22 @@ public class Player extends RidgedBody2D
         this.updatePosition((int) Math.round(this.playerAccelerationX), (int) Math.round(this.playerAccelerationY));
     }
     
-    /**
-     * This method will check if the object is 
-     * a enemy(the player if targetPlayer is true)
-     * and if so deal damage to the target.
-    **/
     @Override
     public void collison(Object collidedObject)
     {
         if(invinceTimer.timerHasPassed() && (collidedObject instanceof Enemy || collidedObject instanceof Projectile))
         {
-            // Take Damage
+            if (collidedObject instanceof Projectile && ((Projectile) collidedObject).getFromPlayer()) {
+                return;
+            }
+            
             this.health--;
             this.invinceTimer.setTimer(120);
+            
+            if (this.health <= 0 && gameSystem != null && gameSystem.gameState == GameState.GAME)
+            {
+                gameSystem.triggerGameOver();
+            }
         }
     }
     
@@ -139,38 +146,23 @@ public class Player extends RidgedBody2D
         int xPos = this.getXPosition();
         int yPos = this.getYPosition();
         
-        if(xPos >= windowX + windowWidth)
-        {
-            //Right wall
-            
+        int halfSize = playerSize / 2;
+        int minX = windowX + halfSize;
+        int maxX = windowX + windowWidth - halfSize;
+        int minY = windowY + halfSize;
+        int maxY = windowY + windowHeight - halfSize;
+        
+        int clampedX = Math.max(minX, Math.min(maxX, xPos));
+        int clampedY = Math.max(minY, Math.min(maxY, yPos));
+        
+        if (clampedX != xPos) {
             playerAccelerationX = 0;
-            
-            this.setPosition(xPos - playerSize, yPos);
         }
-        else if(xPos <= windowX)
-        {
-            //Left wall
-            
-            playerAccelerationX = 0;
-            
-            this.setPosition(xPos + playerSize, yPos);
-        }
-        else if(yPos <= windowY)
-        {
-            //Top wall
-            
+        if (clampedY != yPos) {
             playerAccelerationY = 0;
-            
-            this.setPosition(xPos, yPos + playerSize);
         }
-        else if(yPos >= windowY + windowHeight)
-        {
-            //Bottom wall
-            
-            playerAccelerationY = 0;
-            
-            this.setPosition(xPos, yPos - playerSize);
-        }
+        
+        this.setPosition(clampedX, clampedY);
         return false;
     }
     
@@ -181,7 +173,6 @@ public class Player extends RidgedBody2D
     @Override
     public boolean screenEdge()
     {
-        
         //DEATH TO THE SCREEN!!!!!
         return false;
     }
@@ -189,15 +180,52 @@ public class Player extends RidgedBody2D
     @Override
     public void paint(Graphics2D g2, int windowX, int windowY)
     {
-        g2.setColor(Color.RED);
+        boolean isInvincible = !invinceTimer.timerHasPassed();
+        
+        if (isInvincible)
+        {
+            int blinkPhase = (int) Math.abs(invinceTimer.getCurrentTime()) % 10;
+            if (blinkPhase < 5)
+            {
+                // Skip rendering frame during invinces
+                return;
+            }
+            // Dimmed white color during invulnerability
+            g2.setColor(new Color(255, 255, 255, 110));
+        }
+        else
+        {
+            g2.setColor(Color.WHITE);
+        }
+        
         int playerX = this.getXPosition();
         int playerY = this.getYPosition();
         
         int playerSizeX = this.getXSize();
         int playerSizeY = this.getYSize();
         
-        Shape circle = new Ellipse2D.Double(playerX - windowX - (playerSizeX/2), playerY - windowY - (playerSizeY/2), this.playerSize, this.playerSize);
+        int drawX = playerX - windowX;
+        int drawY = playerY - windowY;
+        
+        Shape circle = new Ellipse2D.Double(drawX - (playerSizeX/2), drawY - (playerSizeY/2), this.playerSize, this.playerSize);
         g2.draw(circle);
+        
+        //HP Points :3
+        if (isInvincible && health > 0)
+        {
+            int dotSize = 6;
+            int dotSpacing = 10;
+            int totalWidth = (health - 1) * dotSpacing;
+            int startX = drawX - (totalWidth / 2);
+            int dotCenterY = drawY - (playerSizeY / 2) - 14;
+            
+            for (int i = 0; i < health; i++)
+            {
+                int dotX = startX + (i * dotSpacing) - (dotSize / 2);
+                int dotY = dotCenterY - (dotSize / 2);
+                g2.fill(new Ellipse2D.Double(dotX, dotY, dotSize, dotSize));
+            }
+        }
     }
     
     public void attemptShoot(PointerInfo currentMouse)
