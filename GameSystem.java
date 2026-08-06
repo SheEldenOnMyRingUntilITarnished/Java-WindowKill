@@ -22,7 +22,9 @@ public class GameSystem implements Runnable
     InputManager inputManager = player.inputManager;
 
     WindowPanel window = null;
-
+    
+    private boolean wrapping = false;
+    
     private int screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
     private int screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
     
@@ -31,11 +33,27 @@ public class GameSystem implements Runnable
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        loadMainMenu();
+        LoadMainMenu();
         gameThread.start();
     }
-
-    public void loadMainMenu()
+    public void LoadSettingsMenu()
+    {
+        int centerX = screenWidth / 2;
+        int centerY = screenHeight / 2;
+        
+        WindowArea titleWin = setupWindow("SettingsHolder", 360, 130);
+        titleWin.setWindowPosition(centerX - 180, centerY - 150);
+        
+        Button settingsBtn = new Button("ENABLE WRAPPING", 180, 46, () -> {
+            ToggleWrapping();
+        });
+    }
+    public void ToggleWrapping()
+    {
+        if(wrapping) wrapping = true;
+        else wrapping = false;
+    }
+    public void LoadMainMenu()
     {
         gameState = GameState.MAIN_MENU;
         
@@ -51,32 +69,24 @@ public class GameSystem implements Runnable
         
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
-        
-        WindowArea titleWin = new WindowArea(this, 360, 130);
+        WindowArea titleWin = setupWindow("TITLE", 360, 130);
         titleWin.setWindowPosition(centerX - 180, centerY - 150);
-        titleWin.getGamePanel().setWindowType("TITLE");
-        objects.add(titleWin);
-        activeWindows.add(titleWin);
         
-        WindowArea startWin = new WindowArea(this, 240, 130);
+        WindowArea startWin = setupWindow("START", 240, 130);
         startWin.setWindowPosition(centerX - 250, centerY + 20);
-        startWin.getGamePanel().setWindowType("START");
-        objects.add(startWin);
-        activeWindows.add(startWin);
         
-        WindowArea settingsWin = new WindowArea(this, 240, 130);
+        WindowArea settingsWin = setupWindow("SETTINGS", 240, 130);
         settingsWin.setWindowPosition(centerX + 10, centerY + 20);
-        settingsWin.getGamePanel().setWindowType("SETTINGS");
-        objects.add(settingsWin);
-        activeWindows.add(settingsWin);
+ 
         
         Button startBtn = new Button("START GAME", 180, 46, () -> {
             startGame();
         });
         startBtn.attachToWindow(startWin, 120, 65);
         
-        Button settingsBtn = new Button("SETTINGS", 180, 46, () -> {
-            System.out.println("SETTINGS_OPENED");
+        Button settingsBtn = new Button("OPEN SETTINGS", 180, 46, () -> {
+            System.out.println("The Tijmen Angers");
+            LoadSettingsMenu();
         });
         settingsBtn.attachToWindow(settingsWin, 120, 65);
         
@@ -121,7 +131,7 @@ public class GameSystem implements Runnable
         enemyManger.setGameSystem(this);
         objects.add(enemyManger);
         
-        setupWindow("GAME", 320, 320);
+        setupWindow("GAME", 640, 640);
         
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
@@ -145,12 +155,7 @@ public class GameSystem implements Runnable
         
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
-        
-        WindowArea gameOverWin = new WindowArea(this, 340, 220);
-        gameOverWin.setWindowPosition(centerX - 170, centerY - 110);
-        gameOverWin.getGamePanel().setWindowType("GAME_OVER");
-        objects.add(gameOverWin);
-        activeWindows.add(gameOverWin);
+        WindowArea gameOverWin = setupWindow("GAME_OVER", 340, 220);
         
         Button restartBtn = new Button("RESTART", 180, 46, () -> {
             startGame();
@@ -158,7 +163,7 @@ public class GameSystem implements Runnable
         restartBtn.attachToWindow(gameOverWin, 170, 105);
         
         Button menuBtn = new Button("MAIN MENU", 180, 46, () -> {
-            loadMainMenu();
+            LoadMainMenu();
         });
         menuBtn.attachToWindow(gameOverWin, 170, 162);
         
@@ -166,13 +171,15 @@ public class GameSystem implements Runnable
         objects.add(menuBtn);
     }
 
-    public void setupWindow(String chosenWindowType, int chosenWidth, int chosenHeight)
+    public WindowArea setupWindow(String chosenWindowType, int chosenWidth, int chosenHeight)
     {
         WindowArea windowArea = new WindowArea(this, chosenWidth, chosenHeight);
-        objects.add(windowArea);
-        activeWindows.add(windowArea);
         window = windowArea.getGamePanel();
         window.setWindowType(chosenWindowType);
+        objects.add(windowArea);
+        activeWindows.add(windowArea);
+        
+        return windowArea;
     }
 
     /**
@@ -505,5 +512,10 @@ public class GameSystem implements Runnable
     private void setWindowSize(int Width, int Height)
     {
         window.setSize(Width,Height);
+    }
+    
+    public int getGameTimeFrames()
+    {
+        return this.gameTimeFrames;
     }
 }

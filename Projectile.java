@@ -95,7 +95,7 @@ public class Projectile extends RidgedBody2D
             return false;
         }
         
-        int expandAmount = 50;
+        int expandAmount = 15;
         
         if(this.getXPosition() >= windowX + windowWidth)
         {

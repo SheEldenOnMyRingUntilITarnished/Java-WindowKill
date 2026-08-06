@@ -152,17 +152,12 @@ public class Player extends RidgedBody2D
         int minY = windowY + halfSize;
         int maxY = windowY + windowHeight - halfSize;
         
-        int clampedX = Math.max(minX, Math.min(maxX, xPos));
-        int clampedY = Math.max(minY, Math.min(maxY, yPos));
+        if(xPos > maxX) xPos = minX;
+        if(xPos < minX) xPos = maxX;
+        if(yPos > maxY) yPos = minY;
+        if(yPos < minY) yPos = maxY;
         
-        if (clampedX != xPos) {
-            playerAccelerationX = 0;
-        }
-        if (clampedY != yPos) {
-            playerAccelerationY = 0;
-        }
-        
-        this.setPosition(clampedX, clampedY);
+        this.setPosition(xPos, yPos);
         return false;
     }
     
@@ -233,6 +228,8 @@ public class Player extends RidgedBody2D
         if(shootTimer.timerHasPassed())
         {
             shootTimer.setTimer(shootRate);
+            
+            
             
             Projectile newPlayerProjectile = new Projectile(playerStats.projectileWidth, playerStats.projectileHeight, playerStats.playerProjectileSpeed, gameSystem.calculateTheAngleBetweenTwoPoints(getXPosition(), getYPosition(), currentMouse.getLocation().getX(), currentMouse.getLocation().getY()) * Math.PI/180,true,false);
             newPlayerProjectile.setPosition(getXPosition(),getYPosition());

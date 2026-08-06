@@ -69,7 +69,7 @@ public class WindowPanel extends JPanel
         
         if(this.windowType.equals("null"))
         {
-            System.err.println("Window Missing WindowType");
+            //System.err.println("Window Missing WindowType");
             return;
         }
         
@@ -110,25 +110,25 @@ public class WindowPanel extends JPanel
         }
         else if (this.windowType.equals("START"))
         {
-            Graphics2D g2d = (Graphics2D) g2.create();
+            /*Graphics2D g2d = (Graphics2D) g2.create();
             g2d.setColor(Color.GREEN);
             g2d.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
             java.awt.FontMetrics fm = g2d.getFontMetrics();
             String header = "PLAY";
             int headerX = (getWidth() - fm.stringWidth(header)) / 2;
             g2d.drawString(header, headerX, 28);
-            g2d.dispose();
+            g2d.dispose();*/
         }
         else if (this.windowType.equals("SETTINGS"))
         {
-            Graphics2D g2d = (Graphics2D) g2.create();
+            /*Graphics2D g2d = (Graphics2D) g2.create();
             g2d.setColor(Color.CYAN);
             g2d.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
             java.awt.FontMetrics fm = g2d.getFontMetrics();
             String header = "OPTIONS";
             int headerX = (getWidth() - fm.stringWidth(header)) / 2;
             g2d.drawString(header, headerX, 28);
-            g2d.dispose();
+            g2d.dispose();*/
         }
         else if (this.windowType.equals("GAME_OVER"))
         {

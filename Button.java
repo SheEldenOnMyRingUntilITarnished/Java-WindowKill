@@ -91,6 +91,11 @@ public class Button extends UI_Collider
         }
     }
     
+    public void UpdateLabel(String newLabel)
+    {
+        this.label = newLabel;
+    }
+    
     @Override
     public void collison(Object collidedObject)
     {

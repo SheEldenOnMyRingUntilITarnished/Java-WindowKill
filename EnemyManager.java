@@ -6,8 +6,7 @@ public class EnemyManager extends Object
     private GameSystem gameSystem = null;
     
     private Timer spawnTimer = new Timer();
-    private int spawnCooldown = 360; //Probably should update this so its not frame based
-    private int gameTimeFrames = 0;
+    private int startingSpawnCooldown = 360; //Probably should update this so its not frame based
     
     public EnemyManager(Player chosenPlayer)
     {
@@ -16,7 +15,7 @@ public class EnemyManager extends Object
         if (chosenPlayer != null) {
             this.gameSystem = chosenPlayer.gameSystem;
         }
-        spawnTimer.setTimer(spawnCooldown);
+        spawnTimer.setTimer(startingSpawnCooldown);
     }
     
     public void setGameSystem(GameSystem chosenGameSystem)
@@ -51,11 +50,13 @@ public class EnemyManager extends Object
             }
         }
         
-        gameTimeFrames++; //Increments the total frames the game has been running for
         spawnTimer.update();
         
         if (spawnTimer.timerHasPassed())
         {
+            double currentFrame = gameSystem.getGameTimeFrames();
+            int spawnCooldown = startingSpawnCooldown;
+            spawnCooldown = Math.toIntExact(Math.round(startingSpawnCooldown * 1/Math.exp(currentFrame/3600)));
             spawnTimer.setTimer(spawnCooldown);
             Enemy newEnemy = SpawnEnemy();
             if (newEnemy != null) {
@@ -72,9 +73,12 @@ public class EnemyManager extends Object
         
         EnemyTypes chosenType;
         double rand = Math.random();
+        int currentFrame = gameSystem.getGameTimeFrames();
         
-        if(rand < 0.1 && gameTimeFrames > 3600) chosenType = EnemyTypes.SQUARE;
-        else if(rand < 0.3 && gameTimeFrames > 1800) chosenType = EnemyTypes.TRIANGLE;
+        
+        
+        if(rand < 0.1 && currentFrame > 3600) chosenType = EnemyTypes.SQUARE;
+        else if(rand < 0.3 && currentFrame > 1800) chosenType = EnemyTypes.TRIANGLE;
         else chosenType = EnemyTypes.CIRCLE; //Easyist enemy
         
         return createEnemy(chosenType);
@@ -85,11 +89,11 @@ public class EnemyManager extends Object
         EnemyStats stats;
         //EnemyStats(Health, Speed, AttackRate(only used by enemys i have not added yet :( ))
         if (chosenType == EnemyTypes.SQUARE) {
-            stats = new EnemyStats(2, 2.0, 1.0);
+            stats = new EnemyStats(4, 2.0, 1.0);
         } else if (chosenType == EnemyTypes.TRIANGLE) {
-            stats = new EnemyStats(1, 2.5, 1.0);
+            stats = new EnemyStats(3, 2.5, 1.0);
         } else {
-            stats = new EnemyStats(3, 1.0, 1.0);
+            stats = new EnemyStats(2, 1.0, 1.0);
         }
         
         EnemyAI ai = new EnemyAI();

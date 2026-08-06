@@ -49,23 +49,31 @@ public class InputManager extends Object
             // Player controls only active during GAME state :)
             if (state == GameState.GAME) {
                 // Movement
+                double xDir = 0;
+                double yDir = 0;
+                
                 if(keyH.upPressed)
                 {
-                    this.player.acceleratePlayerY(-this.player.playerStats.playerAcceleration);
+                    yDir -= 1;
                 }
                 if(keyH.downPressed)
                 {
-                    this.player.acceleratePlayerY(this.player.playerStats.playerAcceleration);
+                    yDir += 1;
                 }
                 if(keyH.leftPressed)
                 {
-                    this.player.acceleratePlayerX(-this.player.playerStats.playerAcceleration);
+                    xDir -= 1;
                 }
                 if(keyH.rightPressed)
                 {
-                    this.player.acceleratePlayerX(this.player.playerStats.playerAcceleration);
+                    xDir += 1;
                 }
                 
+                if(xDir != 0 || yDir != 0)
+                {
+                    this.player.acceleratePlayerX(this.player.playerStats.playerAcceleration * xDir);
+                    this.player.acceleratePlayerY(this.player.playerStats.playerAcceleration * yDir);
+                }
                 // Shooting
                 if(mouseH.shootPressed)
                 {

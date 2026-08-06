@@ -9,4 +9,6 @@ comment3.params=setTime
 comment3.target=void\ setTimer(double)
 comment4.params=
 comment4.target=boolean\ timerHasPassed()
-numComments=5
+comment5.params=
+comment5.target=double\ getCurrentTime()
+numComments=6
