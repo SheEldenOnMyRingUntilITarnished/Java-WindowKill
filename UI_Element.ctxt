@@ -4,4 +4,6 @@ comment1.params=
 comment1.target=UI_Element()
 comment2.params=currentMouse
 comment2.target=void\ mouseChecks(java.awt.PointerInfo)
-numComments=3
+comment3.params=g2\ windowX\ windowY
+comment3.target=void\ paint(java.awt.Graphics2D,\ int,\ int)
+numComments=4

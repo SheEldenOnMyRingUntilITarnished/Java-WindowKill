@@ -33,27 +33,38 @@ public class GameSystem implements Runnable
     public void startGameThread()
     {
         gameThread = new Thread(this);
-        LoadMainMenu();
+        loadMainMenu();
         gameThread.start();
     }
-    public void LoadSettingsMenu()
+    public void loadSettingsMenu()
     {
         int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
         
-        WindowArea titleWin = setupWindow("SettingsHolder", 360, 130);
-        titleWin.setWindowPosition(centerX - 180, centerY - 150);
-        
-        Button settingsBtn = new Button("ENABLE WRAPPING", 180, 46, () -> {
-            ToggleWrapping();
+        WindowArea settingsHolderWin = setupWindow("SettingsHolder", 240, 240);
+        settingsHolderWin.setWindowPosition(centerX - 180, centerY - 150);
+        Button enableWrappingBtn = new Button("ENABLE WRAPPING", 180, 46, (btn) -> {
+            toggleWrapping(true);
         });
+        enableWrappingBtn.attachToWindow(settingsHolderWin, 120, 80);
+        objects.add(enableWrappingBtn);
+        
+        Button disableWrappingBtn = new Button("DISABLE WRAPPING", 180, 46, (btn) -> {
+            toggleWrapping(true);
+        });
+        disableWrappingBtn.attachToWindow(settingsHolderWin, 120, 160);
+        objects.add(disableWrappingBtn);
     }
-    public void ToggleWrapping()
+    public boolean toggleWrapping(boolean enable)
     {
-        if(wrapping) wrapping = true;
-        else wrapping = false;
+        wrapping = enable;
+        return wrapping;
     }
-    public void LoadMainMenu()
+    public boolean getCanWrap()
+    {
+        return this.wrapping;
+    }
+    public void loadMainMenu()
     {
         gameState = GameState.MAIN_MENU;
         
@@ -79,14 +90,14 @@ public class GameSystem implements Runnable
         settingsWin.setWindowPosition(centerX + 10, centerY + 20);
  
         
-        Button startBtn = new Button("START GAME", 180, 46, () -> {
+        Button startBtn = new Button("START GAME", 180, 46, (btn) -> {
             startGame();
         });
         startBtn.attachToWindow(startWin, 120, 65);
         
-        Button settingsBtn = new Button("OPEN SETTINGS", 180, 46, () -> {
+        Button settingsBtn = new Button("OPEN SETTINGS", 180, 46, (btn) -> {
             System.out.println("The Tijmen Angers");
-            LoadSettingsMenu();
+            loadSettingsMenu();
         });
         settingsBtn.attachToWindow(settingsWin, 120, 65);
         
@@ -157,13 +168,13 @@ public class GameSystem implements Runnable
         int centerY = screenHeight / 2;
         WindowArea gameOverWin = setupWindow("GAME_OVER", 340, 220);
         
-        Button restartBtn = new Button("RESTART", 180, 46, () -> {
+        Button restartBtn = new Button("RESTART", 180, 46, (btn) -> {
             startGame();
         });
         restartBtn.attachToWindow(gameOverWin, 170, 105);
         
-        Button menuBtn = new Button("MAIN MENU", 180, 46, () -> {
-            LoadMainMenu();
+        Button menuBtn = new Button("MAIN MENU", 180, 46, (btn) -> {
+            loadMainMenu();
         });
         menuBtn.attachToWindow(gameOverWin, 170, 162);
         

@@ -152,10 +152,20 @@ public class Player extends RidgedBody2D
         int minY = windowY + halfSize;
         int maxY = windowY + windowHeight - halfSize;
         
-        if(xPos > maxX) xPos = minX;
-        if(xPos < minX) xPos = maxX;
-        if(yPos > maxY) yPos = minY;
-        if(yPos < minY) yPos = maxY;
+        if(gameSystem.getCanWrap())
+        {
+            if(xPos > maxX) xPos = minX;
+            if(xPos < minX) xPos = maxX;
+            if(yPos > maxY) yPos = minY;
+            if(yPos < minY) yPos = maxY;
+        }
+        else
+        {
+            if(xPos > maxX) xPos = maxX;
+            if(xPos < minX) xPos = minX;
+            if(yPos > maxY) yPos = maxY;
+            if(yPos < minY) yPos = minY;
+        }
         
         this.setPosition(xPos, yPos);
         return false;

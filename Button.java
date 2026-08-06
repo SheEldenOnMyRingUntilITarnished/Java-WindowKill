@@ -3,11 +3,12 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.util.function.Consumer;
 
 public class Button extends UI_Collider
 {
     private String label;
-    private Runnable action;
+    private Consumer<Button> action;
     private boolean isHovered = false;
     private Color normalColor = Color.GREEN;
     private Color hoverColor = Color.CYAN;
@@ -17,7 +18,7 @@ public class Button extends UI_Collider
     private int relativeX = 0;
     private int relativeY = 0;
     
-    public Button(String label, int width, int height, Runnable onClickAction)
+    public Button(String label, int width, int height, Consumer<Button> onClickAction)
     {
         super(width, height);
         this.label = label;
@@ -87,11 +88,11 @@ public class Button extends UI_Collider
     {
         if (action != null)
         {
-            action.run();
+            action.accept(this);
         }
     }
     
-    public void UpdateLabel(String newLabel)
+    public void updateLabel(String newLabel)
     {
         this.label = newLabel;
     }

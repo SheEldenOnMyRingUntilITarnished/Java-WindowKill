@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Button
 comment1.params=label\ width\ height\ onClickAction
-comment1.target=Button(java.lang.String,\ int,\ int,\ java.lang.Runnable)
+comment1.target=Button(java.lang.String,\ int,\ int,\ java.util.function.Consumer)
 comment10.params=collidedObject
 comment10.target=void\ collison(Object)
 comment11.params=g2\ windowX\ windowY
@@ -21,5 +21,5 @@ comment7.target=boolean\ isHovered()
 comment8.params=
 comment8.target=void\ triggerClick()
 comment9.params=newLabel
-comment9.target=void\ UpdateLabel(java.lang.String)
+comment9.target=void\ updateLabel(java.lang.String)
 numComments=12
