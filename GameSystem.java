@@ -50,7 +50,7 @@ public class GameSystem implements Runnable
         objects.add(enableWrappingBtn);
         
         Button disableWrappingBtn = new Button("DISABLE WRAPPING", 180, 46, (btn) -> {
-            toggleWrapping(true);
+            toggleWrapping(false);
         });
         disableWrappingBtn.attachToWindow(settingsHolderWin, 120, 160);
         objects.add(disableWrappingBtn);
