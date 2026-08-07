@@ -22,7 +22,7 @@ public class WindowArea extends Object
     private float widthF;
     private float heightF;
     
-    private float shrinkSpeed = 0.15f;
+    private float shrinkSpeed = 0.25f;
     private int minWidth = 160;
     private int minHeight = 160;
     private int maxWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
